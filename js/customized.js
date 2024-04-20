@@ -2,9 +2,8 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Array containing URLs of images
     var images = [
-        "transparent/aes-logo.png",
-        "transparent/bucs-logo.png",
-        "transparent/bu-logo.png"
+        "../img/undraw_engineering_team_a7n2.svg",
+        "../img/undraw_undraw_undraw_businessman_e7v0_qrld_-1-_hvmv.svg"
         // Add more image URLs as needed
     ];
 
@@ -12,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var randomIndex = Math.floor(Math.random() * images.length);
 
     // Get the img element by its id
-    var imgElement = document.getElementById("randomImage");
+    var imgElement = document.getElementById("randomBannerImage");
 
     // Set the src attribute of the img element to the randomly selected image URL
     imgElement.src = images[randomIndex];

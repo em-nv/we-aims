@@ -27,6 +27,9 @@
     <!-- LORDICONS -->
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
 
+    <!-- CUSTOMIZED JS -->
+    <script src="js/customized.js"></script>
+
 </head>
 
 <body id="page-top">
@@ -501,7 +504,7 @@
                         </div> -->
                         <div class="row">
                             <div class="card-body banner-left">
-                                <h4>Hello, <span>Admin!</span>
+                                <h4 style="font-weight: bold;">Hello, <span style="font-weight: bolder;">ADMIN WILLEM!</span>
                                     <lord-icon
                                         src="https://cdn.lordicon.com/cqofjexf.json"
                                         trigger="loop"
@@ -510,11 +513,11 @@
                                         style="width:45px;height:45px">
                                     </lord-icon>
                                 </h4>
-                                <!-- <p class="mb-0">Before working with this theme, you should become familiar with the
-                                    Bootstrap framework, especially the utility classes.</p> -->
+                                <p class="mb-0">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum delectus blanditiis, excepturi perferendis hic impedit eum labore inventore fuga placeat molestiae dolorem aperiam velit ad optio in consequatur illo recusandae.</p>
                             </div>
                             <div class="card-body banner-right">
-                                <h3>Picture here</h3>
+                               <!--  <h3>Picture here</h3> -->
+                                <img id="randomBannerImage" src="" class="img-fluid px-3 px-sm-4 mt-3 mb-4 banner-img" style="width: 15rem;" >
                                 <!-- <p class="mb-0">Before working with this theme, you should become familiar with the
                                     Bootstrap framework, especially the utility classes.</p> -->
                             </div>
@@ -524,36 +527,36 @@
                     <!-- Content Row -->
                     <div class="row">
 
-                        <!-- CUSTOMERS CARD -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                CUSTOMERS</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">20</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-solid fa-user fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- SUPPLIERS CARD -->
+                        <!-- TOTAL SALES CARD -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                SUPPLIERS</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">12</div>
+                                                TOTALS SALES</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Php 14,500</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-solid fa-truck-field fa-2x text-gray-300"></i>
+                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PROFIT CARD -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                PROFIT</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Php 9,000</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -596,72 +599,75 @@
                             </div>
                         </div>
 
-                        <!-- TOTAL SALES CARD -->
+                        <!-- CUSTOMERS CARD -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                CUSTOMERS</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">20</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-solid fa-user fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SUPPLIERS CARD -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                TOTALS SALES</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Php 14,500</div>
+                                                SUPPLIERS</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">12</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                            <i class="fas fa-solid fa-truck-field fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- PROFIT CARD -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                PROFIT</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Php 9,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- lllllllllllllllll -->
+                    
+                        <!-- TOTAL PRODUCTS SOLD CARD -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Category</div>
+                                                TOTAL PRODUCTS SOLD</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                            <i class="fas fa-solid fa-box-open fa-2x text-gray-300"></i>
+                                          
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- lllllllllllllllll -->
+                        <!-- TOTAL SERVICE TRANSACTION CARD -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Category</div>
+                                                TOTAL SERVICE TRANSACTION</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                            <i class="fas fa-solid fa-screwdriver-wrench fa-2x text-gray-300"></i>
+                                            
                                         </div>
                                     </div>
                                 </div>
