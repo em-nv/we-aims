@@ -2,8 +2,9 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Array containing URLs of images
     var images = [
-        "../img/undraw_engineering_team_a7n2.svg",
-        "../img/undraw_undraw_undraw_businessman_e7v0_qrld_-1-_hvmv.svg"
+        "img/undraw_engineering_team_a7n2.svg",
+        "img/undraw_posting_photo.svg",
+        "img/undraw_project_team_lc5a.svg"
         // Add more image URLs as needed
     ];
 
