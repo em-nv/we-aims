@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Random Image on Page Load</title>
+</head>
+<body>
+
+<img id="randomImage" src="" alt="Random Image">
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    // Array containing URLs of images
+    var images = [
+        "transparent/aes-logo.png",
+        "transparent/bucs-logo.png",
+        "transparent/bu-logo.png"
+        // Add more image URLs as needed
+    ];
+
+    // Select a random index from the images array
+    var randomIndex = Math.floor(Math.random() * images.length);
+
+    // Get the img element by its id
+    var imgElement = document.getElementById("randomImage");
+
+    // Set the src attribute of the img element to the randomly selected image URL
+    imgElement.src = images[randomIndex];
+    });
+</script>
+
+</body>
+</html>
