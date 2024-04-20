@@ -11287,3 +11287,20 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
+
+
+
+
+
+
+
+
+/* BANNER */
+.banner{
+  padding: 10px;
+  display: flex;
+    justify-content: space-between;
+}
+.left, .right {
+  flex: 1;
+}
