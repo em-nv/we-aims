@@ -30,7 +30,9 @@
 
   --primary: #911C1C;
   --secondary: #858796;
+
   --body-color: #F5EFDE;
+  --card-border-left-color: #5E8DAB;
 
 /*   --success: #1cc88a;
   --info: #36b9cc;
@@ -1830,6 +1832,19 @@ pre code {
 .table-responsive > .table-bordered {
   border: 0;
 }
+
+/* TABLE IN DASHBOARD */
+.table-responsive-dashboard {
+  display: block;
+  width: 100%;
+  max-height: 300px; /* Adjust the height as needed */
+  overflow: auto;
+}
+
+.table-responsive-dashboard > .table-bordered {
+  border: 0;
+}
+
 
 .form-control {
   display: block;
@@ -4560,8 +4575,11 @@ input[type="button"].btn-block {
 .card-header {
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
-  background-color: #f8f9fc;
+  background-color: #016193;
   border-bottom: 1px solid #e3e6f0;
+}
+.card-header-alert {
+  background-color: var(--primary);
 }
 
 .card-header:first-child {
@@ -6501,6 +6519,12 @@ button.bg-dark:focus {
 .bg-white {
   background-color: #fff !important;
 }
+
+/* HOMEPAGE TOP NAVIGATION BAR BCKGROUND COLOR */
+.bg-home-nav-bar {
+  background-color: var(--primary) !important;
+}
+
 
 .bg-transparent {
   background-color: transparent !important;
@@ -9600,7 +9624,7 @@ button.bg-dark:focus {
 }
 
 .text-primary {
-  color: #4e73df !important;
+  color: white !important;
 }
 
 a.text-primary:hover, a.text-primary:focus {
@@ -9616,7 +9640,7 @@ a.text-secondary:hover, a.text-secondary:focus {
 }
 
 .text-success {
-  color: #1cc88a !important;
+  color: #5E8DAB !important;
 }
 
 a.text-success:hover, a.text-success:focus {
@@ -10068,7 +10092,7 @@ a:focus {
 }
 
 .border-left-success {
-  border-left: 0.25rem solid #1cc88a !important;
+  border-left: 0.27rem solid var(--card-border-left-color) !important;
 }
 
 .border-bottom-success {
@@ -10329,6 +10353,69 @@ a:focus {
 .topbar.navbar-light .navbar-nav .nav-item .nav-link:active {
   color: #858796;
 }
+
+.home-page-nav-bar{
+  padding-left: 4em;
+  padding-right: 4rem;
+}
+
+
+
+
+/* HOMEPAGE TOP NAVIGATION BAR ITEMS */
+.navbar-light-home-page .navbar-nav .nav-item .nav-link {
+  color: white;
+  font-size: smaller;
+  width: 6rem;
+  justify-content: center;
+}
+.navbar-light-home-page .navbar-nav .nav-item .nav-link:hover {
+  background-color: #7C1717;
+}
+.navbar-light-home-page .navbar-nav .nav-item .nav-link.active,
+.navbar-light-home-page .navbar-nav .nav-item .nav-link.active:hover {
+  color: white;
+  text-decoration: underline;
+  background-color: #7C1717;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 10px;
+}
+.nav-message > h6 {
+  color: white;
+  justify-content: baseline;
+  margin-top: 15px;
+}
+
+
+@media screen and (max-width: 576px) {
+  
+}
+
+@media screen and (max-width: 768px) {
+  .navbar-light-home-page .navbar-nav .nav-item .nav-link {
+    width: 4rem;
+  }
+  .nav-message {
+    display: none; 
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .navbar-light-home-page .navbar-nav .nav-item .nav-link {
+    font-size: 40%;
+    width: 100%;
+  }
+  .nav-message {
+    display: none; 
+  }
+  
+}
+
+@media screen and (max-width: 1200px) {
+  
+}
+
+
 
 .sidebar {
   width: 6.5rem;
