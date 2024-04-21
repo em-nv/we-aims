@@ -152,12 +152,21 @@
                 </div>
             </li>
 
-
-            <!-- Nav Item - TRANSACTIONS -->
+            <!-- Nav Item - TRANSACTIONS Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTransactions"
+                    aria-expanded="true" aria-controls="collapseTransactions">
                     <i class="fas fa-fw fa-solid fa-hand-holding-dollar"></i>
-                    <span>Transactions</span></a>
+                    <span>Transactions</span>
+                </a>
+                <div id="collapseTransactions" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <!-- <h6 class="collapse-header">Custom Components:</h6> -->
+                        <a class="collapse-item" href="buttons.html">Transaction Customer</a>
+                        <a class="collapse-item" href="cards.html">Products</a>
+                        <a class="collapse-item" href="cards.html">Supplier</a>
+                    </div>
+                </div>
             </li>
 
 
@@ -522,10 +531,16 @@
                                     </lord-icon>
                                 </h4>
                                 <p class="mb-0">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum delectus blanditiis, excepturi perferendis hic impedit eum labore inventore fuga placeat molestiae dolorem aperiam velit ad optio in consequatur illo recusandae.</p>
+                                
+                                <!-- Page Heading -->
+                                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                            class="fas fa-download fa-sm text-white-50"></i> VIEW REPORTS</a>
+                                </div>
                             </div>
                             <div class="card-body banner-right">
                                <!--  <h3>Picture here</h3> -->
-                                <img id="randomBannerImage" src="" class="img-fluid px-3 px-sm-4 mt-3 mb-4 banner-img" style="width: 15rem;" >
+                                <img id="randomBannerImage" src="img/6367132.jpg" class="img-fluid px-3 px-sm-4 mt-3 mb-4 banner-img" style="width: 15rem;" >
                                 <!-- <p class="mb-0">Before working with this theme, you should become familiar with the
                                     Bootstrap framework, especially the utility classes.</p> -->
                             </div>

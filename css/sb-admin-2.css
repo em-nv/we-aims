@@ -74,7 +74,7 @@ body {
   line-height: 1.5;
   color: #858796;
   text-align: left;
-  background-color: #fff;
+  background-color: var(--body-color)
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -9829,7 +9829,7 @@ a:focus {
 }
 
 #wrapper #content-wrapper {
-  background-color: var(--body-color);
+  /* background-color: var(--body-color); */
   width: 100%;
   overflow-x: hidden;
 }
@@ -9837,6 +9837,10 @@ a:focus {
 #wrapper #content-wrapper #content {
   flex: 1 0 auto;
 }
+/* Exception for background color */
+/* #wrapper #content-wrapper:not(#exception) {
+  background-color: lightblue;
+} */
 
 .container,
 .container-fluid,
@@ -10354,7 +10358,11 @@ a:focus {
   color: #858796;
 }
 
-.home-page-nav-bar{
+.home-page-nav-bar {
+  padding-left: 4em;
+  padding-right: 4rem;
+}
+.home-content-container{
   padding-left: 4em;
   padding-right: 4rem;
 }
@@ -10809,6 +10817,7 @@ a:focus {
 
 .sidebar-dark .nav-item.active .nav-link {
   color: #fff;
+  background-color: #7C1717;
 }
 
 .sidebar-dark .nav-item.active .nav-link i {
@@ -11407,6 +11416,7 @@ body.sidebar-toggled footer.sticky-footer {
   flex-direction: column;
   align-items: flex-start; */
   color: white;
+  padding-left: 2rem;
 }
 
 .banner-right{
@@ -11443,4 +11453,9 @@ body.sidebar-toggled footer.sticky-footer {
 
 @media screen and (max-width: 1200px) {
   
+}
+
+.home-body {
+  background-color: rgba(245, 239, 222, 0.7); /* 0.5 is the opacity value (50%) */
+  height: 100vh;
 }
