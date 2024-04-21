@@ -11026,7 +11026,7 @@ a:focus {
 }
 
 .bg-login-image {
-  background: url("https://source.unsplash.com/K4mSJ7kc0As/600x800");
+  background: url("");
   background-position: center;
   background-size: cover;
 }
@@ -11035,6 +11035,7 @@ a:focus {
   background: url("https://source.unsplash.com/Mv9hjnEUHR4/600x800");
   background-position: center;
   background-size: cover;
+  
 }
 
 .bg-password-image {
@@ -11521,4 +11522,9 @@ body.sidebar-toggled footer.sticky-footer {
 .logo{
   width: 50%;
   height: auto;
+}
+
+/* LOGIN CARD BG COLOR */
+.log-in-card{
+  background-color: var(--body-color) !important;
 }

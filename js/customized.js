@@ -17,7 +17,28 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Set the src attribute of the img element to the randomly selected image URL
     imgElement.src = images[randomIndex];
-    });
+});
+
+
+/* AUTO CHANGING IMAGE EVERY LOAD OF PAGE */
+document.addEventListener("DOMContentLoaded", function() {
+    // Array containing URLs of images
+    var images = [
+        "https://source.unsplash.com/1Ah8CAwk3vM/600x800",
+        "https://source.unsplash.com/U4w7y0lowL8/600x800",
+        "https://source.unsplash.com/thtUUYPdxWY/600x800"
+        // Add more image URLs as needed
+    ];
+
+    // Select a random index from the images array
+    var randomIndex = Math.floor(Math.random() * images.length);
+
+    // Get the img element by its id
+    var imgElement = document.getElementById("randomLogInImage");
+
+    // Set the src attribute of the img element to the randomly selected image URL
+    imgElement.src = images[randomIndex];
+});
 
 
 
