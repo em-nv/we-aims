@@ -11574,7 +11574,8 @@ body.sidebar-toggled footer.sticky-footer {
 .logo{
   width: 50%;
   height: auto;
-  padding: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 /* ABOUT PAGE BODY BG AND HEIGHT */
