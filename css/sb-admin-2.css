@@ -10401,10 +10401,30 @@ a:focus {
 }
 
 
-.about-content-container{
+.about-content-container {
   display: flex;
-  padding: 30px;
-  }
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* Center align text inside the container */
+  padding: 50px;
+}
+.about-caption,
+.about-image {
+  flex: 1; /* This will make both child elements take equal space */
+}
+.about-caption{
+  text-align: left;
+  padding-right: 30px;
+  color: black;
+}
+.about-image{
+  width: 300px; /* adjust the width and height as needed */
+  height: 65vh;
+  background-image: url('../img/branch.jpg'); /* specify your image URL */
+  background-size: cover; /* this will make the image cover the entire div */
+  background-position: center; /* this will center the image */
+  border-radius: 25px;
+}
 
 
 
@@ -10413,20 +10433,20 @@ a:focus {
 }
 
 @media screen and (max-width: 768px) {
-}
-.home-content-container{
-  padding-left: 10px;
-  padding-right: 10px;
-  justify-content: space-between;
-  align-items: center;
-  
-}
-.about-caption, .about-image{
-  margin: 20px;
-  img {
-    width: 50%;
+  .home-content-container{
+    padding-left: 8px;
+    padding-right: 8px;
+    align-items: center;
+    font-size: 130%;
   }
+
+  .about-image{
+    display: none;
+
+  }
+
 }
+
 
 @media screen and (max-width: 992px) {
   
@@ -10443,7 +10463,7 @@ a:focus {
       left: 0;
   }
   to {
-      left: calc(100% - 240px); /* Adjust the value according to your design */
+      left: calc(100% - 260px); /* Adjust the value according to your design */
   }
 }
 
@@ -11535,7 +11555,7 @@ body.sidebar-toggled footer.sticky-footer {
 
 /* ABOUT PAGE BODY BG AND HEIGHT */
 .about-body {
-  background-color: var(--body-color); /* 0.5 is the opacity value (50%) */
+  background-color: rgba(245, 239, 222, 0.70);
   height: 100vh;
 }
 

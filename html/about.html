@@ -30,7 +30,29 @@
     <!-- CUSTOMIZED JS -->
     <script src="js/customized.js"></script>
 
+    <style>
+        @media screen and (max-width: 768px) {
+            body {
+            position: relative;
+            overflow: hidden; /* Hide the overflow from the blurred pseudo-element */
+        }
 
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('../img/branch.jpg');
+            background-size: cover;
+            background-position: center;
+           /*  filter: blur(5px); */ /* Adjust the blur radius as needed */
+            z-index: -1; /* Ensure the pseudo-element stays behind the content */
+        }
+
+        }
+    </style>
 
 </head>
 
@@ -57,8 +79,8 @@
                             <li><a href="about.html" class="active">About</a></li>
                             <li><a href="">Features</a></li>
                             <li><a href="">Contact</a></li>
-                            <li><a href="">Login</a></li>
-                            <li><a href="">Sign Up</a></li>
+                            <li><a href="login.html">Login</a></li>
+                            <li><a href="register.html">Sign Up</a></li>
                             <label for="check" class="close-menu"><i class="fas fa-times"></i></label>
                         </span>
                         <label for="check" class="open-menu"><i class="fas fa-bars"></i></label>
@@ -70,12 +92,15 @@
                 <div class="container-fluid about-content-container">
                     <div class="about-caption">
                         <!-- Page Heading -->
-                        <h1 class="">Welcome to We-AIMS!</h1>
-                        <p> “Willem's Wheels, Sorted Deals: Aims your Growth as Success Reveals!”</p>
+                        <h4>ABOUT US</h4>
+                        <h1 class="">LEGAZPI WILLEM MARKETING CORPORATION</h1>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque quod fugiat delectus laboriosam, vero reprehenderit rem vitae facilis. Exercitationem labore dolorem vero perspiciatis alias facere doloribus asperiores nesciunt nihil maxime?
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, nulla nesciunt maxime, corporis vel itaque obcaecati dolorum repellendus, quasi ad ipsum laboriosam. Ipsum rerum autem dolore reprehenderit, minus exercitationem sapiente?
+                        </p>
                     </div>
                     <div class="about-image">
                         <!-- Page Heading -->
-                        <img src="../img/branch.jpg">
+                        
                     </div>
                     
                 </div>
