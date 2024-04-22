@@ -10400,12 +10400,50 @@ a:focus {
   animation: moveRight 5s ease forwards; /* Animation to move car */
 }
 
+
+.about-content-container{
+  display: flex;
+  padding: 30px;
+  }
+
+
+
+@media screen and (max-width: 576px) {
+
+}
+
+@media screen and (max-width: 768px) {
+}
+.home-content-container{
+  padding-left: 10px;
+  padding-right: 10px;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+.about-caption, .about-image{
+  margin: 20px;
+  img {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  
+}
+
+@media screen and (max-width: 1200px) {
+  
+}
+
+
+
 @keyframes moveRight {
   from {
       left: 0;
   }
   to {
-      left: calc(100% - 270px); /* Adjust the value according to your design */
+      left: calc(100% - 240px); /* Adjust the value according to your design */
   }
 }
 
@@ -10450,36 +10488,6 @@ a:focus {
 }
 
 
-@media screen and (max-width: 576px) {
-  .home-page-nav-bar {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .navbar-light-home-page .navbar-nav .nav-item .nav-link {
-    width: 4rem;
-  }
-  .nav-message {
-    display: none; 
-  }
-}
-
-@media screen and (max-width: 992px) {
-  .navbar-light-home-page .navbar-nav .nav-item .nav-link {
-    font-size: 50%;
-    width: 100%;
-  }
-  .nav-message {
-    display: none; 
-  }
-  
-}
-
-@media screen and (max-width: 1200px) {
-  
-}
 
 
 
@@ -11514,6 +11522,7 @@ body.sidebar-toggled footer.sticky-footer {
   
 }
 
+/* HOME PAGE BODY BG AND HEIGHT */
 .home-body {
   background-color: rgba(245, 239, 222, 0.75); /* 0.5 is the opacity value (50%) */
   height: 100vh;
@@ -11522,6 +11531,12 @@ body.sidebar-toggled footer.sticky-footer {
 .logo{
   width: 50%;
   height: auto;
+}
+
+/* ABOUT PAGE BODY BG AND HEIGHT */
+.about-body {
+  background-color: var(--body-color); /* 0.5 is the opacity value (50%) */
+  height: 100vh;
 }
 
 /* LOGIN CARD BG COLOR */
