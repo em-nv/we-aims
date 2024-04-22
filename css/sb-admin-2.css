@@ -29,10 +29,10 @@
   --gray-dark: #5a5c69; */
 
   --primary: #911C1C;
-  --secondary: #858796;
+  --secondary: #5E8DAB;
+  --blue: #004061;
 
   --body-color: #F5EFDE;
-  --card-border-left-color: #5E8DAB;
 
 /*   --success: #1cc88a;
   --info: #36b9cc;
@@ -657,6 +657,12 @@ pre code {
 }
 
 .col-auto {
+  flex: 0 0 auto;
+  width: auto;
+  max-width: 100%;
+}
+
+.col-auto-blue {
   flex: 0 0 auto;
   width: auto;
   max-width: 100%;
@@ -10046,6 +10052,10 @@ a:focus {
   color: #dddfeb !important;
 }
 
+.text-blue-300 {
+  color: var(--secondary) !important;
+}
+
 .text-gray-400 {
   color: #d1d3e2 !important;
 }
@@ -10096,7 +10106,7 @@ a:focus {
 }
 
 .border-left-success {
-  border-left: 0.27rem solid var(--card-border-left-color) !important;
+  border-left: 0.27rem solid var(--secondary) !important;
 }
 
 .border-bottom-success {
@@ -10371,10 +10381,18 @@ a:focus {
   align-items: center;
   text-align: center;
   height: 70%; /* Optional: Adjust the height according to your layout */
-  font-size: 200%;
   color: black;
   width: 70%;
   position: relative; /* Ensure the parent div is positioned */
+  h1{
+    font-size: 65px;
+    color: var(--blue);
+    font-weight: bolder;
+  }
+  p{
+    font-size: 30px;
+    font-style: italic;
+  }
 }
 
 .home-content-button, .car{
@@ -10415,7 +10433,13 @@ a:focus {
 .about-caption{
   text-align: left;
   padding-right: 30px;
-  color: black;
+  h1{
+    color: var(--blue);
+    font-weight: bolder;
+  }
+  h4, p {
+    color: black;
+  }
 }
 .about-image{
   width: 300px; /* adjust the width and height as needed */
@@ -10437,7 +10461,6 @@ a:focus {
     padding-left: 8px;
     padding-right: 8px;
     align-items: center;
-    font-size: 130%;
   }
 
   .about-image{
@@ -11551,6 +11574,7 @@ body.sidebar-toggled footer.sticky-footer {
 .logo{
   width: 50%;
   height: auto;
+  padding: 20px;
 }
 
 /* ABOUT PAGE BODY BG AND HEIGHT */

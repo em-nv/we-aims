@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Home</title>
+    <title>About</title>
 
     <!-- Custom fonts for this template-->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -31,10 +31,26 @@
     <script src="js/customized.js"></script>
 
     <style>
-        body{
-            background-image: url(../img/Cars.png);
-            background-size:cover;
-            background-position:center;
+        @media screen and (max-width: 768px) {
+            body {
+            position: relative;
+            overflow: hidden; /* Hide the overflow from the blurred pseudo-element */
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('../img/branch.jpg');
+            background-size: cover;
+            background-position: center;
+           /*  filter: blur(5px); */ /* Adjust the blur radius as needed */
+            z-index: -1; /* Ensure the pseudo-element stays behind the content */
+        }
+
         }
     </style>
 
@@ -43,7 +59,7 @@
 <body id="page-top">
 
     <!-- Page Wrapper -->
-    <div id="wrapper" class="home-body">
+    <div id="wrapper" class="about-body">
 
         
 
@@ -56,11 +72,11 @@
                 <!-- Topbar -->
                 <nav>
                     <ul class='nav-bar'>
-                        <li class='logo'><a href='#'><img src='../img/logo.png'><span class="top-bar-text">We-AIMS   WILLEM'S AUTOMOTIVE INVANTORY MANAGEMENT SYSTEM</span></a></li>
+                        <li class='logo'><a href='#'><img src='../img/logo.png'><span class="top-bar-text">We-AIMS - WILLEM'S AUTOMOTIVE INVANTORY MANAGEMENT SYSTEM</span></a></li>
                         <input type='checkbox' id='check' />
                         <span class="menu">
-                            <li><a href="home.html" class="active">Home</a></li>
-                            <li><a href="about.html">About</a></li>
+                            <li><a href="home.html">Home</a></li>
+                            <li><a href="about.html" class="active">About</a></li>
                             <li><a href="">Features</a></li>
                             <li><a href="">Contact</a></li>
                             <li><a href="login.html">Login</a></li>
@@ -73,17 +89,20 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid home-content-container">
-
-                    <!-- Page Heading -->
-                    <h1>Welcome to We-AIMS!</h1>
-                    <p> “Willem's Wheels, Sorted Deals: Aims your Growth as Success Reveals!”</p>
-                    <div class="home-content-button">
-                        <img src="../img/red-car2.png" class="car">
-                        <button class="button-link">
-                            <i class="fa-solid fa-angles-right"></i>
-                        </button>
+                <div class="container-fluid about-content-container">
+                    <div class="about-caption">
+                        <!-- Page Heading -->
+                        <h4>ABOUT US</h4>
+                        <h1 class="">LEGAZPI WILLEM MARKETING CORPORATION</h1>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque quod fugiat delectus laboriosam, vero reprehenderit rem vitae facilis. Exercitationem labore dolorem vero perspiciatis alias facere doloribus asperiores nesciunt nihil maxime?
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, nulla nesciunt maxime, corporis vel itaque obcaecati dolorum repellendus, quasi ad ipsum laboriosam. Ipsum rerum autem dolore reprehenderit, minus exercitationem sapiente?
+                        </p>
                     </div>
+                    <div class="about-image">
+                        <!-- Page Heading -->
+                        
+                    </div>
+                    
                 </div>
                 <!-- /.container-fluid -->
 
