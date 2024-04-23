@@ -10395,7 +10395,7 @@ a:focus {
   }
 }
 
-.home-content-button, .car{
+.home-content-button {
   align-self: flex-end;
   text-align: center;
   justify-content: center;
@@ -10416,6 +10416,8 @@ a:focus {
   position: absolute;
   left: 0;
   animation: moveRight 5s ease forwards; /* Animation to move car */
+  width: 15%;
+  height: auto;
 }
 
 
@@ -10461,6 +10463,19 @@ a:focus {
     padding-left: 8px;
     padding-right: 8px;
     align-items: center;
+
+    h1{
+      font-size: 35px;
+    }
+    p{
+      font-size: 20px;
+    }
+  }
+
+
+  .car {
+    width: 50%;
+
   }
 
   .about-image{
@@ -10486,7 +10501,7 @@ a:focus {
       left: 0;
   }
   to {
-      left: calc(100% - 260px); /* Adjust the value according to your design */
+      left: calc(100% - 250px); /* Adjust the value according to your design */
   }
 }
 
@@ -11083,7 +11098,7 @@ a:focus {
 }
 
 .bg-register-image {
-  background: url("https://source.unsplash.com/Mv9hjnEUHR4/600x800");
+  background: url("");
   background-position: center;
   background-size: cover;
   
@@ -11570,9 +11585,22 @@ body.sidebar-toggled footer.sticky-footer {
   background-color: rgba(245, 239, 222, 0.75); /* 0.5 is the opacity value (50%) */
   height: 100vh;
 }
-
 .logo{
   width: 50%;
+  height: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.logo-login{
+  width: 50%;
+  height: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.logo-register{
+  width: 30%;
   height: auto;
   padding-top: 20px;
   padding-bottom: 20px;
@@ -11585,6 +11613,7 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 /* LOGIN CARD BG COLOR */
-.log-in-card{
+.log-in-card, .register-card {
   background-color: var(--body-color) !important;
 }
+
