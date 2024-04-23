@@ -62,28 +62,3 @@ document.addEventListener("DOMContentLoaded", function() {
     // Set the src attribute of the img element to the randomly selected image URL
     imgElement.src = images[randomIndex];
 });
-
-
-
-
-
-    
-
-/* AUTO CHANGING ICON EVERY LOAD OF PAGE */
-document.addEventListener("DOMContentLoaded", function() {
-    // Array containing URLs of Lordicon JSON files
-    var lordiconURLs = [
-        "https://cdn.lordicon.com/cqofjexf.json",
-        "https://cdn.lordicon.com/qzhzhqfw.json",
-        "https://cdn.lordicon.com/lzlcrlfm.json"
-    ];
-  
-    // Select a random index from the lordiconURLs array
-    var randomIndex = Math.floor(Math.random() * lordiconURLs.length);
-  
-    // Get the lord-icon element by its id
-    var lordiconElement = document.getElementById("randomIcon");
-  
-    // Set the src attribute of the lord-icon element to the randomly selected Lordicon URL
-    lordiconElement.setAttribute("src", lordiconURLs[randomIndex]);
-  });

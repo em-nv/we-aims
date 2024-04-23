@@ -10470,6 +10470,7 @@ a:focus {
     p{
       font-size: 20px;
     }
+
   }
 
 
@@ -11617,3 +11618,8 @@ body.sidebar-toggled footer.sticky-footer {
   background-color: var(--body-color) !important;
 }
 
+
+
+.date-now, .time-nnow{
+  caret-color: red;
+}
