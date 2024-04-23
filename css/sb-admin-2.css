@@ -10455,7 +10455,13 @@ a:focus {
 
 
 @media screen and (max-width: 576px) {
+  
+}
 
+@media screen and (max-width: 724px) {
+  .date-now{
+    display: none !important;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -11620,6 +11626,6 @@ body.sidebar-toggled footer.sticky-footer {
 
 
 
-.date-now, .time-nnow{
-  caret-color: red;
+.date-now{
+  font-weight: bold;
 }
