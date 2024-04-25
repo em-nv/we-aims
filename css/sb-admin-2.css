@@ -11628,3 +11628,28 @@ body.sidebar-toggled footer.sticky-footer {
 .date-now{
   font-weight: bold;
 }
+
+
+.product-edit-column, .product-trash-column{
+  text-align: center;
+  width: 100px;
+}
+
+
+.table-header, .table-footer{
+  background-color: lightblue;
+  color: black;
+  text-decoration: none;
+}
+
+.product-edit-column a,
+    .product-trash-column a {
+        text-decoration: none; /* Remove underline from anchor tags */
+        color: #333; /* Set icon color */
+    }
+
+    .product-edit-column a:hover,
+    .product-trash-column a:hover {
+        color: #007bff; /* Change icon color on hover */
+    }
+
