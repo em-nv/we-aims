@@ -10458,7 +10458,7 @@ a:focus {
   
 }
 
-@media screen and (max-width: 724px) {
+@media screen and (max-width: 1055px) {
   .date-now{
     display: none !important;
   }
@@ -10478,7 +10478,6 @@ a:focus {
     }
 
   }
-
 
   .car {
     width: 50%;
