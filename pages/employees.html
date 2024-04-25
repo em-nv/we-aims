@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Blank</title>
+    <title>Employees</title>
 
     <!-- Custom fonts for this template-->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -39,7 +39,7 @@
         <ul class="nav-background navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../index.html">
                 <div class="sidebar-brand-icon">
                     <img src="../img/logo/logo.png" class="logo">
                 </div>
@@ -51,7 +51,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="../index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -66,49 +66,49 @@
 
             <!-- Nav Item - CUSTOMERS -->
             <li class="nav-item">
-                <a class="nav-link" href="pages/customers.html">
+                <a class="nav-link" href="../pages/customers.html">
                     <i class="fas fa-fw fa-solid fa-users"></i>
                     <span>Customers</span></a>
             </li>
 
             <!-- Nav Item - SUPPLIERS -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="../pages/suppliers/html">
                     <i class="fas fa-fw fa-solid fa-truck-field"></i>
                     <span>Suppliers</span></a>
             </li>
 
             <!-- Nav Item - EMPLOYEES -->
             <li class="nav-item active">
-                <a class="nav-link" href="pages/employees.html">
+                <a class="nav-link" href="../pages/employees.html">
                     <i class="fas fa-fw fa-solid fa-building-user"></i>
                     <span>Employees</span></a>
             </li>
 
             <!-- Nav Item - PRODUCTS -->
             <li class="nav-item">
-                <a class="nav-link" href="pages/products.html">
+                <a class="nav-link" href="../pages/products.html">
                     <i class="fas fa-fw fa-solid fa-dolly"></i>
                     <span>Products</span></a>
             </li>
 
             <!-- Nav Item - SERVICES -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="../pages/services.html">
                     <i class="fas fa-fw fa-solid fa-screwdriver-wrench"></i>
                     <span>Services</span></a>
             </li>
 
             <!-- Nav Item - REPORTS -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="../pages/reports.html">
                     <i class="fas fa-fw fa-solid fa-chart-line"></i>
                     <span>Reports</span></a>
             </li>
 
             <!-- Nav Item - SALES -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="../pages/sales.html">
                     <i class="fas fa-fw fa-solid fa-dollar-sign"></i>
                     <span>Sales</span></a>
             </li>
@@ -128,13 +128,6 @@
                         <a class="collapse-item" href="cards.html">Supplier</a>
                     </div>
                 </div>
-            </li>
-
-            <!-- Nav Item - TRY -->
-            <li class="nav-item">
-                <a class="nav-link" href="pages/trytry.html">
-                    <i class="fas fa-fw fa-solid fa-dollar-sign"></i>
-                    <span>Try</span></a>
             </li>
 
 
@@ -412,6 +405,10 @@
                             <h6 class="m-0 font-weight-bold text-primary"></h6>
                         </div> -->
                         <div class="card-body">
+                            <div class="employee-add-button">
+                                <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" ><i
+                                    class="fas fa-solid fa-plus fa-sm text-white-50"></i> Add</a>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead class="table-header">
@@ -436,8 +433,8 @@
                                     </tfoot>
                                     <tbody>
                                         <tr>
-                                            <td class="product-edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
-                                            <td class="product-trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
+                                            <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
+                                            <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
 
                                             <td>Item</td>
                                             <td>61</td>
@@ -445,8 +442,8 @@
                                             <td>$320,800</td>
                                         </tr>
                                         <tr>
-                                            <td class="product-edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
-                                            <td class="product-trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
+                                            <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
+                                            <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
 
                                             <td>Item</td>
                                             <td>61</td>
@@ -454,8 +451,8 @@
                                             <td>$320,800</td>
                                         </tr>
                                         <tr>
-                                            <td class="product-edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
-                                            <td class="product-trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
+                                            <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
+                                            <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
 
                                             <td>Item</td>
                                             <td>61</td>
@@ -507,7 +504,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true"></span>
                     </button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -518,6 +515,19 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+
+    <!-- CUSTOMIZED JS -->
+    <script src="../js/customized.js"></script>
+    <script src="../js/date-and-time.js"></script>
+
+
+
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="../vendor/jquery/jquery.min.js"></script>
