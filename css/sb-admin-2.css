@@ -11656,3 +11656,18 @@ body.sidebar-toggled footer.sticky-footer {
 .employee-add-button{
   margin-bottom: 10px !important;
 }
+
+.products-filter{
+
+}
+
+.products-filter.active{
+  color: black !important;
+  font-weight: bold;
+  border-bottom: 2px solid black;
+  border-radius: 0 !important;
+}
+.products-filter:hover{
+  font-weight: bold;
+  color: black !important;
+}
