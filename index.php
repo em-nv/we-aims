@@ -146,7 +146,7 @@
 
             <!-- Nav Item - LOGOUT -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.php">
+                <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-solid fa-dollar-sign"></i>
                     <span>Logout</span></a>
             </li>
@@ -217,7 +217,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.php">
+                <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Tables</span></a>
             </li>

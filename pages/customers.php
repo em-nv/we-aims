@@ -461,8 +461,8 @@
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3" style="display: flex; justify-content: space-between">
-                            <!-- <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6> -->
+                        <div class="card-header py-3" style="display: flex; justify-content: space-between; background-color: transparent !important;">
+                            <h6 class="m-0 font-weight-bold text-primary"> </h6>
                             <div class="add-button">
                                 <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" ><i
                                     class="fas fa-solid fa-plus fa-sm text-white-50"></i> Add</a>
@@ -493,7 +493,7 @@
                                     </tfoot>
                                     <tbody>
                                         <tr>
-                                            <td>Tiger Nixon</td>
+                                            <td>A Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td>61</td>
@@ -501,15 +501,15 @@
                                             <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
                                         </tr>
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
+                                            <td>B Nixon</td>
+                                            <td>System FEFG</td>
                                             <td>Edinburgh</td>
                                             <td>61</td>
                                             <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
                                             <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
                                         </tr>
                                         <tr>
-                                            <td>Tiger Nixon</td>
+                                            <td>E Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td>61</td>

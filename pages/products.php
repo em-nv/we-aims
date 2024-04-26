@@ -11,16 +11,17 @@
 
     <title>Products</title>
 
-    <!-- Custom fonts for this template-->
+    <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-
-
-    <!-- Custom styles for this template-->
+    <!-- Custom styles for this template -->
     <link href="../css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     <!-- FONT AWESOME ICONS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
@@ -73,7 +74,7 @@
 
             <!-- Nav Item - SUPPLIERS -->
             <li class="nav-item">
-                <a class="nav-link" href="../pages/suppliers/html">
+                <a class="nav-link" href="../pages/suppliers.php">
                     <i class="fas fa-fw fa-solid fa-truck-field"></i>
                     <span>Suppliers</span></a>
             </li>
@@ -141,7 +142,7 @@
 
             <!-- Nav Item - LOGOUT -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="tables.php">
                     <i class="fas fa-fw fa-solid fa-dollar-sign"></i>
                     <span>Logout</span></a>
             </li>
@@ -161,8 +162,8 @@
                         <a class="collapse-item" href="forgot-password.php">Forgot Password</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                        <a class="collapse-item" href="404.php">404 Page</a>
+                        <a class="collapse-item" href="blank.php">Blank Page</a>
                     </div>
                 </div>
             </li>
@@ -177,8 +178,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
+                        <a class="collapse-item" href="buttons.php">Buttons</a>
+                        <a class="collapse-item" href="cards.php">Cards</a>
                     </div>
                 </div>
             </li>
@@ -246,9 +247,11 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
+                    <form class="form-inline">
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    </form>
 
                     <!-- Topbar Search -->
                     <form
@@ -265,15 +268,6 @@
                     </form>
 
                     <!-- Topbar Navbar -->
-                    <div class="date-and-time">
-                        <span id="date_now" class="date-now">
-                            <!-- JavaScript will update this -->
-                        </span>
-                        <span id="current-time" class="time-now">
-                            <!-- JavaScript will update this -->
-                        </span>
-                    </div>
-
                     <ul class="navbar-nav ml-auto">
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -351,6 +345,72 @@
                             </div>
                         </li>
 
+                        <!-- Nav Item - Messages -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <!-- Counter - Messages -->
+                                <span class="badge badge-danger badge-counter">7</span>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="messagesDropdown">
+                                <h6 class="dropdown-header">
+                                    Message Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                                            alt="...">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div class="font-weight-bold">
+                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
+                                            problem I've been having.</div>
+                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                            alt="...">
+                                        <div class="status-indicator"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">I have the photos that you ordered last month, how
+                                            would you like them sent to you?</div>
+                                        <div class="small text-gray-500">Jae Chun · 1d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                            alt="...">
+                                        <div class="status-indicator bg-warning"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">Last month's report looks great, I am very happy with
+                                            the progress so far, keep up the good work!</div>
+                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+                                            alt="...">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
+                                            told me that people say this to all dogs, even if they aren't good...</div>
+                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                            </div>
+                        </li>
+
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -401,69 +461,61 @@
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-                        <!-- <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary"></h6>
-                        </div> -->
-                        <div class="card-body">
-                            <div style="display: flex; justify-content: space-between;">
-                                <div class="products-filter-button">
-                                    <a href="products.php" class="d-sm-inline-block btn products-filter active">All</a>
-                                    <a href="products-near-expiry.php" class="d-sm-inline-block btn products-filter">Near Expiry</a>
-                                </div>
-                                <div>
-                                    <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-solid fa-plus fa-sm text-white-50"></i> Add Item</a>
-                                </div>
+                        <div class="card-header py-3" style="display: flex; justify-content: space-between; background-color: transparent !important;">
+                            <h6 class="m-0 font-weight-bold text-primary"> </h6>
+                            <div class="add-button">
+                                <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" ><i
+                                    class="fas fa-solid fa-plus fa-sm text-white-50"></i> Add</a>
                             </div>
-                            
+                        </div>
+                        <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead class="table-header">
+                                    <thead>
                                         <tr>
+                                            <th>Name</th>
+                                            <th>Position</th>
+                                            <th>Office</th>
+                                            <th>Age</th>
                                             <th></th>
                                             <th></th>
-                                            <th>Product</th>
-                                            <th>Items</th>
-                                            <th>Price</th>
                                         </tr>
                                     </thead>
-                                    <tfoot class="table-footer">
+                                    <tfoot>
                                         <tr>
+                                            <th>Name</th>
+                                            <th>Position</th>
+                                            <th>Office</th>
+                                            <th>Age</th>
                                             <th></th>
                                             <th></th>
-                                            <th>Product</th>
-                                            <th>Items</th>
-                                            <th>Price</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <tr>
+                                            <td>A Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
                                             <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
                                             <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                                            <td>Item name</td>
-                                            <td>61</td>
-                                            <td>Php 30.00</td>
                                         </tr>
                                         <tr>
+                                            <td>B Nixon</td>
+                                            <td>System Mechanic</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
                                             <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
                                             <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                                            <td>Item name</td>
-                                            <td>61</td>
-                                            <td>Php 30.00</td>
                                         </tr>
-    
                                         <tr>
+                                            <td>E Nixon</td>
+                                            <td>System Analyst</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
                                             <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
                                             <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                                            <td>Item name</td>
-                                            <td>61</td>
-                                            <td>Php 30.00</td>
                                         </tr>
-    
-    
-
-                                        
-
-                                
                                     </tbody>
                                 </table>
                             </div>
@@ -480,7 +532,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>Copyright &copy; Your Website 2020</span>
                     </div>
                 </div>
             </footer>
@@ -517,19 +569,6 @@
         </div>
     </div>
 
-
-
-
-
-
-    <!-- CUSTOMIZED JS -->
-    <script src="../js/customized.js"></script>
-    <script src="../js/date-and-time.js"></script>
-
-
-
-
-
     <!-- Bootstrap core JavaScript-->
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -539,6 +578,13 @@
 
     <!-- Custom scripts for all pages-->
     <script src="../js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="../js/demo/datatables-demo.js"></script>
 
 </body>
 
