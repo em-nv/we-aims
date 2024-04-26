@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Suppliers</title>
+    <title>Customers</title>
 
     <!-- Custom fonts for this template-->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -39,7 +39,7 @@
         <ul class="nav-background navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../index.php">
                 <div class="sidebar-brand-icon">
                     <img src="../img/logo/logo.png" class="logo">
                 </div>
@@ -51,7 +51,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="../index.html">
+                <a class="nav-link" href="../index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -65,50 +65,50 @@
             </div>
 
             <!-- Nav Item - CUSTOMERS -->
-            <li class="nav-item">
-                <a class="nav-link" href="../pages/customers.html">
+            <li class="nav-item active">
+                <a class="nav-link" href="../pages/customers.php">
                     <i class="fas fa-fw fa-solid fa-users"></i>
                     <span>Customers</span></a>
             </li>
 
             <!-- Nav Item - SUPPLIERS -->
-            <li class="nav-item active">
-                <a class="nav-link" href="../pages/suppliers/html">
+            <li class="nav-item">
+                <a class="nav-link" href="../pages/suppliers.php">
                     <i class="fas fa-fw fa-solid fa-truck-field"></i>
                     <span>Suppliers</span></a>
             </li>
 
             <!-- Nav Item - EMPLOYEES -->
             <li class="nav-item">
-                <a class="nav-link" href="../pages/employees.html">
+                <a class="nav-link" href="../pages/employees.php">
                     <i class="fas fa-fw fa-solid fa-building-user"></i>
                     <span>Employees</span></a>
             </li>
 
             <!-- Nav Item - PRODUCTS -->
             <li class="nav-item">
-                <a class="nav-link" href="../pages/products.html">
+                <a class="nav-link" href="../pages/products.php">
                     <i class="fas fa-fw fa-solid fa-dolly"></i>
                     <span>Products</span></a>
             </li>
 
             <!-- Nav Item - SERVICES -->
             <li class="nav-item">
-                <a class="nav-link" href="../pages/services.html">
+                <a class="nav-link" href="../pages/services.php">
                     <i class="fas fa-fw fa-solid fa-screwdriver-wrench"></i>
                     <span>Services</span></a>
             </li>
 
             <!-- Nav Item - REPORTS -->
             <li class="nav-item">
-                <a class="nav-link" href="../pages/reports.html">
+                <a class="nav-link" href="../pages/reports.php">
                     <i class="fas fa-fw fa-solid fa-chart-line"></i>
                     <span>Reports</span></a>
             </li>
 
             <!-- Nav Item - SALES -->
             <li class="nav-item">
-                <a class="nav-link" href="../pages/sales.html">
+                <a class="nav-link" href="../pages/sales.php">
                     <i class="fas fa-fw fa-solid fa-dollar-sign"></i>
                     <span>Sales</span></a>
             </li>
@@ -123,9 +123,9 @@
                 <div id="collapseTransactions" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="buttons.html">Transaction Customer</a>
-                        <a class="collapse-item" href="cards.html">Products</a>
-                        <a class="collapse-item" href="cards.html">Supplier</a>
+                        <a class="collapse-item" href="buttons.php">Transaction Customer</a>
+                        <a class="collapse-item" href="cards.php">Products</a>
+                        <a class="collapse-item" href="cards.php">Supplier</a>
                     </div>
                 </div>
             </li>
@@ -141,7 +141,7 @@
 
             <!-- Nav Item - LOGOUT -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="tables.php">
                     <i class="fas fa-fw fa-solid fa-dollar-sign"></i>
                     <span>Logout</span></a>
             </li>
@@ -156,9 +156,9 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="pages/login.html">Login</a>
-                        <a class="collapse-item" href="pages/register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                        <a class="collapse-item" href="pages/login.php">Login</a>
+                        <a class="collapse-item" href="pages/register.php">Register</a>
+                        <a class="collapse-item" href="forgot-password.php">Forgot Password</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
                         <a class="collapse-item" href="404.html">404 Page</a>
@@ -394,7 +394,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Suppliers</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Customers</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>

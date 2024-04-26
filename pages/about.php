@@ -75,12 +75,12 @@
                         <li class='logo'><a href='#'><img src='../img/logo/logo.png'><span class="top-bar-text">We-AIMS - WILLEM'S AUTOMOTIVE INVANTORY MANAGEMENT SYSTEM</span></a></li>
                         <input type='checkbox' id='check' />
                         <span class="menu">
-                            <li><a href="home.html">Home</a></li>
-                            <li class="shade"><a href="about.html" class="active">About</a></li>
+                            <li><a href="home.php">Home</a></li>
+                            <li class="shade"><a href="about.php" class="active">About</a></li>
                             <li><a href="">Features</a></li>
                             <li><a href="">Contact</a></li>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Sign Up</a></li>
+                            <li><a href="login.php">Login</a></li>
+                            <li><a href="register.php">Sign Up</a></li>
                             <label for="check" class="close-menu"><i class="fas fa-times"></i></label>
                         </span>
                         <label for="check" class="open-menu"><i class="fas fa-bars"></i></label>
@@ -133,7 +133,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="login.php">Logout</a>
                 </div>
             </div>
         </div>

@@ -59,12 +59,12 @@
                         <li class='logo'><a href='#'><img src='../img/logo/logo.png'><span class="top-bar-text">We-AIMS - WILLEM'S AUTOMOTIVE INVANTORY MANAGEMENT SYSTEM</span></a></li>
                         <input type='checkbox' id='check' />
                         <span class="menu">
-                            <li class="shade"><a href="home.html" class="active">Home</a></li>
-                            <li><a href="about.html">About</a></li>
+                            <li class="shade"><a href="home.php" class="active">Home</a></li>
+                            <li><a href="about.php">About</a></li>
                             <li><a href="">Features</a></li>
                             <li><a href="">Contact</a></li>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Sign Up</a></li>
+                            <li><a href="login.php">Login</a></li>
+                            <li><a href="register.php">Sign Up</a></li>
                             <label for="check" class="close-menu"><i class="fas fa-times"></i></label>
                         </span>
                         <label for="check" class="open-menu"><i class="fas fa-bars"></i></label>
@@ -80,7 +80,7 @@
                     <p> “Willem's Wheels, Sorted Deals: Aims your Growth as Success Reveals!”</p>
                     <div class="home-content-button">
                         <img src="../img/red-car2.png" class="car">
-                        <a class="button-link" href="login.html">
+                        <a class="button-link" href="login.php">
                             <i style="font-size: 20px;" class="fa-solid fa-angles-right"></i>
                         </a>
                     </div>
@@ -114,7 +114,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="login.php">Logout</a>
                 </div>
             </div>
         </div>

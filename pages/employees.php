@@ -39,7 +39,7 @@
         <ul class="nav-background navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../index.php">
                 <div class="sidebar-brand-icon">
                     <img src="../img/logo/logo.png" class="logo">
                 </div>
@@ -51,7 +51,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="../index.html">
+                <a class="nav-link" href="../index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -66,49 +66,49 @@
 
             <!-- Nav Item - CUSTOMERS -->
             <li class="nav-item">
-                <a class="nav-link" href="../pages/customers.html">
+                <a class="nav-link" href="../pages/customers.php">
                     <i class="fas fa-fw fa-solid fa-users"></i>
                     <span>Customers</span></a>
             </li>
 
             <!-- Nav Item - SUPPLIERS -->
             <li class="nav-item">
-                <a class="nav-link" href="../pages/suppliers.html">
+                <a class="nav-link" href="../pages/suppliers.php">
                     <i class="fas fa-fw fa-solid fa-truck-field"></i>
                     <span>Suppliers</span></a>
             </li>
 
             <!-- Nav Item - EMPLOYEES -->
             <li class="nav-item active">
-                <a class="nav-link" href="../pages/employees.html">
+                <a class="nav-link" href="../pages/employees.php">
                     <i class="fas fa-fw fa-solid fa-building-user"></i>
                     <span>Employees</span></a>
             </li>
 
             <!-- Nav Item - PRODUCTS -->
             <li class="nav-item">
-                <a class="nav-link" href="../pages/products.html">
+                <a class="nav-link" href="../pages/products.php">
                     <i class="fas fa-fw fa-solid fa-dolly"></i>
                     <span>Products</span></a>
             </li>
 
             <!-- Nav Item - SERVICES -->
             <li class="nav-item">
-                <a class="nav-link" href="../pages/services.html">
+                <a class="nav-link" href="../pages/services.php">
                     <i class="fas fa-fw fa-solid fa-screwdriver-wrench"></i>
                     <span>Services</span></a>
             </li>
 
             <!-- Nav Item - REPORTS -->
             <li class="nav-item">
-                <a class="nav-link" href="../pages/reports.html">
+                <a class="nav-link" href="../pages/reports.php">
                     <i class="fas fa-fw fa-solid fa-chart-line"></i>
                     <span>Reports</span></a>
             </li>
 
             <!-- Nav Item - SALES -->
             <li class="nav-item">
-                <a class="nav-link" href="../pages/sales.html">
+                <a class="nav-link" href="../pages/sales.php">
                     <i class="fas fa-fw fa-solid fa-dollar-sign"></i>
                     <span>Sales</span></a>
             </li>
@@ -123,9 +123,9 @@
                 <div id="collapseTransactions" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="buttons.html">Transaction Customer</a>
-                        <a class="collapse-item" href="cards.html">Products</a>
-                        <a class="collapse-item" href="cards.html">Supplier</a>
+                        <a class="collapse-item" href="buttons.php">Transaction Customer</a>
+                        <a class="collapse-item" href="cards.php">Products</a>
+                        <a class="collapse-item" href="cards.php">Supplier</a>
                     </div>
                 </div>
             </li>
@@ -141,7 +141,7 @@
 
             <!-- Nav Item - LOGOUT -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="tables.php">
                     <i class="fas fa-fw fa-solid fa-dollar-sign"></i>
                     <span>Logout</span></a>
             </li>
@@ -156,13 +156,13 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="pages/login.html">Login</a>
-                        <a class="collapse-item" href="pages/register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                        <a class="collapse-item" href="pages/login.php">Login</a>
+                        <a class="collapse-item" href="pages/register.php">Register</a>
+                        <a class="collapse-item" href="forgot-password.php">Forgot Password</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                        <a class="collapse-item" href="404.php">404 Page</a>
+                        <a class="collapse-item" href="blank.php">Blank Page</a>
                     </div>
                 </div>
             </li>
@@ -177,8 +177,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
+                        <a class="collapse-item" href="buttons.php">Buttons</a>
+                        <a class="collapse-item" href="cards.php">Cards</a>
                     </div>
                 </div>
             </li>
@@ -194,10 +194,10 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                        <a class="collapse-item" href="utilities-color.php">Colors</a>
+                        <a class="collapse-item" href="utilities-border.php">Borders</a>
+                        <a class="collapse-item" href="utilities-animation.php">Animations</a>
+                        <a class="collapse-item" href="utilities-other.php">Other</a>
                     </div>
                 </div>
             </li>
@@ -510,7 +510,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="login.php">Logout</a>
                 </div>
             </div>
         </div>

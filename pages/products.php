@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Services</title>
+    <title>Products</title>
 
     <!-- Custom fonts for this template-->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -39,7 +39,7 @@
         <ul class="nav-background navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../index.php">
                 <div class="sidebar-brand-icon">
                     <img src="../img/logo/logo.png" class="logo">
                 </div>
@@ -51,7 +51,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="../index.html">
+                <a class="nav-link" href="../index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -66,49 +66,49 @@
 
             <!-- Nav Item - CUSTOMERS -->
             <li class="nav-item">
-                <a class="nav-link" href="../pages/customers.html">
+                <a class="nav-link" href="../pages/customers.php">
                     <i class="fas fa-fw fa-solid fa-users"></i>
                     <span>Customers</span></a>
             </li>
 
             <!-- Nav Item - SUPPLIERS -->
             <li class="nav-item">
-                <a class="nav-link" href="../pages/suppliers.html">
+                <a class="nav-link" href="../pages/suppliers/html">
                     <i class="fas fa-fw fa-solid fa-truck-field"></i>
                     <span>Suppliers</span></a>
             </li>
 
             <!-- Nav Item - EMPLOYEES -->
             <li class="nav-item">
-                <a class="nav-link" href="../pages/employees.html">
+                <a class="nav-link" href="../pages/employees.php">
                     <i class="fas fa-fw fa-solid fa-building-user"></i>
                     <span>Employees</span></a>
             </li>
 
             <!-- Nav Item - PRODUCTS -->
-            <li class="nav-item">
-                <a class="nav-link" href="../pages/products.html">
+            <li class="nav-item active">
+                <a class="nav-link" href="../pages/products.php">
                     <i class="fas fa-fw fa-solid fa-dolly"></i>
                     <span>Products</span></a>
             </li>
 
             <!-- Nav Item - SERVICES -->
-            <li class="nav-item active">
-                <a class="nav-link" href="../pages/services.html">
+            <li class="nav-item">
+                <a class="nav-link" href="../pages/services.php">
                     <i class="fas fa-fw fa-solid fa-screwdriver-wrench"></i>
                     <span>Services</span></a>
             </li>
 
             <!-- Nav Item - REPORTS -->
             <li class="nav-item">
-                <a class="nav-link" href="../pages/reports.html">
+                <a class="nav-link" href="../pages/reports.php">
                     <i class="fas fa-fw fa-solid fa-chart-line"></i>
                     <span>Reports</span></a>
             </li>
 
             <!-- Nav Item - SALES -->
             <li class="nav-item">
-                <a class="nav-link" href="../pages/sales.html">
+                <a class="nav-link" href="../pages/sales.php">
                     <i class="fas fa-fw fa-solid fa-dollar-sign"></i>
                     <span>Sales</span></a>
             </li>
@@ -123,9 +123,9 @@
                 <div id="collapseTransactions" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="buttons.html">Transaction Customer</a>
-                        <a class="collapse-item" href="cards.html">Products</a>
-                        <a class="collapse-item" href="cards.html">Supplier</a>
+                        <a class="collapse-item" href="buttons.php">Transaction Customer</a>
+                        <a class="collapse-item" href="cards.php">Products</a>
+                        <a class="collapse-item" href="cards.php">Supplier</a>
                     </div>
                 </div>
             </li>
@@ -156,9 +156,9 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="pages/login.html">Login</a>
-                        <a class="collapse-item" href="pages/register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                        <a class="collapse-item" href="pages/login.php">Login</a>
+                        <a class="collapse-item" href="pages/register.php">Register</a>
+                        <a class="collapse-item" href="forgot-password.php">Forgot Password</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
                         <a class="collapse-item" href="404.html">404 Page</a>
@@ -394,7 +394,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Services</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Products</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
@@ -405,60 +405,61 @@
                             <h6 class="m-0 font-weight-bold text-primary"></h6>
                         </div> -->
                         <div class="card-body">
-                            <div class="add-button">
-                                <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" ><i
-                                    class="fas fa-solid fa-plus fa-sm text-white-50"></i> Add</a>
+                            <div style="display: flex; justify-content: space-between;">
+                                <div class="products-filter-button">
+                                    <a href="products.php" class="d-sm-inline-block btn products-filter active">All</a>
+                                    <a href="products-near-expiry.php" class="d-sm-inline-block btn products-filter">Near Expiry</a>
+                                </div>
+                                <div>
+                                    <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-solid fa-plus fa-sm text-white-50"></i> Add Item</a>
+                                </div>
                             </div>
+                            
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead class="table-header">
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th>Name</th>
-                                            <th>Gender</th>
-                                            <th>Email</th>
-                                            <th>Age</th>
+                                            <th>Product</th>
+                                            <th>Items</th>
+                                            <th>Price</th>
                                         </tr>
                                     </thead>
                                     <tfoot class="table-footer">
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th>Name</th>
-                                            <th>Gender</th>
-                                            <th>Email</th>
-                                            <th>Age</th>
+                                            <th>Product</th>
+                                            <th>Items</th>
+                                            <th>Price</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <tr>
                                             <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
                                             <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-
-                                            <td>Item</td>
+                                            <td>Item name</td>
                                             <td>61</td>
-                                            <td>$320,800</td>
-                                            <td>$320,800</td>
+                                            <td>Php 30.00</td>
                                         </tr>
                                         <tr>
                                             <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
                                             <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-
-                                            <td>Item</td>
+                                            <td>Item name</td>
                                             <td>61</td>
-                                            <td>$320,800</td>
-                                            <td>$320,800</td>
+                                            <td>Php 30.00</td>
                                         </tr>
+    
                                         <tr>
                                             <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
                                             <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-
-                                            <td>Item</td>
+                                            <td>Item name</td>
                                             <td>61</td>
-                                            <td>$320,800</td>
-                                            <td>$320,800</td>
+                                            <td>Php 30.00</td>
                                         </tr>
+    
+    
 
                                         
 
@@ -510,7 +511,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="login.php">Logout</a>
                 </div>
             </div>
         </div>
