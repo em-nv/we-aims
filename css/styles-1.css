@@ -97,8 +97,8 @@ body {
         background-color: var(--color2);
         transition: all 0.2s ease-in-out;
     }
-    .menu li {margin-top: 40px;}
-    .menu li a {padding: 10px;}
+    .menu li {margin-top: 5px;}
+    .menu li a {padding: 5px;}
     .open-menu , .close-menu {display: block;}
     #check:checked ~ .menu {right: 0;}
 
