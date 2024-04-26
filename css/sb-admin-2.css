@@ -11653,7 +11653,12 @@ body.sidebar-toggled footer.sticky-footer {
         color: #007bff; /* Change icon color on hover */
     }
 
-.employee-add-button{
+.add-button{
+  margin-bottom: 10px !important;
+  display: flex;
+  justify-content: flex-end; /* Aligns items to the right */
+}
+.products-filter-button{
   margin-bottom: 10px !important;
 }
 

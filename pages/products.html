@@ -405,12 +405,16 @@
                             <h6 class="m-0 font-weight-bold text-primary"></h6>
                         </div> -->
                         <div class="card-body">
-                            <div class="employee-add-button">
-                                <a href="products.html" class="d-sm-inline-block btn products-filter active" >
-                                    All</a>
-                                <a href="products-near-expiry.html" class="d-sm-inline-block btn products-filter" >
-                                    Near Expiry</a>
+                            <div style="display: flex; justify-content: space-between;">
+                                <div class="products-filter-button">
+                                    <a href="products.html" class="d-sm-inline-block btn products-filter active">All</a>
+                                    <a href="products-near-expiry.html" class="d-sm-inline-block btn products-filter">Near Expiry</a>
+                                </div>
+                                <div>
+                                    <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-solid fa-plus fa-sm text-white-50"></i> Add Item</a>
+                                </div>
                             </div>
+                            
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead class="table-header">
