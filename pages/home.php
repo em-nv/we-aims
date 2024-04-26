@@ -27,8 +27,7 @@
      <!-- LORDICONS -->
      <script src="https://cdn.lordicon.com/lordicon.js"></script>
 
-    <!-- CUSTOMIZED JS -->
-    <script src="js/customized.js"></script>
+    
 
     <style>
         body{
@@ -130,6 +129,9 @@
     <!-- Custom scripts for all pages-->
     <script src="../js/sb-admin-2.js"></script>
 
+
+    <!-- CUSTOMIZED JS -->
+    <script src="../js/customized.js"></script>
 </body>
 
 </html>

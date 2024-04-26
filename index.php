@@ -151,6 +151,13 @@
                     <span>Logout</span></a>
             </li>
 
+            <!-- Nav Item - LOGOUT -->
+            <li class="nav-item">
+                <a class="nav-link" href="pages/home.php">
+                    <i class="fas fa-fw fa-solid fa-dollar-sign"></i>
+                    <span>About</span></a>
+            </li>
+
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
@@ -166,8 +173,8 @@
                         <a class="collapse-item" href="forgot-password.php">Forgot Password</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.php">404 Page</a>
-                        <a class="collapse-item" href="blank.php">Blank Page</a>
+                        <a class="collapse-item" href="404.html">404 Page</a>
+                        <a class="collapse-item" href="blank.html">Blank Page</a>
                     </div>
                 </div>
             </li>

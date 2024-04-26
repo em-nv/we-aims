@@ -10477,10 +10477,6 @@ a:focus {
       font-size: 20px;
     }
 
-  }
-
-  .car {
-    width: 50%;
 
   }
 
@@ -11655,15 +11651,12 @@ body.sidebar-toggled footer.sticky-footer {
 
 .add-button{
   display: flex;
-  justify-content: flex-end; /* Aligns items to the right */
-  
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ensure the div takes up the full height */
 }
 .products-filter-button{
-  margin-bottom: 10px !important;
-}
-
-.products-filter{
-
+  margin-bottom: none;
 }
 
 .products-filter.active{
