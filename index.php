@@ -229,6 +229,13 @@
                     <span>Tables</span></a>
             </li>
 
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="pages/404.php">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>404 Page</span></a>
+            </li>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
