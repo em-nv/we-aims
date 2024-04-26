@@ -31,7 +31,7 @@ body {
 }
 .logo img {width: 10%;} 
 .menu {display: flex;}
-.menu li {padding-left: 30px;}
+.menu li {padding: 18px 15px;}
 .menu li a {
     display: inline-block;
     text-decoration: none;
@@ -42,12 +42,15 @@ body {
     text-transform: uppercase;
     padding: 10px;
 }
-.menu li a:hover{
+.menu li:hover{
     background-color: #85171F;
 }
 .menu li a.active{
-    background-color: #85171F;
+    /* background-color: #85171F; */
     border-bottom: 2px solid white;
+}
+.menu li.shade{
+    background-color: #85171F;
 }
 .menu li a::after {
     content: "";
