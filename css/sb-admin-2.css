@@ -11654,9 +11654,9 @@ body.sidebar-toggled footer.sticky-footer {
     }
 
 .add-button{
-  margin-bottom: 10px !important;
   display: flex;
   justify-content: flex-end; /* Aligns items to the right */
+  
 }
 .products-filter-button{
   margin-bottom: 10px !important;

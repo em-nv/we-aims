@@ -11,17 +11,16 @@
 
     <title>Customers</title>
 
-    <!-- Custom fonts for this template -->
+    <!-- Custom fonts for this template-->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="../css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Custom styles for this page -->
-    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="../css/sb-admin-2.css" rel="stylesheet">
 
     <!-- FONT AWESOME ICONS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
@@ -247,11 +246,9 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
-                    <form class="form-inline">
-                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                            <i class="fa fa-bars"></i>
-                        </button>
-                    </form>
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
 
                     <!-- Topbar Search -->
                     <form
@@ -268,6 +265,15 @@
                     </form>
 
                     <!-- Topbar Navbar -->
+                    <div class="date-and-time">
+                        <span id="date_now" class="date-now">
+                            <!-- JavaScript will update this -->
+                        </span>
+                        <span id="current-time" class="time-now">
+                            <!-- JavaScript will update this -->
+                        </span>
+                    </div>
+
                     <ul class="navbar-nav ml-auto">
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -345,72 +351,6 @@
                             </div>
                         </li>
 
-                        <!-- Nav Item - Messages -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">7</span>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
-                                    Message Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div class="font-weight-bold">
-                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                            problem I've been having.</div>
-                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="...">
-                                        <div class="status-indicator"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">I have the photos that you ordered last month, how
-                                            would you like them sent to you?</div>
-                                        <div class="small text-gray-500">Jae Chun · 1d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
-                                        <div class="status-indicator bg-warning"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Last month's report looks great, I am very happy with
-                                            the progress so far, keep up the good work!</div>
-                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                            told me that people say this to all dogs, even if they aren't good...</div>
-                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                            </div>
-                        </li>
-
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -461,61 +401,68 @@
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3" style="display: flex; justify-content: space-between">
-                            <!-- <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6> -->
+                        <!-- <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary"></h6>
+                        </div> -->
+                        <div class="card-body">
                             <div class="add-button">
                                 <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" ><i
                                     class="fas fa-solid fa-plus fa-sm text-white-50"></i> Add</a>
                             </div>
-                        </div>
-                        <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
+                                    <thead class="table-header">
                                         <tr>
+                                            <th></th>
+                                            <th></th>
                                             <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
+                                            <th>Gender</th>
+                                            <th>Email</th>
                                             <th>Age</th>
-                                            <th></th>
-                                            <th></th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
+                                    <tfoot class="table-footer">
                                         <tr>
+                                            <th></th>
+                                            <th></th>
                                             <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
+                                            <th>Gender</th>
+                                            <th>Email</th>
                                             <th>Age</th>
-                                            <th></th>
-                                            <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
                                             <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
                                             <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
+
+                                            <td>Item</td>
+                                            <td>61</td>
+                                            <td>$320,800</td>
+                                            <td>$320,800</td>
                                         </tr>
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
                                             <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
                                             <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
+
+                                            <td>Item</td>
+                                            <td>61</td>
+                                            <td>$320,800</td>
+                                            <td>$320,800</td>
                                         </tr>
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
                                             <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
                                             <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
+
+                                            <td>Item</td>
+                                            <td>61</td>
+                                            <td>$320,800</td>
+                                            <td>$320,800</td>
                                         </tr>
+
+                                        
+
+                                
                                     </tbody>
                                 </table>
                             </div>
@@ -532,7 +479,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; Your Website 2021</span>
                     </div>
                 </div>
             </footer>
@@ -569,6 +516,19 @@
         </div>
     </div>
 
+
+
+
+
+
+    <!-- CUSTOMIZED JS -->
+    <script src="../js/customized.js"></script>
+    <script src="../js/date-and-time.js"></script>
+
+
+
+
+
     <!-- Bootstrap core JavaScript-->
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -578,13 +538,6 @@
 
     <!-- Custom scripts for all pages-->
     <script src="../js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="../js/demo/datatables-demo.js"></script>
 
 </body>
 
