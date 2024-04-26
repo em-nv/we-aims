@@ -103,18 +103,11 @@
                     <span>Services</span></a>
             </li>
 
-            <!-- Nav Item - REPORTS -->
+            <!-- Nav Item - SALE REPORTS -->
             <li class="nav-item">
-                <a class="nav-link" href="pages/reports.php">
+                <a class="nav-link" href="pages/salesReport.php">
                     <i class="fas fa-fw fa-solid fa-chart-line"></i>
-                    <span>Reports</span></a>
-            </li>
-
-            <!-- Nav Item - SALES -->
-            <li class="nav-item">
-                <a class="nav-link" href="pages/sales.php">
-                    <i class="fas fa-fw fa-solid fa-dollar-sign"></i>
-                    <span>Sales</span></a>
+                    <span>Sales Report</span></a>
             </li>
 
             <!-- Nav Item - TRANSACTIONS Menu -->
