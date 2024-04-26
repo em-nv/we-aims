@@ -4518,7 +4518,7 @@ input[type="button"].btn-block {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #fff;
+  background-color: #FFFDF6;
   background-clip: border-box;
   border: 1px solid #e3e6f0;
   border-radius: 0.35rem;
@@ -6503,7 +6503,7 @@ button.bg-danger:focus {
 }
 
 .bg-light {
-  background-color: #f8f9fc !important;
+  background-color: #F5EFDE !important;
 }
 
 a.bg-light:hover, a.bg-light:focus,
@@ -6523,7 +6523,7 @@ button.bg-dark:focus {
 }
 
 .bg-white {
-  background-color: #fff !important;
+  background-color: #FFFDF6 !important;
 }
 
 /* HOMEPAGE TOP NAVIGATION BAR BCKGROUND COLOR */
