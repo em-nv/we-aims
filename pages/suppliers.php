@@ -124,6 +124,13 @@
                 </div>
             </li>
 
+            <!-- Nav Item - ADMIN -->
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php">
+                    <i class="fas fa-fw fa-solid fa-users"></i>
+                    <span>Admin</span></a>
+            </li>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider">

@@ -127,6 +127,13 @@
                 </div>
             </li>
 
+             <!-- Nav Item - ADMIN -->
+             <li class="nav-item">
+                <a class="nav-link" href="pages/admin.php">
+                    <i class="fas fa-fw fa-solid fa-users"></i>
+                    <span>Admin</span></a>
+            </li>
+
 
 
             <!-- Divider -->

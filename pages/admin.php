@@ -9,18 +9,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Customers</title>
+    <title>Admin Page</title>
 
-    <!-- Custom fonts for this template-->
+    <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-
-
-    <!-- Custom styles for this template-->
+    <!-- Custom styles for this template -->
     <link href="../css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     <!-- FONT AWESOME ICONS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
@@ -65,7 +66,7 @@
             </div>
 
             <!-- Nav Item - CUSTOMERS -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="../pages/customers.php">
                     <i class="fas fa-fw fa-solid fa-users"></i>
                     <span>Customers</span></a>
@@ -99,18 +100,11 @@
                     <span>Services</span></a>
             </li>
 
-            <!-- Nav Item - REPORTS -->
+            <!-- Nav Item - SALE REPORTS -->
             <li class="nav-item">
-                <a class="nav-link" href="../pages/reports.php">
+                <a class="nav-link" href="pages/salesReport.php">
                     <i class="fas fa-fw fa-solid fa-chart-line"></i>
-                    <span>Reports</span></a>
-            </li>
-
-            <!-- Nav Item - SALES -->
-            <li class="nav-item">
-                <a class="nav-link" href="../pages/sales.php">
-                    <i class="fas fa-fw fa-solid fa-dollar-sign"></i>
-                    <span>Sales</span></a>
+                    <span>Sales Report</span></a>
             </li>
 
             <!-- Nav Item - TRANSACTIONS Menu -->
@@ -128,6 +122,13 @@
                         <a class="collapse-item" href="cards.php">Supplier</a>
                     </div>
                 </div>
+            </li>
+
+            <!-- Nav Item - ADMIN -->
+            <li class="nav-item active">
+                <a class="nav-link" href="admin.php">
+                    <i class="fas fa-fw fa-solid fa-users"></i>
+                    <span>Admin</span></a>
             </li>
 
 
@@ -161,8 +162,8 @@
                         <a class="collapse-item" href="forgot-password.php">Forgot Password</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                        <a class="collapse-item" href="404.php">404 Page</a>
+                        <a class="collapse-item" href="blank.php">Blank Page</a>
                     </div>
                 </div>
             </li>
@@ -177,8 +178,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
+                        <a class="collapse-item" href="buttons.php">Buttons</a>
+                        <a class="collapse-item" href="cards.php">Cards</a>
                     </div>
                 </div>
             </li>
@@ -394,75 +395,68 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Customers</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Admin</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-                        <!-- <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary"></h6>
-                        </div> -->
-                        <div class="card-body">
+                        <div class="card-header py-3" style="display: flex; justify-content: space-between; background-color: transparent !important;">
+                            <h6 class="m-0 font-weight-bold text-primary"> </h6>
                             <div class="add-button">
                                 <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" ><i
                                     class="fas fa-solid fa-plus fa-sm text-white-50"></i> Add</a>
                             </div>
+                        </div>
+                        <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead class="table-header">
+                                    <thead>
                                         <tr>
-                                            <th></th>
-                                            <th></th>
                                             <th>Name</th>
-                                            <th>Gender</th>
-                                            <th>Email</th>
+                                            <th>Position</th>
+                                            <th>Office</th>
                                             <th>Age</th>
+                                            <th></th>
+                                            <th></th>
                                         </tr>
                                     </thead>
-                                    <tfoot class="table-footer">
+                                    <tfoot>
                                         <tr>
-                                            <th></th>
-                                            <th></th>
                                             <th>Name</th>
-                                            <th>Gender</th>
-                                            <th>Email</th>
+                                            <th>Position</th>
+                                            <th>Office</th>
                                             <th>Age</th>
+                                            <th></th>
+                                            <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <tr>
+                                            <td>A Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
                                             <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
                                             <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-
-                                            <td>Item</td>
-                                            <td>61</td>
-                                            <td>$320,800</td>
-                                            <td>$320,800</td>
                                         </tr>
                                         <tr>
+                                            <td>B Nixon</td>
+                                            <td>System FEFG</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
                                             <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
                                             <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-
-                                            <td>Item</td>
-                                            <td>61</td>
-                                            <td>$320,800</td>
-                                            <td>$320,800</td>
                                         </tr>
                                         <tr>
+                                            <td>E Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
                                             <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
                                             <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-
-                                            <td>Item</td>
-                                            <td>61</td>
-                                            <td>$320,800</td>
-                                            <td>$320,800</td>
                                         </tr>
-
-                                        
-
-                                
                                     </tbody>
                                 </table>
                             </div>
@@ -479,7 +473,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>Copyright &copy; Your Website 2020</span>
                     </div>
                 </div>
             </footer>
@@ -510,22 +504,16 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="login.php">Logout</a>
                 </div>
             </div>
         </div>
     </div>
 
 
-
-
-
-
     <!-- CUSTOMIZED JS -->
     <script src="../js/customized.js"></script>
     <script src="../js/date-and-time.js"></script>
-
-
 
 
 
@@ -538,6 +526,13 @@
 
     <!-- Custom scripts for all pages-->
     <script src="../js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="../js/demo/datatables-demo.js"></script>
 
 </body>
 
