@@ -2,11 +2,11 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Array containing URLs of images
     var images = [
-        "img/person.png",
-        "img/undraw_engineering_team_a7n2.svg",
-        "img/undraw_delivery_truck_vt6p.svg",
-        "img/undraw_electric_car_b-7-hl.svg",
-        "img/undraw_logistics_x-4-dc.svg"
+        "img/banner-images/person1.png",
+        "img/banner-images/undraw_engineering_team_a7n2.svg",
+        "img/banner-images/undraw_delivery_truck_vt6p.svg",
+        "img/banner-images/undraw_electric_car_b-7-hl.svg",
+        "img/banner-images/undraw_logistics_x-4-dc.svg"
         // Add more image URLs as needed
     ];
 

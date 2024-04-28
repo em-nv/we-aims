@@ -4824,11 +4824,12 @@ input[type="button"].btn-block {
   border-bottom-right-radius: 0.35rem;
 }
 
+/* TABLE BELOW BUTTONS */
 .page-item.active .page-link {
   z-index: 3;
   color: #fff;
-  background-color: #4e73df;
-  border-color: #4e73df;
+  background-color: var(--primary);
+  border-color: var(--primary);
 }
 
 .page-item.disabled .page-link {
