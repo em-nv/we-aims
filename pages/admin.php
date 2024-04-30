@@ -125,7 +125,7 @@
             </li>
 
             <!-- Nav Item - ADMIN -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="admin.php">
                     <i class="fas fa-fw fa-solid fa-user-tie"></i>
                     <span>Admin</span></a>
