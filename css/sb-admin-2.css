@@ -11656,9 +11656,7 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 @media screen and (max-width: 768px) {
-  .banner-right {
-    display: none; 
-  }
+
 }
 
 @media screen and (max-width: 992px) {

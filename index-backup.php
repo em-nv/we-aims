@@ -317,35 +317,30 @@
                             <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
                         </div> -->
                         <div class="row">
-                            <div class="">
-                                <div class="d-flex align-items-center row my-2">
-                                    <div class="col-sm-7">
-                                        <div class="card-body banner-left">
-                                            <h4 style="font-weight: bold;">Hello, <span style="font-weight: bolder;">NAME!</span>
-                                                <lord-icon
-                                                    src="https://cdn.lordicon.com/cqofjexf.json"
-                                                    trigger="loop"
-                                                    delay="1000"
-                                                    stroke="bold"
-                                                    colors="primary:#ffffff,secondary:#ffc738,tertiary:#4bb3fd"
-                                                    style="width:45px;height:45px">
-                                                </lord-icon>
-                                            </h4>
-                                            <p class="mb-0">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum delectus blanditiis, excepturi perferendis hic impedit eum labore inventore fuga placeat molestiae dolorem aperiam velit ad optio in consequatur illo recusandae.</p>
-                                            
-                                            <!-- Page Heading -->
-                                            <div class="d-sm-flex align-items-center justify-content-between" style="padding-top:10px;">
-                                                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                                                    <i class="fas fa-solid fa-chart-line fa-sm text-white-50"></i> View Reports</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-5 text-center text-sm-left d-none d-sm-block">
-                                        <div class="card-body pb-0 px-0 px-md-4 banner-right">
-                                            <img id="randomBannerImage" src="" class="img-fluid px-3 px-sm-4 mt-3 mb-4 banner-img" style="width: 20rem;" >
-                                        </div>
-                                    </div>
+                            <div class="card-body banner-left">
+                                <h4 style="font-weight: bold;">Hello, <span style="font-weight: bolder;">NAME!</span>
+                                    <lord-icon
+                                        src="https://cdn.lordicon.com/cqofjexf.json"
+                                        trigger="loop"
+                                        delay="1000"
+                                        stroke="bold"
+                                        colors="primary:#ffffff,secondary:#ffc738,tertiary:#4bb3fd"
+                                        style="width:45px;height:45px">
+                                    </lord-icon>
+                                </h4>
+                                <p class="mb-0">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum delectus blanditiis, excepturi perferendis hic impedit eum labore inventore fuga placeat molestiae dolorem aperiam velit ad optio in consequatur illo recusandae.</p>
+                                
+                                <!-- Page Heading -->
+                                <div class="d-sm-flex align-items-center justify-content-between mb-4" style="padding-top:10px;">
+                                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                        <i class="fas fa-solid fa-chart-line fa-sm text-white-50"></i> View Reports</a>
                                 </div>
+                            </div>
+                            <div class="card-body banner-right">
+                               <!--  <h3>Picture here</h3> -->
+                                <img id="randomBannerImage" src="" class="img-fluid px-3 px-sm-4 mt-3 mb-4 banner-img" style="width: 20rem;" >
+                                <!-- <p class="mb-0">Before working with this theme, you should become familiar with the
+                                    Bootstrap framework, especially the utility classes.</p> -->
                             </div>
                         </div>
                     </div>
