@@ -27,8 +27,11 @@
     <!-- FONT AWESOME ICONS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
-    <!-- LORDICONS -->
-    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <!-- BOXICONS AWESOME ICONS -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+
+    
 
     
 
@@ -174,14 +177,11 @@
                         </div>
                     </form>
 
-                    <!-- Topbar Navbar -->
+                    <!-- Topbar DATE AND TIME -->
                     <div class="date-and-time">
-                        <span id="date_now" class="date-now">
-                            <!-- JavaScript will update this -->
-                        </span>
-                        <span id="current-time" class="time-now">
-                            <!-- JavaScript will update this -->
-                        </span>
+                        <span class="calendar-logo"><i class='bx bx-calendar'></i></span>
+                        <span id="date_now" class="date-now"></span>
+                        <span id="current-time" class="time-now"></span>
                     </div>
 
                     <ul class="navbar-nav ml-auto">
@@ -1294,8 +1294,8 @@
     <script src="js/customized.js"></script>
     <script src="js/date-and-time.js"></script>
 
-
-
+    <!-- LORDICONS -->
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
 
 
     <!-- Bootstrap core JavaScript-->

@@ -10526,7 +10526,7 @@ a:focus {
 }
 
 @media screen and (max-width: 1055px) {
-  .date-now{
+  .date-now, .calendar-logo{
     display: none !important;
   }
 
@@ -11706,6 +11706,13 @@ body.sidebar-toggled footer.sticky-footer {
   background-color: var(--body-color) !important;
 }
 
+.date-and-time{
+
+}
+
+.calendar-logo{
+  font-size: larger;
+}
 
 
 .date-now{
