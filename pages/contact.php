@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>About</title>
+    <title>Contact Us</title>
 
     <!-- Custom fonts for this template-->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -29,39 +29,14 @@
 
     <!-- CUSTOMIZED JS -->
     <script src="../js/customized.js"></script>
-
-    <style>
-        @media screen and (max-width: 768px) {
-            body {
-            position: relative;
-            overflow: hidden; /* Hide the overflow from the blurred pseudo-element */
-        }
-
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('../img/branch.jpg');
-            background-size: cover;
-            background-position: center;
-           /*  filter: blur(5px); */ /* Adjust the blur radius as needed */
-            z-index: -1; /* Ensure the pseudo-element stays behind the content */
-        }
-
-        }
-    </style>
+    
 
 </head>
 
 <body id="page-top">
 
     <!-- Page Wrapper -->
-    <div id="wrapper" class="about-body">
-
-        
+    <div id="wrapper">
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -76,9 +51,9 @@
                         <input type='checkbox' id='check' />
                         <span class="menu">
                             <li><a href="home.php">Home</a></li>
-                            <li class="shade"><a href="about.php" class="active">About</a></li>
+                            <li><a href="about.php">About</a></li>
                             <li><a href="features.php">Features</a></li>
-                            <li><a href="contact.php">Contact</a></li>
+                            <li class="shade"><a href="contact.php" class="active">Contact</a></li>
                             <li><a href="login.php">Login</a></li>
                             <li><a href="register.php">Sign Up</a></li>
                             <label for="check" class="close-menu"><i class="fas fa-times"></i></label>
@@ -89,19 +64,47 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid about-content-container">
-                    <div class="about-caption">
-                        <!-- Page Heading -->
-                        <h4>ABOUT US</h4>
-                        <h1>LEGAZPI WILLEM MARKETING CORPORATION</h1>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque quod fugiat delectus laboriosam, vero reprehenderit rem vitae facilis. Exercitationem labore dolorem vero perspiciatis alias facere doloribus asperiores nesciunt nihil maxime?
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, nulla nesciunt maxime, corporis vel itaque obcaecati dolorum repellendus, quasi ad ipsum laboriosam. Ipsum rerum autem dolore reprehenderit, minus exercitationem sapiente?
-                        </p>
+                <div class="container-fluid contact-content-container">
+                    <div class="contact-caption">
+                        <h1 style="padding-bottom: 10px;">Get in Touch with Us</h1>
+                        <p style="padding-bottom: 10px;">We're here to assist you every step of the way. Whether you have inquiries, feedback, or simply want to say hello, drop us a line.</p>
                     </div>
-                    <div class="about-image">
-                        <!-- Page Heading -->
-                        
+                    <div class="">
+                        <form class="user">
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input type="text" class="form-control contact-form-control-user" id="contactFirstName"
+                                        placeholder="First Name">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control contact-form-control-user" id="contactLastName"
+                                        placeholder="Last Name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control contact-form-control-user" id="contactInputEmail"
+                                    placeholder="Email Address">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control contact-form-control-user" id="contactInputSubject"
+                                    placeholder="Subject">
+                            </div>
+                            <div class="form-group">
+                                <textarea type="text" class="form-control contact-form-control-user" id="contactInputMessage"
+                                    placeholder="Message"></textarea>
+                            </div>
+        
+                            <div class="form-group">
+                                <a style="width: 20%; font-size: smaller;" href="" class="btn btn-primary">
+                                    SEND
+                                </a>
+                                <a style="width: 20%; font-size: smaller;" href="" class="btn btn-primary">
+                                    RESET
+                                </a>
+                            </div>
+                        </form>
                     </div>
+                
                     
                 </div>
                 <!-- /.container-fluid -->

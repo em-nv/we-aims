@@ -1222,6 +1222,7 @@ pre code {
   .col-lg-6 {
     flex: 0 0 50%;
     max-width: 50%;
+    align-items: center;
   }
   .col-lg-7 {
     flex: 0 0 58.33333%;
@@ -10454,6 +10455,71 @@ a:focus {
 }
 
 
+.contact-content-container {
+  align-items: center;
+  text-align: center; /* Center align text inside the container */
+  padding: 50px;
+  padding-left: 300px;
+  padding-right: 300px;
+}
+.contact-caption{
+  h1{
+    color: var(--blue);
+    font-weight: bolder;
+  }
+  p {
+    color: black;
+  }
+}
+
+.features-content-container {
+  align-items: center;
+  text-align: center; /* Center align text inside the container */
+  padding: 50px;
+  padding-left: 200px;
+  padding-right: 200px;
+}
+.features-caption{
+  h1{
+    color: var(--blue);
+    font-weight: bolder;
+  }
+  p {
+    color: black;
+  }
+}
+
+.features-container{
+  display: flex;
+  justify-content: space-between;
+  color: black;
+  
+}
+.features-card{
+  flex: 1;
+  padding: 30px;
+  padding-top: 40px;
+  margin: 10px;
+  background-color: white;
+  border-radius: 20px;
+  h1 {
+    font-weight: bold;
+    color: var(--primary);
+    font-size: 50px;
+  }
+  img {
+    width: 70%;
+    margin-bottom: 50px;
+  }
+  h4{
+    font-size: 25px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: var(--primary);
+  }
+
+}
+
 
 @media screen and (max-width: 576px) {
   
@@ -10462,6 +10528,14 @@ a:focus {
 @media screen and (max-width: 1055px) {
   .date-now{
     display: none !important;
+  }
+
+  .features-content-container, .contact-content-container {
+    align-items: center;
+    text-align: center; /* Center align text inside the container */
+    padding: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
   }
 }
 
@@ -10494,7 +10568,13 @@ a:focus {
 }
 
 @media screen and (max-width: 1200px) {
-  
+  .features-container {
+    display: block;
+  }
+  .features-card {
+      flex: none;
+      width: auto;
+  }
 }
 
 
@@ -11121,6 +11201,12 @@ form.user .form-control-user {
   font-size: 0.8rem;
   border-radius: 10rem;
   padding: 1.5rem 1rem;
+}
+
+.contact-form-control-user {
+  font-size: 0.8rem;
+  padding: 1.5rem 1rem;
+  
 }
 
 form.user .btn-user {

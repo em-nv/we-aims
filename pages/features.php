@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>About</title>
+    <title>Features</title>
 
     <!-- Custom fonts for this template-->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -30,38 +30,14 @@
     <!-- CUSTOMIZED JS -->
     <script src="../js/customized.js"></script>
 
-    <style>
-        @media screen and (max-width: 768px) {
-            body {
-            position: relative;
-            overflow: hidden; /* Hide the overflow from the blurred pseudo-element */
-        }
-
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('../img/branch.jpg');
-            background-size: cover;
-            background-position: center;
-           /*  filter: blur(5px); */ /* Adjust the blur radius as needed */
-            z-index: -1; /* Ensure the pseudo-element stays behind the content */
-        }
-
-        }
-    </style>
+    
 
 </head>
 
 <body id="page-top">
 
     <!-- Page Wrapper -->
-    <div id="wrapper" class="about-body">
-
-        
+    <div id="wrapper">
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -76,8 +52,8 @@
                         <input type='checkbox' id='check' />
                         <span class="menu">
                             <li><a href="home.php">Home</a></li>
-                            <li class="shade"><a href="about.php" class="active">About</a></li>
-                            <li><a href="features.php">Features</a></li>
+                            <li><a href="about.php">About</a></li>
+                            <li class="shade"><a href="features.php" class="active">Features</a></li>
                             <li><a href="contact.php">Contact</a></li>
                             <li><a href="login.php">Login</a></li>
                             <li><a href="register.php">Sign Up</a></li>
@@ -89,19 +65,30 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid about-content-container">
-                    <div class="about-caption">
-                        <!-- Page Heading -->
-                        <h4>ABOUT US</h4>
-                        <h1>LEGAZPI WILLEM MARKETING CORPORATION</h1>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque quod fugiat delectus laboriosam, vero reprehenderit rem vitae facilis. Exercitationem labore dolorem vero perspiciatis alias facere doloribus asperiores nesciunt nihil maxime?
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, nulla nesciunt maxime, corporis vel itaque obcaecati dolorum repellendus, quasi ad ipsum laboriosam. Ipsum rerum autem dolore reprehenderit, minus exercitationem sapiente?
-                        </p>
+                <div class="container-fluid features-content-container">
+
+                    <div class="features-caption">
+                        <h1 style="padding-bottom: 10px;">WHAT WE OFFER</h1>
                     </div>
-                    <div class="about-image">
-                        <!-- Page Heading -->
-                        
+                    <div class="features-container">
+                        <div class="features-card">
+                            <img src="../img/features-img/undraw_server_re_twwj.svg" alt="">
+                            <h4>Centralized Data Management</h4>
+                            <p>We-aims provides a centralized repository for storing all relevant data including sales transactions, inventory records, customer information, and branch-specific details.</p>
+                        </div>
+
+                        <div class="features-card">
+                            <img src="../img/features-img/undraw_all_the_data_re_hh4w.svg" alt="">
+                            <h4>Real-time Inventory Management</h4>
+                            <p>We-aims can also track inventory levels of the business, enabling better inventory control and timely replenishment.</p>
+                        </div>
+                        <div class="features-card">
+                            <img src="../img/features-img/undraw_data_processing_yrrv.svg" alt="">
+                            <h4>Efficient Transaction Processing</h4>
+                            <p>Daily transaction processing such as recording sales and managing inventory, can also be found in we-aims inventory management system, reducing manual errors and increasing efficiency.</p>
+                        </div>
                     </div>
+                
                     
                 </div>
                 <!-- /.container-fluid -->
@@ -140,7 +127,7 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/jquery/jquery.min.js"></>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->

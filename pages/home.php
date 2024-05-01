@@ -60,8 +60,8 @@
                         <span class="menu">
                             <li class="shade"><a href="home.php" class="active">Home</a></li>
                             <li><a href="about.php">About</a></li>
-                            <li><a href="">Features</a></li>
-                            <li><a href="">Contact</a></li>
+                            <li><a href="features.php">Features</a></li>
+                            <li><a href="contact.php">Contact</a></li>
                             <li><a href="login.php">Login</a></li>
                             <li><a href="register.php">Sign Up</a></li>
                             <label for="check" class="close-menu"><i class="fas fa-times"></i></label>
