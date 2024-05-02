@@ -364,7 +364,7 @@
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">Php 14,500</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-blue-300"></i>
+                                            <i class="fas fa-solid fa-peso-sign fa-2x text-blue-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -382,7 +382,7 @@
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">Php 9,000</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-blue-300"></i>
+                                            <i class="fas fa-solid fa-peso-sign fa-2x text-blue-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -400,7 +400,7 @@
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">Php 8,000</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-blue-300"></i>
+                                            <i class="fas fa-solid fa-peso-sign fa-2x text-blue-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -418,7 +418,7 @@
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">Php 6,500</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-blue-300"></i>
+                                            <i class="fas fa-solid fa-peso-sign fa-2x text-blue-300"></i>
                                         </div>
                                     </div>
                                 </div>

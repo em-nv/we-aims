@@ -281,49 +281,55 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th>Employee ID</th>
                                             <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
+                                            <th>Role/Designation</th>
+                                            <th>Salary</th>
+                                            <th>Phone</th>
                                             <th></th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>Employee ID</th>
                                             <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
+                                            <th>Role/Designation</th>
+                                            <th>Salary</th>
+                                            <th>Phone</th>
                                             <th></th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <tr>
-                                            <td>A Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
+                                            <td>200</td>
+                                            <td>Mark Poe</td>
+                                            <td>Mechanic</td>
+                                            <td>Php5,000</td>
+                                            <td>09123456789</td>
                                             <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
                                             <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
                                         </tr>
                                         <tr>
-                                            <td>B Nixon</td>
-                                            <td>System Mechanic</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
+                                            <td>201</td>
+                                            <td>Peter Rivera</td>
+                                            <td>Mechanic</td>
+                                            <td>Php5,000</td>
+                                            <td>09123456789</td>
                                             <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
                                             <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
                                         </tr>
                                         <tr>
-                                            <td>E Nixon</td>
-                                            <td>System Analyst</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
+                                            <td>202</td>
+                                            <td>Peter Rivera</td>
+                                            <td>Mechanic</td>
+                                            <td>Php5,000</td>
+                                            <td>09123456789</td>
                                             <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
                                             <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
                                         </tr>
+                                
                                     </tbody>
                                 </table>
                             </div>
