@@ -331,7 +331,7 @@
                                                     style="width:45px;height:45px">
                                                 </lord-icon>
                                             </h4>
-                                            <p class="mb-0">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum delectus blanditiis, excepturi perferendis hic impedit eum labore inventore fuga placeat molestiae dolorem aperiam velit ad optio in consequatur illo recusandae.</p>
+                                            <p class="mb-0">Welcome back to your control center! As you step into your dashboard, you're empowered to navigate through every aspect of your inventory management with precision and efficiency. From tracking stock levels to analyzing sales trends, our system is your trusted companion on this journey. Together, let's drive your business forward with streamlined inventory operations and strategic insights.</p>
                                             
                                             <!-- Page Heading -->
                                             <div class="d-sm-flex align-items-center justify-content-between" style="padding-top:10px;">
@@ -1257,7 +1257,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>Copyright &copy; We-AIMS 2024</span>
                     </div>
                 </div>
             </footer>
