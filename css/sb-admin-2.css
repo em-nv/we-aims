@@ -10552,6 +10552,12 @@ a:focus {
       font-size: 20px;
     }
 
+    .home-content-button{
+      .car{
+        width: 50%;
+      }
+    }
+
 
   }
 
