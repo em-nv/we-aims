@@ -29,6 +29,9 @@
     <!-- LORDICONS -->
     <script src="../https://cdn.lordicon.com/lordicon.js"></script>
 
+    <!-- BOXICONS AWESOME ICONS -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
 
 <body id="page-top">
@@ -159,6 +162,7 @@
                     <!-- Topbar DATE AND TIME -->
                     <div class="d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="date-and-time">
+                            <span class="calendar-logo"><i class='bx bx-calendar'></i></span>
                             <span id="date_now" class="date-now"></span>
                             <span id="current-time" class="time-now"></span>
                         </div>
