@@ -635,38 +635,35 @@ $conn->close();
                             <!-- CUSTOMER TABLE -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">CUSTOMER TABLE</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">CUSTOMER PREVIEW</h6>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="small font-weight-bold">Server Migration <span
-                                            class="float-right">20%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
-                                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Sales Tracking <span
-                                            class="float-right">40%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
-                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Customer Database <span
-                                            class="float-right">60%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar" role="progressbar" style="width: 60%"
-                                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Payout Details <span
-                                            class="float-right">80%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%"
-                                            aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Account Setup <span
-                                            class="float-right">Complete!</span></h4>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
-                                            aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="table-responsive-dashboard">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Phone No.</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php 
+                                                include 'pages/cus_db.php'; // database connection file
+                                                $sql = "SELECT firstName, lastName, phone FROM customers LIMIT 4"; // Selecting required columns
+
+                                                $result = mysqli_query($conn, $sql); // Executing SQL query
+
+                                                // Fetching data from the result set and displaying it in table rows
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                    echo "<tr>";
+                                                    echo "<td>" . $row['firstName'] . " " . $row['lastName'] . "</td>"; // Combining first name and last name
+                                                    echo "<td>" . $row['phone'] . "</td>";
+                                                    echo "</tr>";
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                        <a href="pages/customers.php" style="padding: 5px; display: block; margin: 0 auto; width: fit-content;">See more...</a>
                                     </div>
                                 </div>
                             </div>
@@ -719,19 +716,36 @@ $conn->close();
                             <!-- PRODUCTS TABLE -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">PRODUCTS TABLE</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">PRODUCTS PREVIEW</h6>
                                 </div>
                                 <div class="card-body">
-                                    <div class="text-center">
-                                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                            src="img/undraw_posting_photo.svg" alt="...">
+                                    <div class="table-responsive-dashboard">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Product Name</th>
+                                                    <th>Retail Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php 
+                                                include 'pages/cus_db.php'; // database connection file
+                                                $sql = "SELECT productName, retailPrice FROM products LIMIT 4"; // Selecting required columns
+
+                                                $result = mysqli_query($conn, $sql); // Executing SQL query
+
+                                                // Fetching data from the result set and displaying it in table rows
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                    echo "<tr>";
+                                                    echo "<td>" . $row['productName'] . "</td>"; // Combining first name and last name
+                                                    echo "<td>" . "Php " . number_format($row['retailPrice']) . "</td>";
+                                                    echo "</tr>";
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                        <a href="pages/customers.php" style="padding: 5px; display: block; margin: 0 auto; width: fit-content;">See more...</a>
                                     </div>
-                                    <p>Add some quality, svg illustrations to your project courtesy of <a
-                                            target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
-                                        constantly updated collection of beautiful svg images that you can use
-                                        completely free and without attribution!</p>
-                                    <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on
-                                        unDraw &rarr;</a>
                                 </div>
                             </div>
 
@@ -778,19 +792,45 @@ $conn->close();
                     <!-- SUPPLIER TABLE -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">SUPPLIER TABLE</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">SUPPLIER PREVIEW</h6>
                         </div>
                         <div class="card-body">
-                            <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
-                                CSS bloat and poor page performance. Custom CSS classes are used to create
-                                custom components and custom utility classes.</p>
-                            <p class="mb-0">Before working with this theme, you should become familiar with the
-                                Bootstrap framework, especially the utility classes.</p>
+                            <div class="table-responsive-dashboard">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Company Name</th>
+                                            <th>Adddress</th>
+                                            <th>Zip Code</th>
+                                            <th>Phone Number</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php 
+                                        include 'pages/cus_db.php'; // database connection file
+                                        $sql = "SELECT companyName, city, province, zipCode, phoneNumber FROM suppliers LIMIT 4"; // Selecting required columns
+
+                                        $result = mysqli_query($conn, $sql); // Executing SQL query
+
+                                        // Fetching data from the result set and displaying it in table rows
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            echo "<tr>";
+                                            echo "<td>" . $row['companyName'] . "</td>"; // Combining first name and last name
+                                            echo "<td>" . $row['city'] . ", " . $row['province'] . "</td>";
+                                            echo "<td>" . $row['zipCode'] . "</td>";
+                                            echo "<td>" . $row['phoneNumber'] . "</td>";
+                                            echo "</tr>";
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                                <a href="pages/suppliers.php" style="padding: 5px; display: block; margin: 0 auto; width: fit-content;">See more...</a>
+                            </div>
                         </div>
                     </div>
 
                     <!-- TRIAL TABLE -->
-                    <div class="card shadow mb-4">
+                    <!-- <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">TRIAL TABLE</h6>
                         </div>
@@ -1278,7 +1318,7 @@ $conn->close();
                                 </table>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
 
 
