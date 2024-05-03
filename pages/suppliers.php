@@ -423,189 +423,179 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editSupplierId"])) {
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Suppliers</h1>
-                    <div>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal"
-                            data-target="#addSupplierModal">
-                            <i class="fas fa-user-plus fa-sm text-white-50"></i> Add Supplier
-                        </a>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Suppliers</h1>
+                        <div>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal"
+                                data-target="#addSupplierModal">
+                                <i class="fas fa-user-plus fa-sm text-white-50"></i> Add Supplier
+                            </a>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        </div>
+                    </div>
+
+                    <!-- MODAL FOR ADDING A SUPPLIER -->
+                    <div class="modal fade" id="addSupplierModal" tabindex="-1" role="dialog" aria-labelledby="addSupplierModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header gradient-header">
+                                    <h5 class="modal-title" id="addSupplierModalLabel">Add New Supplier</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="addSupplierForm" method="POST" action="suppliers.php">
+                                        <div class="form-group">
+                                            <label for="supplierCompanyName">Company Name</label>
+                                            <input type="text" class="form-control" id="supplierCompanyName" name="supplierCompanyName" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="supplierProvince">Province</label>
+                                            <input type="text" class="form-control" id="supplierProvince" name="supplierProvince" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="supplierCity">City/Municipality</label>
+                                            <input type="text" class="form-control" id="supplierCity" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="supplierZipCode">Zip Code</label>
+                                            <input type="text" class="form-control" id="supplierZipCode" name="supplierZipCode" required pattern="[0-9]{4}" title="Phone number must be 4 digits">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="supplierPhoneNumber">Phone Number</label>
+                                            <input type="text" class="form-control" id="supplierPhoneNumber" name="supplierPhoneNumber" required pattern="[0-9]{11}" title="Phone number must be 11 digits">
+                                        </div>
+                                        
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" form="addSupplierForm">Add Supplier</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODAL FOR EDITING A SUPPLIER -->
+                    <div class="modal fade" id="editSupplierModal" tabindex="-1" role="dialog" aria-labelledby="editSupplierModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header gradient-header">
+                                    <h5 class="modal-title" id="editSupplierModalLabel">Edit Supplier</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                <form id="editSupplierForm" method="POST" action="suppliers.php">
+                                <div class="form-group">
+                                    <label for="editSupplierCompanyName">Company Name</label>
+                                    <input type="text" class="form-control" id="editSupplierCompanyName" name="editSupplierCompanyName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editSupplierProvince">Province</label>
+                                    <input type="text" class="form-control" id="editSupplierProvince" name="editSupplierProvince" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editSupplierCity">City/Municipality</label>
+                                    <input type="text" class="form-control" id="editSupplierCity" name="editSupplierCity" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editSupplierZipCode">Zip Code</label>
+                                    <input type="text" class="form-control" id="editSupplierZipCode" name="editSupplierZipCode" required pattern="[0-9]{4}" title="Phone number must be 4 digits">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editSupplierPhoneNumber">Phone Number</label>
+                                    <input type="text" class="form-control" id="editSupplierPhoneNumber" name="editSupplierPhoneNumber" required pattern="[0-9]{11}" title="Phone number must be 11 digits">
+                                </div>
+                            
+                                <!-- Hidden field for supplier ID -->
+                                <input type="hidden" id="editSupplierId" name="editSupplierId">
+                                </form>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" form="editSupplierForm">Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- DataTable for Suppliers -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 gradient-header" style="display: flex; justify-content: space-between;">
+                            <h6 class="m-0 font-weight-bold text-white">Suppliers List</h6>
+                            
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Supplier ID</th>
+                                            <th>Company Name</th>
+                                            <th>Province</th>
+                                            <th>City/Municipality</th>
+                                            <th>Zip Code</th>
+                                            <th>Phone Number</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                        include 'cus_db.php'; // Adjust to your suppliers database connection file
+
+                                        // SQL query to select data from the suppliers table
+                                        $sql = "SELECT Sup_Id, companyName, province, city, zipCode, phoneNumber FROM suppliers";
+                                        $result = $conn->query($sql);
+
+                                        if ($result === false) {
+                                            echo "Error: " . $conn->error;
+                                        } else {
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    echo "<tr>";
+                                                    echo "<td>" . htmlspecialchars($row["Sup_Id"]) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row["companyName"]) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row["province"]) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row["city"]) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row["zipCode"]) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row["phoneNumber"]) . "</td>";
+                                                    echo "<td><button type='button' class='btn btn-success' data-toggle='modal' data-target='#editSupplierModal' 
+                                                    onclick='setEditSupplierFormData(\"" . htmlspecialchars($row["Sup_Id"]) . "\", \"" . htmlspecialchars($row["companyName"]) . "\", \"" . htmlspecialchars($row["province"]) . 
+                                                    "\", \"" . htmlspecialchars($row["city"]) . "\", \"" . htmlspecialchars($row["zipCode"]) . "\", \"" . htmlspecialchars($row["phoneNumber"]) . "\")'><i class='fa fa-edit'></i> Edit</button></td>";
+
+                                                    echo "<td>
+                                                            <form method='POST' action='suppliers.php' onsubmit='return confirm(\"Are you sure you want to delete this record?\");'>
+                                                                <input type='hidden' name='supplierId' value='" . $row["Sup_Id"] . "'>
+                                                                <button type='submit' class='btn btn-danger'><i class='fa fa-trash'></i> Delete</button>
+                                                            </form>
+                                                        </td>";
+                                                    echo "</tr>";
+                                                }
+                                            } else {
+                                                echo "<tr><td colspan='7'>No results found</td></tr>";
+                                            }
+                                        }
+                                        $conn->close();
+                                    ?>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <!-- MODAL FOR ADDING A SUPPLIER -->
-<div class="modal fade" id="addSupplierModal" tabindex="-1" role="dialog" aria-labelledby="addSupplierModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header gradient-header">
-                <h5 class="modal-title" id="addSupplierModalLabel">Add New Supplier</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="addSupplierForm" method="POST" action="suppliers.php">
-                    <div class="form-group">
-                        <label for="supplierCompanyName">Company Name</label>
-                        <input type="text" class="form-control" id="supplierCompanyName" name="supplierCompanyName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="supplierProvince">Province</label>
-                        <input type="text" class="form-control" id="supplierProvince" name="supplierProvince" required pattern="[A-Za-z]+" title="Only letters allowed">
-                    </div>
-                    <div class="form-group">
-                        <label for="supplierCity">City/Municipality</label>
-                        <input type="text" class="form-control" id="supplierCity" name="supplierCity" required pattern="[A-Za-z]+" title="Only letters allowed">
-                    </div>
-                    <div class="form-group">
-                        <label for="supplierZipCode">Zip Code</label>
-                        <input type="text" class="form-control" id="supplierZipCode" name="supplierZipCode" required pattern="[0-9]{4}" title="Phone number must be 4 digits">
-                    </div>
-                    <div class="form-group">
-                        <label for="supplierPhoneNumber">Phone Number</label>
-                        <input type="text" class="form-control" id="supplierPhoneNumber" name="supplierPhoneNumber" required pattern="[0-9]{11}" title="Phone number must be 11 digits">
-                    </div>
-                    
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="addSupplierForm">Add Supplier</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<!-- MODAL FOR EDITING A SUPPLIER -->
-<div class="modal fade" id="editSupplierModal" tabindex="-1" role="dialog" aria-labelledby="editSupplierModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header gradient-header">
-                <h5 class="modal-title" id="editSupplierModalLabel">Edit Supplier</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            <form id="editSupplierForm" method="POST" action="suppliers.php">
-            <div class="form-group">
-                <label for="editSupplierCompanyName">Company Name</label>
-                <input type="text" class="form-control" id="editSupplierCompanyName" name="editSupplierCompanyName" required>
-            </div>
-            <div class="form-group">
-                <label for="editSupplierProvince">Province</label>
-                <input type="text" class="form-control" id="editSupplierProvince" name="editSupplierProvince" required pattern="[A-Za-z]+" title="Only letters allowed">
-            </div>
-            <div class="form-group">
-                <label for="editSupplierCity">City/Municipality</label>
-                <input type="text" class="form-control" id="editSupplierCity" name="editSupplierCity" required pattern="[A-Za-z]+" title="Only letters allowed">
-            </div>
-            <div class="form-group">
-                <label for="editSupplierZipCode">Zip Code</label>
-                <input type="text" class="form-control" id="editSupplierZipCode" name="editSupplierZipCode" required pattern="[0-9]{4}" title="Phone number must be 4 digits">
-            </div>
-            <div class="form-group">
-                <label for="editSupplierPhoneNumber">Phone Number</label>
-                <input type="text" class="form-control" id="editSupplierPhoneNumber" name="editSupplierPhoneNumber" required pattern="[0-9]{11}" title="Phone number must be 11 digits">
-            </div>
-           
-            <!-- Hidden field for supplier ID -->
-            <input type="hidden" id="editSupplierId" name="editSupplierId">
-            </form>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="editSupplierForm">Save Changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-<!-- DataTable for Suppliers -->
-<div class="card shadow mb-4">
-    <div class="card-header py-3 gradient-header" style="display: flex; justify-content: space-between;">
-        <h6 class="m-0 font-weight-bold text-white">Suppliers List</h6>
-        
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>Supplier ID</th>
-                        <th>Company Name</th>
-                        <th>Province</th>
-                        <th>City/Municipality</th>
-                        <th>Zip Code</th>
-                        <th>Phone Number</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php
-include 'cus_db.php'; // Adjust to your suppliers database connection file
-
-// SQL query to select data from the suppliers table
-$sql = "SELECT Sup_Id, companyName, province, city, zipCode, phoneNumber FROM suppliers";
-$result = $conn->query($sql);
-
-if ($result === false) {
-    echo "Error: " . $conn->error;
-} else {
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo "<tr>";
-            echo "<td>" . htmlspecialchars($row["Sup_Id"]) . "</td>";
-            echo "<td>" . htmlspecialchars($row["companyName"]) . "</td>";
-            echo "<td>" . htmlspecialchars($row["province"]) . "</td>";
-            echo "<td>" . htmlspecialchars($row["city"]) . "</td>";
-            echo "<td>" . htmlspecialchars($row["zipCode"]) . "</td>";
-            echo "<td>" . htmlspecialchars($row["phoneNumber"]) . "</td>";
-            echo "<td><button type='button' class='btn btn-success' data-toggle='modal' data-target='#editSupplierModal' 
-            onclick='setEditSupplierFormData(\"" . htmlspecialchars($row["Sup_Id"]) . "\", \"" . htmlspecialchars($row["companyName"]) . "\", \"" . htmlspecialchars($row["province"]) . 
-            "\", \"" . htmlspecialchars($row["city"]) . "\", \"" . htmlspecialchars($row["zipCode"]) . "\", \"" . htmlspecialchars($row["phoneNumber"]) . "\")'><i class='fa fa-edit'></i> Edit</button></td>";
-
-            echo "<td>
-                    <form method='POST' action='suppliers.php' onsubmit='return confirm(\"Are you sure you want to delete this record?\");'>
-                        <input type='hidden' name='supplierId' value='" . $row["Sup_Id"] . "'>
-                        <button type='submit' class='btn btn-danger'><i class='fa fa-trash'></i> Delete</button>
-                    </form>
-                  </td>";
-            echo "</tr>";
-        }
-    } else {
-        echo "<tr><td colspan='7'>No results found</td></tr>";
-    }
-}
-$conn->close();
-?>
-
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-</div>
  
             </div>
             <!-- End of Main Content -->
+            
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -669,16 +659,16 @@ $conn->close();
     <!-- Page level custom scripts -->
     <script src="../js/demo/datatables-demo.js"></script>
     <script>
-function setEditSupplierFormData(Sup_Id, companyName, province, city, zipCode, phoneNumber, productID) {
-    document.getElementById("editSupplierId").value = Sup_Id;
-    document.getElementById("editSupplierCompanyName").value = companyName;
-    document.getElementById("editSupplierProvince").value = province;
-    document.getElementById("editSupplierCity").value = city;
-    document.getElementById("editSupplierZipCode").value = zipCode;
-    document.getElementById("editSupplierPhoneNumber").value = phoneNumber;
+        function setEditSupplierFormData(Sup_Id, companyName, province, city, zipCode, phoneNumber, productID) {
+            document.getElementById("editSupplierId").value = Sup_Id;
+            document.getElementById("editSupplierCompanyName").value = companyName;
+            document.getElementById("editSupplierProvince").value = province;
+            document.getElementById("editSupplierCity").value = city;
+            document.getElementById("editSupplierZipCode").value = zipCode;
+            document.getElementById("editSupplierPhoneNumber").value = phoneNumber;
 
-}
-</script>
+        }
+    </script>
 
 
 </body>

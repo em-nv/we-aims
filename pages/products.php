@@ -534,245 +534,225 @@ $stmt->bind_param("issdddddi", $supplierId, $companyName, $productName, $costPri
                 </nav>
                 <!-- End of Topbar -->
 
-               <!-- Begin Page Content -->
-               <div class="container-fluid">
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
 
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Products</h1>
-    <div>
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal"
-   data-target="#addProductModal">
-   <i class="fas fa-user-plus fa-sm text-white-50"></i> Add Products
-</a>
-
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-    </div>
-</div>
-
-
-
-
-
-
-<!-- MODAL FOR ADDING A PRODUCT -->
-<div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header gradient-header">
-                <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="addProductForm" method="POST" action="products.php">
-                    <div class="form-group">
-                        <label for="supplierID">Supplier ID</label>
-                        <select class="form-control" id="supplierID" name="Sup_Id" required onchange="updateCompanyName(this.value);">
-                            <option value="">Select Supplier ID</option>
-                            <?php foreach ($suppliers as $supplierID => $companyName) {
-                                echo "<option value='$supplierID'>$supplierID</option>";
-                            } ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="companyName">Company Name</label>
-                        <input type="text" class="form-control" id="companyName" name="companyName" required readonly>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="productName">Product Name</label>
-                        <input type="text" class="form-control" id="productName" name="productName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="costPrice">Cost Price</label>
-                        <input type="text" class="form-control" id="costPrice" name="costPrice" required onchange="ADDcalculateTotalPrices();">
-                    </div>
-                    <div class="form-group">
-                        <label for="retailPrice">Retail Price</label>
-                        <input type="text" class="form-control" id="retailPrice" name="retailPrice" required onchange="ADDcalculateTotalPrices();">
-                    </div>
-                    <div class="form-group">
-                        <label for="quantity">Quantity</label>
-                        <input type="number" class="form-control" id="quantity" name="quantity" required onchange="ADDcalculateTotalPrices();">
-                    </div>
-                    <div class="modal-footer">
-                        <div class="form-group">
-                            <label for="totalCostPrice">Total Cost Price</label>
-                            <input type="text" class="form-control" id="totalCostPrice" name="totalCostPrice" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="totalRetailPrice">Total Retail Price</label>
-                            <input type="text" class="form-control" id="totalRetailPrice" name="totalRetailPrice" readonly>
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Products</h1>
+                        <div>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addProductModal">
+                                <i class="fas fa-user-plus fa-sm text-white-50"></i> Add Products
+                            </a>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+                            </a>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="addProductForm">Add Product</button>
-            </div>
-        </div>
-    </div>
-</div>
 
+                    <!-- MODAL FOR ADDING A PRODUCT -->
+                    <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header gradient-header">
+                                    <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="addProductForm" method="POST" action="products.php">
+                                        <div class="form-group">
+                                            <label for="supplierID">Supplier ID</label>
+                                            <select class="form-control" id="supplierID" name="Sup_Id" required onchange="updateCompanyName(this.value);">
+                                                <option value="">Select Supplier ID</option>
+                                                <?php foreach ($suppliers as $supplierID => $companyName) {
+                                                    echo "<option value='$supplierID'>$supplierID</option>";
+                                                } ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="companyName">Company Name</label>
+                                            <input type="text" class="form-control" id="companyName" name="companyName" required readonly>
+                                        </div>
 
-
-<!-- MODAL FOR EDITING A PRODUCT -->
-<div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header gradient-header">
-                <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="editProductForm" method="POST" action="products.php">
-                    <div class="form-group">
-                        <label for="ep_editSupplierID">Supplier ID</label>
-                        <select class="form-control" id="ep_editSupplierID" name="ep_Sup_Id" required onchange="updateEditCompanyName(this.value, 'edit');">
-                            <option value="">Select Supplier ID</option>
-                            <?php foreach ($suppliers as $supplierID => $companyName) {
-                                echo "<option value='$supplierID'>$supplierID</option>";
-                            } ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="ep_editCompanyName">Company Name</label>
-                        <input type="text" class="form-control" id="ep_editCompanyName" name="ep_companyName" required readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="ep_editProductName">Product Name</label>
-                        <input type="text" class="form-control" id="ep_editProductName" name="ep_productName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="ep_editCostPrice">Cost Price</label>
-                        <input type="text" class="form-control" id="ep_editCostPrice" name="ep_costPrice" required onchange="calculateTotalPrices('edit');">
-                    </div>
-                    <div class="form-group">
-                        <label for="ep_editRetailPrice">Retail Price</label>
-                        <input type="text" class="form-control" id="ep_editRetailPrice" name="ep_retailPrice" required onchange="calculateTotalPrices('edit');">
-                    </div>
-                    <div class="form-group">
-                        <label for="ep_editQuantity">Quantity</label>
-                        <input type="number" class="form-control" id="ep_editQuantity" name="ep_quantity" required onchange="calculateTotalPrices('edit');">
-                    </div>
-                    <div class="modal-footer">
-                        <div class="form-group">
-                            <label for="ep_editTotalCostPrice">Total Cost Price</label>
-                            <input type="text" class="form-control" id="ep_editTotalCostPrice" name="ep_totalCostPrice" readonly>
+                                        <div class="form-group">
+                                            <label for="productName">Product Name</label>
+                                            <input type="text" class="form-control" id="productName" name="productName" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="costPrice">Cost Price</label>
+                                            <input type="text" class="form-control" id="costPrice" name="costPrice" required onchange="ADDcalculateTotalPrices();">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="retailPrice">Retail Price</label>
+                                            <input type="text" class="form-control" id="retailPrice" name="retailPrice" required onchange="ADDcalculateTotalPrices();">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="quantity">Quantity</label>
+                                            <input type="number" class="form-control" id="quantity" name="quantity" required onchange="ADDcalculateTotalPrices();">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <div class="form-group">
+                                                <label for="totalCostPrice">Total Cost Price</label>
+                                                <input type="text" class="form-control" id="totalCostPrice" name="totalCostPrice" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="totalRetailPrice">Total Retail Price</label>
+                                                <input type="text" class="form-control" id="totalRetailPrice" name="totalRetailPrice" readonly>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" form="addProductForm">Add Product</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="ep_editTotalRetailPrice">Total Retail Price</label>
-                            <input type="text" class="form-control" id="ep_editTotalRetailPrice" name="ep_totalRetailPrice" readonly>
+                    </div>
+
+
+
+                    <!-- MODAL FOR EDITING A PRODUCT -->
+                    <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header gradient-header">
+                                    <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="editProductForm" method="POST" action="products.php">
+                                        <div class="form-group">
+                                            <label for="ep_editSupplierID">Supplier ID</label>
+                                            <select class="form-control" id="ep_editSupplierID" name="ep_Sup_Id" required onchange="updateEditCompanyName(this.value, 'edit');">
+                                                <option value="">Select Supplier ID</option>
+                                                <?php foreach ($suppliers as $supplierID => $companyName) {
+                                                    echo "<option value='$supplierID'>$supplierID</option>";
+                                                } ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ep_editCompanyName">Company Name</label>
+                                            <input type="text" class="form-control" id="ep_editCompanyName" name="ep_companyName" required readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ep_editProductName">Product Name</label>
+                                            <input type="text" class="form-control" id="ep_editProductName" name="ep_productName" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ep_editCostPrice">Cost Price</label>
+                                            <input type="text" class="form-control" id="ep_editCostPrice" name="ep_costPrice" required onchange="calculateTotalPrices('edit');">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ep_editRetailPrice">Retail Price</label>
+                                            <input type="text" class="form-control" id="ep_editRetailPrice" name="ep_retailPrice" required onchange="calculateTotalPrices('edit');">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ep_editQuantity">Quantity</label>
+                                            <input type="number" class="form-control" id="ep_editQuantity" name="ep_quantity" required onchange="calculateTotalPrices('edit');">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <div class="form-group">
+                                                <label for="ep_editTotalCostPrice">Total Cost Price</label>
+                                                <input type="text" class="form-control" id="ep_editTotalCostPrice" name="ep_totalCostPrice" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ep_editTotalRetailPrice">Total Retail Price</label>
+                                                <input type="text" class="form-control" id="ep_editTotalRetailPrice" name="ep_totalRetailPrice" readonly>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" id="ep_editProductId" name="ep_productId"> <!-- Hidden field for product ID -->
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" form="editProductForm">Save Changes</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <input type="hidden" id="ep_editProductId" name="ep_productId"> <!-- Hidden field for product ID -->
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="editProductForm">Save Changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
                     <!-- DataTable for Products -->
-<div class="card shadow mb-4">
-    <div class="card-header py-3 gradient-header" style="display: flex; justify-content: space-between;">
-        <h6 class="m-0 font-weight-bold text-white">Products List</h6>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>Product ID</th>
-                        <th>Supplier ID</th>
-                        <th>Company Name</th>
-                        <th>Product Name</th>
-                        <th>Cost Price</th>
-                        <th>Retail Price</th>
-                        <th>Quantity</th>
-                        <th>Total Cost Price</th>
-                        <th>Total Retail Price</th>
-                        
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php
-include 'cus_db.php'; // Include your database connection file
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 gradient-header" style="display: flex; justify-content: space-between;">
+                            <h6 class="m-0 font-weight-bold text-white">Products List</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Product ID</th>
+                                            <th>Supplier ID</th>
+                                            <th>Company Name</th>
+                                            <th>Product Name</th>
+                                            <th>Cost Price</th>
+                                            <th>Retail Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total Cost Price</th>
+                                            <th>Total Retail Price</th>
+                                            
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                            include 'cus_db.php'; // Include your database connection file
 
-// Fetch products data from the database along with the company name and supplier ID
-$sql = "SELECT p.*, s1.companyName AS companyName, s2.Sup_Id AS Sup_Id
-        FROM products p 
-        JOIN suppliers s1 ON p.companyName = s1.companyName
-        JOIN suppliers s2 ON p.Sup_Id = s2.Sup_Id";
-$result = $conn->query($sql);
-
-
-if ($result === false) {
-    echo "Error: " . $conn->error;
-} else {
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo "<tr>";
-            echo "<td>" . htmlspecialchars($row["productId"]) . "</td>";
-            echo "<td>" . htmlspecialchars($row["Sup_Id"]) . "</td>";
-            echo "<td>" . htmlspecialchars($row["companyName"]) . "</td>";
-            echo "<td>" . htmlspecialchars($row["productName"]) . "</td>";
-            echo "<td>Php" . htmlspecialchars(number_format($row["costPrice"], 2)) . "</td>";
-            echo "<td>Php" . htmlspecialchars(number_format($row["retailPrice"], 2)) . "</td>";
-            echo "<td>" . htmlspecialchars($row["quantity"]) . "</td>";
-            echo "<td>Php" . number_format($row["totalCostPrice"], 2) . "</td>";
-            
-            echo "<td>Php" . number_format($row["totalRetailPrice"], 2) . "</td>";
-           
-            echo "<td><button type='button' class='btn btn-success' data-toggle='modal' data-target='#editProductModal'
-onclick='setEditProductFormData(\"" . htmlspecialchars($row["productId"]) . "\", \"" . htmlspecialchars($row["Sup_Id"]) . "\", \"" . htmlspecialchars($row["companyName"]) . "\", \"" . htmlspecialchars($row["productName"]) . "\", \"" . htmlspecialchars($row["costPrice"]) . "\", \"" . htmlspecialchars($row["retailPrice"]) . "\", \"" . htmlspecialchars($row["quantity"]) . "\")'><i class='fa fa-edit'></i> Edit</button></td>";
+                                            // Fetch products data from the database along with the company name and supplier ID
+                                            $sql = "SELECT p.*, s1.companyName AS companyName, s2.Sup_Id AS Sup_Id
+                                                    FROM products p 
+                                                    JOIN suppliers s1 ON p.companyName = s1.companyName
+                                                    JOIN suppliers s2 ON p.Sup_Id = s2.Sup_Id";
+                                            $result = $conn->query($sql);
 
 
-            echo "<td>
-                <form method='POST' action='products.php' onsubmit='return confirm(\"Are you sure you want to delete this product?\");'>
-                    <input type='hidden' name='deleteProductId' value='" . $row["productId"] . "'>
-                    <button type='submit' class='btn btn-danger'><i class='fa fa-trash'></i> Delete</button>
-                </form>
-            </td>";
-            echo "</tr>";
-        }
-    } else {
-        echo "<tr><td colspan='10'>No results found</td></tr>";
-    }
-}
-$conn->close();
-?>
+                                            if ($result === false) {
+                                                echo "Error: " . $conn->error;
+                                            } else {
+                                                if ($result->num_rows > 0) {
+                                                    while ($row = $result->fetch_assoc()) {
+                                                        echo "<tr>";
+                                                        echo "<td>" . htmlspecialchars($row["productId"]) . "</td>";
+                                                        echo "<td>" . htmlspecialchars($row["Sup_Id"]) . "</td>";
+                                                        echo "<td>" . htmlspecialchars($row["companyName"]) . "</td>";
+                                                        echo "<td>" . htmlspecialchars($row["productName"]) . "</td>";
+                                                        echo "<td>Php" . htmlspecialchars(number_format($row["costPrice"], 2)) . "</td>";
+                                                        echo "<td>Php" . htmlspecialchars(number_format($row["retailPrice"], 2)) . "</td>";
+                                                        echo "<td>" . htmlspecialchars($row["quantity"]) . "</td>";
+                                                        echo "<td>Php" . number_format($row["totalCostPrice"], 2) . "</td>";
+                                                        
+                                                        echo "<td>Php" . number_format($row["totalRetailPrice"], 2) . "</td>";
+                                                    
+                                                        echo "<td><button type='button' class='btn btn-success' data-toggle='modal' data-target='#editProductModal'
+                                            onclick='setEditProductFormData(\"" . htmlspecialchars($row["productId"]) . "\", \"" . htmlspecialchars($row["Sup_Id"]) . "\", \"" . htmlspecialchars($row["companyName"]) . "\", \"" . htmlspecialchars($row["productName"]) . "\", \"" . htmlspecialchars($row["costPrice"]) . "\", \"" . htmlspecialchars($row["retailPrice"]) . "\", \"" . htmlspecialchars($row["quantity"]) . "\")'><i class='fa fa-edit'></i> Edit</button></td>";
 
 
-
-
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
+                                                        echo "<td>
+                                                            <form method='POST' action='products.php' onsubmit='return confirm(\"Are you sure you want to delete this product?\");'>
+                                                                <input type='hidden' name='deleteProductId' value='" . $row["productId"] . "'>
+                                                                <button type='submit' class='btn btn-danger'><i class='fa fa-trash'></i> Delete</button>
+                                                            </form>
+                                                        </td>";
+                                                        echo "</tr>";
+                                                    }
+                                                } else {
+                                                    echo "<tr><td colspan='10'>No results found</td></tr>";
+                                                }
+                                            }
+                                            $conn->close();
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
 
@@ -854,87 +834,73 @@ $conn->close();
 
 
 
+    <script>
+        function ADDcalculateTotalPrices() {
+            // Retrieve the values from the input fields and convert them to floating point numbers
+            var costPrice = parseFloat(document.getElementById('costPrice').value) || 0; // Using || 0 to handle NaN if the field is empty
+            var retailPrice = parseFloat(document.getElementById('retailPrice').value) || 0; // Using || 0 to handle NaN if the field is empty
+            var quantity = parseInt(document.getElementById('quantity').value, 10) || 0; // Using || 0 to handle NaN if the field is empty
+
+            // Calculate total prices based on the input values
+            var totalRetailPrice = retailPrice * quantity;
+            var totalCostPrice = costPrice * quantity;
+
+            // Set the calculated total prices to their respective input fields and format the output to 2 decimal places
+            document.getElementById('totalRetailPrice').value = totalRetailPrice.toFixed(7);
+            document.getElementById('totalCostPrice').value = totalCostPrice.toFixed(7);
+        }
+    </script>
+
+    <script>
+        function calculateTotalPrices() {
+            var editCostPrice = parseFloat(document.getElementById('ep_editCostPrice').value) || 0;
+            var editRetailPrice = parseFloat(document.getElementById('ep_editRetailPrice').value) || 0;
+            var editQuantity = parseInt(document.getElementById('ep_editQuantity').value, 10) || 0;
+
+            var totalRetailPrice = editRetailPrice * editQuantity;
+            var totalCostPrice = editCostPrice * editQuantity;
+
+            document.getElementById('ep_editTotalCostPrice').value = totalCostPrice.toFixed(7);
+            document.getElementById('ep_editTotalRetailPrice').value = totalRetailPrice.toFixed(7);
+        
+        }
+
+    </script>
+
+    <script>
+        //para automatic
+        // JavaScript to update company name based on selected supplier ID
+        function updateCompanyName(supplierID) {
+            const suppliers = <?php echo json_encode($suppliers); ?>;
+            const companyNameInput = document.getElementById('companyName');
+            companyNameInput.value = suppliers[supplierID] || ''; // Update the company name based on supplier ID or clear if not found
+        }
+    </script>
+
+    <script>
+        function updateEditCompanyName(supplierID) {
+            const suppliers = <?php echo json_encode($suppliers); ?>;
+            const companyNameInput = document.getElementById('ep_editCompanyName');
+            companyNameInput.value = suppliers[supplierID] || ''; // Automatically fill in the company name based on the supplier ID
+        }
+    </script>
 
 
+    <script>
+        function setEditProductFormData(productId, supplierId, companyName, productName, costPrice, retailPrice, quantity, totalCostPrice, totalRetailPrice) {
+            document.getElementById('ep_editProductId').value = productId;
+            document.getElementById('ep_editSupplierID').value = supplierId;
+            document.getElementById('ep_editCompanyName').value = companyName;
+            document.getElementById('ep_editProductName').value = productName;
+            document.getElementById('ep_editCostPrice').value = costPrice;
+            document.getElementById('ep_editRetailPrice').value = retailPrice;
+            document.getElementById('ep_editQuantity').value = quantity;
+            document.getElementById('ep_totalCostPrice').value = totalCostPrice;
+            document.getElementById('ep_totalRetailPrice').value = totalRetailPrice;
 
+        }
 
-
-
-
-
-<script>
-    function ADDcalculateTotalPrices() {
-        // Retrieve the values from the input fields and convert them to floating point numbers
-        var costPrice = parseFloat(document.getElementById('costPrice').value) || 0; // Using || 0 to handle NaN if the field is empty
-        var retailPrice = parseFloat(document.getElementById('retailPrice').value) || 0; // Using || 0 to handle NaN if the field is empty
-        var quantity = parseInt(document.getElementById('quantity').value, 10) || 0; // Using || 0 to handle NaN if the field is empty
-
-        // Calculate total prices based on the input values
-        var totalRetailPrice = retailPrice * quantity;
-        var totalCostPrice = costPrice * quantity;
-
-        // Set the calculated total prices to their respective input fields and format the output to 2 decimal places
-        document.getElementById('totalRetailPrice').value = totalRetailPrice.toFixed(7);
-        document.getElementById('totalCostPrice').value = totalCostPrice.toFixed(7);
-    }
-</script>
-
-
-
-<script>
-function calculateTotalPrices() {
-    var editCostPrice = parseFloat(document.getElementById('ep_editCostPrice').value) || 0;
-    var editRetailPrice = parseFloat(document.getElementById('ep_editRetailPrice').value) || 0;
-    var editQuantity = parseInt(document.getElementById('ep_editQuantity').value, 10) || 0;
-
-    var totalRetailPrice = editRetailPrice * editQuantity;
-    var totalCostPrice = editCostPrice * editQuantity;
-
-    document.getElementById('ep_editTotalCostPrice').value = totalCostPrice.toFixed(7);
-    document.getElementById('ep_editTotalRetailPrice').value = totalRetailPrice.toFixed(7);
-   
-}
-
-</script>
-
-
-
-
-
-
-<script>
-    //para automatic
-// JavaScript to update company name based on selected supplier ID
-function updateCompanyName(supplierID) {
-    const suppliers = <?php echo json_encode($suppliers); ?>;
-    const companyNameInput = document.getElementById('companyName');
-    companyNameInput.value = suppliers[supplierID] || ''; // Update the company name based on supplier ID or clear if not found
-}
-</script>
-<script>
-function updateEditCompanyName(supplierID) {
-    const suppliers = <?php echo json_encode($suppliers); ?>;
-    const companyNameInput = document.getElementById('ep_editCompanyName');
-    companyNameInput.value = suppliers[supplierID] || ''; // Automatically fill in the company name based on the supplier ID
-}
-</script>
-
-
-<script>
-function setEditProductFormData(productId, supplierId, companyName, productName, costPrice, retailPrice, quantity, totalCostPrice, totalRetailPrice) {
-    document.getElementById('ep_editProductId').value = productId;
-    document.getElementById('ep_editSupplierID').value = supplierId;
-    document.getElementById('ep_editCompanyName').value = companyName;
-    document.getElementById('ep_editProductName').value = productName;
-    document.getElementById('ep_editCostPrice').value = costPrice;
-    document.getElementById('ep_editRetailPrice').value = retailPrice;
-    document.getElementById('ep_editQuantity').value = quantity;
-    document.getElementById('ep_totalCostPrice').value = totalCostPrice;
-    document.getElementById('ep_totalRetailPrice').value = totalRetailPrice;
-
-}
-
-</script>
+    </script>
 
 </body>
 
