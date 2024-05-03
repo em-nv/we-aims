@@ -1,3 +1,87 @@
+<?php
+include 'cus_db.php'; // Include your database connection
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Collect post data
+    $firstName = isset($_POST['adminFirstName']) ? $_POST['adminFirstName'] : '';
+    $lastName = isset($_POST['adminLastName']) ? $_POST['adminLastName'] : '';
+    $email = isset($_POST['adminEmail']) ? $_POST['adminEmail'] : '';
+    $password = isset($_POST['adminPassword']) ? $_POST['adminPassword'] : '';
+    
+    // Check if required fields are not empty
+    if (!empty($firstName)) {
+        // Prepare an insert statement
+        $sql = "INSERT INTO admin (fname, lname, email, password) VALUES (?, ?, ?, ?)";
+        
+        if($stmt = $conn->prepare($sql)){
+            // Bind variables to the prepared statement as parameters
+            $stmt->bind_param("ssss", $firstName, $lastName, $email, $password);
+            
+            // Execute the query
+            if($stmt->execute()){
+                echo "Records inserted successfully.";
+            } else{
+                echo "ERROR: Could not execute query: $sql. " . $conn->error;
+            }
+        } else{
+            echo "ERROR: Could not prepare query: $sql. " . $conn->error;
+        }
+    } else {
+        echo "ERROR: First Name is required.";
+    }
+}
+?>
+
+<!--EDIT-->
+<?php 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editAdminId"]) && isset($_POST["editAdminFirstName"]) && isset($_POST["editAdminLastName"]) && isset($_POST["editAdminEmail"]) && isset($_POST["editAdminPassword"])) {
+    $admin_id = $_POST["editAdminId"];
+    $firstName = $_POST["editAdminFirstName"];
+    $lastName = $_POST["editAdminLastName"];
+    $email = $_POST["editAdminEmail"];
+    $password = $_POST["editAdminPassword"];
+
+    // Update the customer data in the database
+    $sql = "UPDATE admin SET fname='$firstName', lname='$lastName', email='$email', password='$password' WHERE admin_id=$admin_id";
+
+    if ($conn->query($sql) === TRUE) {
+        // If update successful, redirect to the previous page or show a success message
+        header("Location: {$_SERVER['HTTP_REFERER']}");
+        exit();
+    } else {
+        echo "Error updating record: " . $conn->error;
+    }
+}
+?>
+
+<!--DELETE-->
+<?php
+// Put this block at the top of the admin.php file
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['admin_id'])) {
+    include 'cus_db.php'; // Include your database connection file
+    $admin_id = $_POST['admin_id'];
+
+    // Prepare SQL and bind parameters
+    $stmt = $conn->prepare("DELETE FROM admin WHERE admin_id = ?");
+    $stmt->bind_param("i", $admin_id);
+    
+    if($stmt->execute()) {
+        // Record deleted successfully, you can set a session message here
+        $_SESSION['message'] = "Record deleted successfully";
+    } else {
+        $_SESSION['error'] = "Error deleting record: " . $conn->error;
+    }
+    
+    $stmt->close();
+    $conn->close();
+
+    header("Location: admin.php");
+    exit();
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,6 +116,28 @@
     <!-- BOXICONS AWESOME ICONS -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
+    <style>
+    .gradient-header {
+        background-image: linear-gradient(to right, #003366, #004080, #0059b3); 
+        color: white; /* White text color */
+            /* Add this CSS to your existing styles */
+    }
+    .edit-column button i,
+    .trash-column button i {
+        color: black; /* Set icon color to black */
+    }
+
+    .edit-column button:hover {
+        background-color: #28a745; /* Change background color to green on hover for edit button */
+        border-color: #28a745; /* Change border color to match background color */
+    }
+
+    .trash-column button:hover {
+        background-color: #dc3545; /* Change background color to red on hover for delete button */
+        border-color: #dc3545; /* Change border color to match background color */
+    }
+    
+    </style>
 </head>
 
 <body id="page-top">
@@ -262,15 +368,102 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Admin</h1>
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Admins</h1>
+                    <div>
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal"
+                            data-target="#addAdminModal">
+                            <i class="fas fa-user-plus fa-sm text-white-50"></i> Add Admin
+                        </a>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
+                </div>
+
+        <!-- MODAL FOR ADDING A ADMIN -->
+        <div class="modal fade" id="addAdminModal" tabindex="-1" role="dialog" aria-labelledby="addAdminModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header gradient-header">
+                        <h5 class="modal-title" id="addAdminModalLabel">Add New Admin</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    <form id="addAdminForm" method="POST" action="admin.php">
+                        <div class="form-group">
+                            <label for="adminFirstName">First Name</label>
+                            <input type="text" class="form-control" id="adminFirstName" name="adminFirstName" required pattern="[A-Za-z]+" title="Only letters allowed">
+                        </div>
+                        <div class="form-group">
+                            <label for="adminLastName">Last Name</label>
+                            <input type="text" class="form-control" id="adminLastName" name="adminLastName" required pattern="[A-Za-z]+" title="Only letters allowed">
+                        </div>
+                        <div class="form-group">
+                            <label for="adminEmail">Email Address</label>
+                            <input type="email" class="form-control" id="adminEmail" name="adminEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="adminPassword">Password</label>
+                            <input type="password" class="form-control" id="adminPassword" name="adminPassword" minlength="8" required>
+                        </div>
+                    </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" form="addAdminForm">Add Admin</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL FOR EDITING (EDIT BUTTON) THE ADMIN -->
+<div class="modal fade" id="editAdminModal" tabindex="-1" role="dialog" aria-labelledby="editAdminModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header gradient-header">
+                <h5 class="modal-title" id="editAdminModalLabel">Edit Admin</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editAdminForm" method="POST" action="admin.php">
+                        <div class="form-group">
+                            <label for="editAdminFirstName">First Name</label>
+                            <input type="text" class="form-control" id="editAdminFirstName" name="editAdminFirstName" required pattern="[A-Za-z]+" title="Only letters allowed">
+                        </div>
+                        <div class="form-group">
+                            <label for="editAdminLastName">Last Name</label>
+                            <input type="text" class="form-control" id="editAdminLastName" name="editAdminLastName" required pattern="[A-Za-z]+" title="Only letters allowed">
+                        </div>
+                        <div class="form-group">
+                            <label for="editAdminEmail">Email Address</label>
+                            <input type="email" class="form-control" id="editAdminEmail" name="editAdminEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editAdminPassword">Password</label>
+                            <input type="password" class="form-control" id="editAdminPassword" name="editAdminPassword" minlength="8" required>
+                        </div>
+                    <!-- Hidden field for admin ID -->
+                    <input type="hidden" id="editAdminId" name="editAdminId">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" form="editAdminForm">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
                     <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
+                    <!-- <div class="card shadow mb-4">
                         <div class="card-header py-3" style="display: flex; justify-content: space-between; background-color: transparent !important;">
                             <h6 class="m-0 font-weight-bold text-primary"> </h6>
                             <div class="add-button">
@@ -330,6 +523,74 @@
                                 </table>
                             </div>
                         </div>
+                    </div> -->
+
+                    <div class="card shadow mb-4">
+                    <div class="card-header py-3 gradient-header" style="display: flex; justify-content: space-between;">
+                        <h6 class="m-0 font-weight-bold text-white">Admin List</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Admin ID</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Email</th>
+                                        <th>Password</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    include 'cus_db.php'; // Include your database connection file
+
+                                    // SQL query to select data from database
+                                    $sql = "SELECT admin_id, fname, lname, email, password FROM admin";
+                                    $result = $conn->query($sql);
+
+                                    if ($result === false) {
+                                        // If the query failed and no result is returned
+                                        echo "Error: " . $conn->error;
+                                    } else {
+                                        // Check if there are rows returned
+                                        if ($result->num_rows > 0) {
+                                            // Output data of each row
+                                            while($row = $result->fetch_assoc()) {
+                                                echo "<tr>";
+                                                echo "<td>" . $row["admin_id"] . "</td>";
+                                                echo "<td>" . htmlspecialchars($row["fname"]) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row["lname"]) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row["email"]) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row["password"]) . "</td>";
+                                                // Edit button form
+                                                echo "<td>
+                                                <button type='button' class='btn btn-success centered-button' data-toggle='modal' data-target='#editAdminModal' 
+                                                onclick='setEditFormData(\"" . htmlspecialchars($row["admin_id"]) . "\", \"" . htmlspecialchars($row["fname"]) . "\", \"" . htmlspecialchars($row["lname"]) . "\", \"" . htmlspecialchars($row["email"]) . "\", \"" . htmlspecialchars($row["password"]) . "\")'>
+                                                    <i class='fa fa-edit'></i> Edit
+                                                </button>
+                                            </td>";
+                                                // Delete button form
+                                                echo "<td>
+                                                        <form method='POST' action='admin.php' onsubmit='return confirm(\"Are you sure you want to delete this record?\");'>
+                                                            <input type='hidden' name='admin_id' value='" . $row["admin_id"] . "'>
+                                                            <button type='submit' class='btn btn-danger centered-button'><i class='fa fa-trash'></i> Delete</button>
+                                                        </form>
+                                                    </td>";
+                                                echo "</tr>";
+                                            }
+                                        } else {
+                                            echo "<tr><td colspan='7'>No results found</td></tr>";
+                                        }
+                                    }
+                                    $conn->close();
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     </div>
 
                 </div>
@@ -385,6 +646,9 @@
     <script src="../js/date-and-time.js"></script>
 
 
+    <!-- CUSTOMIZED JS -->
+    <script src="../js/customized.js"></script>
+    <script src="../js/date-and-time.js"></script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="../vendor/jquery/jquery.min.js"></script>
@@ -402,6 +666,16 @@
 
     <!-- Page level custom scripts -->
     <script src="../js/demo/datatables-demo.js"></script>
+
+    <script>
+    function setEditFormData(admin_id, fname, lname, email, password) {
+    document.getElementById("editAdminFirstName").value = fname;
+    document.getElementById("editAdminLastName").value = lname;
+    document.getElementById("editAdminEmail").value = email;
+    document.getElementById("editAdminPassword").value = password;
+    document.getElementById("editAdminId").value = admin_id;
+}
+</script>
 
 </body>
 

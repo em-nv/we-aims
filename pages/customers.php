@@ -482,8 +482,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && i
                 <thead>
                     <tr>
                         <th>Customer ID</th>
-                        <th>F Name</th>
-                        <th>L Name</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
                         <th>Phone No.</th>
                         <th>Payment Method</th>
                         <th>Edit</th>
