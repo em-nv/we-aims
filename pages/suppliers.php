@@ -453,11 +453,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editSupplierId"])) {
                                         </div>
                                         <div class="form-group">
                                             <label for="supplierProvince">Province</label>
-                                            <input type="text" class="form-control" id="supplierProvince" name="supplierProvince" required pattern="[A-Za-z]+" title="Only letters allowed">
+                                            <input type="text" class="form-control" id="supplierProvince" name="supplierProvince" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
                                         </div>
                                         <div class="form-group">
                                             <label for="supplierCity">City/Municipality</label>
-                                            <input type="text" class="form-control" id="supplierCity" name="supplierCity" required pattern="[A-Za-z]+" title="Only letters allowed">
+                                            <input type="text" class="form-control" id="supplierCity" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
                                         </div>
                                         <div class="form-group">
                                             <label for="supplierZipCode">Zip Code</label>
@@ -497,11 +497,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editSupplierId"])) {
                                 </div>
                                 <div class="form-group">
                                     <label for="editSupplierProvince">Province</label>
-                                    <input type="text" class="form-control" id="editSupplierProvince" name="editSupplierProvince" required pattern="[A-Za-z]+" title="Only letters allowed">
+                                    <input type="text" class="form-control" id="editSupplierProvince" name="editSupplierProvince" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
                                 </div>
                                 <div class="form-group">
                                     <label for="editSupplierCity">City/Municipality</label>
-                                    <input type="text" class="form-control" id="editSupplierCity" name="editSupplierCity" required pattern="[A-Za-z]+" title="Only letters allowed">
+                                    <input type="text" class="form-control" id="editSupplierCity" name="editSupplierCity" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
                                 </div>
                                 <div class="form-group">
                                     <label for="editSupplierZipCode">Zip Code</label>

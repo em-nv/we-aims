@@ -394,11 +394,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && i
                                     <form id="addCustomerForm" method="POST" action="customers.php">
                                         <div class="form-group">
                                             <label for="customerFirstName">First Name</label>
-                                            <input type="text" class="form-control" id="customerFirstName" name="customerFirstName" required pattern="[A-Za-z]+" title="Only letters allowed">
+                                            <input type="text" class="form-control" id="customerFirstName" name="customerFirstName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
                                         </div>
                                         <div class="form-group">
                                             <label for="customerLastName">Last Name</label>
-                                            <input type="text" class="form-control" id="customerLastName" name="customerLastName" required pattern="[A-Za-z]+" title="Only letters allowed">
+                                            <input type="text" class="form-control" id="customerLastName" name="customerLastName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
                                         </div>
                                         <div class="form-group">
                                             <label for="customerPhone">Phone Number</label>
@@ -438,11 +438,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && i
                                     <form id="editCustomerForm" method="POST" action="customers.php">
                                         <div class="form-group">
                                             <label for="editCustomerFirstName">First Name</label>
-                                            <input type="text" class="form-control" id="editCustomerFirstName" name="editCustomerFirstName" required pattern="[A-Za-z]+" title="Only letters allowed">
+                                            <input type="text" class="form-control" id="editCustomerFirstName" name="editCustomerFirstName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
                                         </div>
                                         <div class="form-group">
                                             <label for="editCustomerLastName">Last Name</label>
-                                            <input type="text" class="form-control" id="editCustomerLastName" name="editCustomerLastName" required pattern="[A-Za-z]+" title="Only letters allowed">
+                                            <input type="text" class="form-control" id="editCustomerLastName" name="editCustomerLastName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
                                         </div>
                                         <div class="form-group">
                                             <label for="editCustomerPhone">Phone Number</label>
