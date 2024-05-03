@@ -396,11 +396,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['admin_id'])) {
                     <form id="addAdminForm" method="POST" action="admin.php">
                         <div class="form-group">
                             <label for="adminFirstName">First Name</label>
-                            <input type="text" class="form-control" id="adminFirstName" name="adminFirstName" required pattern="[A-Za-z]+" title="Only letters allowed">
+                            <input type="text" class="form-control" id="adminFirstName" name="adminFirstName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
                         </div>
                         <div class="form-group">
                             <label for="adminLastName">Last Name</label>
-                            <input type="text" class="form-control" id="adminLastName" name="adminLastName" required pattern="[A-Za-z]+" title="Only letters allowed">
+                            <input type="text" class="form-control" id="adminLastName" name="adminLastName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
                         </div>
                         <div class="form-group">
                             <label for="adminEmail">Email Address</label>
