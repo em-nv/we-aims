@@ -74,7 +74,7 @@ body {
   line-height: 1.5;
   color: #858796;
   text-align: left;
-  background-color: var(--body-color)
+  background-color: var(--body-color);
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -4829,8 +4829,8 @@ input[type="button"].btn-block {
 .page-item.active .page-link {
   z-index: 3;
   color: #fff;
-  background-color: var(--primary);
-  border-color: var(--primary);
+  /* filter button active color */
+  background-color: #004080;
 }
 
 .page-item.disabled .page-link {
@@ -5825,7 +5825,6 @@ a.close.disabled {
 
 .modal-footer {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
   padding: 0.75rem;
@@ -11766,4 +11765,11 @@ body.sidebar-toggled footer.sticky-footer {
 .products-filter:hover{
   font-weight: bold;
   color: black !important;
+}
+
+/* CENTERED BUTTON */
+button.centered-button {
+  display: block;
+  margin: 0 auto;
+  /* Additional styling for the button */
 }

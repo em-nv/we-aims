@@ -1,37 +1,32 @@
+<!--ADD-->
 <?php
 include 'cus_db.php'; // Include your database connection
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Collect post data
-    $firstName = isset($_POST['customerFirstName']) ? $_POST['customerFirstName'] : '';
-    $lastName = isset($_POST['customerLastName']) ? $_POST['customerLastName'] : '';
-    $phone = isset($_POST['customerPhone']) ? $_POST['customerPhone'] : '';
-    $paymentMethod = isset($_POST['paymentMethod']) ? $_POST['paymentMethod'] : '';
-    
-    // Check if required fields are not empty
-    if (!empty($firstName)) {
-        // Prepare an insert statement
-        $sql = "INSERT INTO customers (firstName, lastName, phone, paymentMethod) VALUES (?, ?, ?, ?)";
-        
-        if($stmt = $conn->prepare($sql)){
-            // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("ssss", $firstName, $lastName, $phone, $paymentMethod);
-            
-            // Execute the query
-            if($stmt->execute()){
-                echo "Records inserted successfully.";
-            } else{
-                echo "ERROR: Could not execute query: $sql. " . $conn->error;
-            }
+    $firstName = $_POST['customerFirstName'];
+    $lastName = $_POST['customerLastName'];
+    $phone = $_POST['customerPhone'];
+    $paymentMethod = $_POST['paymentMethod'];
+
+    // Prepare an insert statement
+    $sql = "INSERT INTO customers (firstName, lastName, phone, paymentMethod) VALUES (?, ?, ?, ?)";
+
+    if($stmt = $conn->prepare($sql)){
+        // Bind variables to the prepared statement as parameters
+        $stmt->bind_param("ssss", $firstName, $lastName, $phone, $paymentMethod);
+
+        // Execute the query
+        if($stmt->execute()){
+            echo "Records inserted successfully.";
         } else{
-            echo "ERROR: Could not prepare query: $sql. " . $conn->error;
+            echo "ERROR: Could not execute query: $sql. " . $conn->error;
         }
-    } else {
-        echo "ERROR: First Name is required.";
-    }
-}
-?>
+    } else{
+        echo "ERROR: Could not prepare query: $sql. " . $conn->error;
+    }}
+    ?>
 
 <!--DELETE-->
 <?php
@@ -81,7 +76,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && i
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -110,9 +104,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && i
 
     <!-- LORDICONS -->
     <script src="../https://cdn.lordicon.com/lordicon.js"></script>
-
-    <!-- BOXICONS AWESOME ICONS -->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <style>
     .gradient-header {
@@ -225,19 +216,100 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && i
                 <div id="collapseTransactions" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="buttons.php">Transaction Customer</a>
-                        <a class="collapse-item" href="cards.php">Products</a>
+                        <a class="collapse-item" href="TransactionProducts.php">Transaction Products</a>
+                        <a class="collapse-item" href="cards.php">Services</a>
                         <a class="collapse-item" href="cards.php">Supplier</a>
                     </div>
                 </div>
             </li>
 
-            <!-- Nav Item - ADMIN -->
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Addons
+            </div>
+
+            <!-- Nav Item - LOGOUT -->
             <li class="nav-item">
-                <a class="nav-link" href="admin.php">
-                    <i class="fas fa-fw fa-solid fa-user-tie"></i>
-                    <span>Admin</span></a>
+                <a class="nav-link" href="tables.php">
+                    <i class="fas fa-fw fa-solid fa-dollar-sign"></i>
+                    <span>Logout</span></a>
             </li>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Pages</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Login Screens:</h6>
+                        <a class="collapse-item" href="pages/login.php">Login</a>
+                        <a class="collapse-item" href="pages/register.php">Register</a>
+                        <a class="collapse-item" href="forgot-password.php">Forgot Password</a>
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Other Pages:</h6>
+                        <a class="collapse-item" href="404.php">404 Page</a>
+                        <a class="collapse-item" href="blank.php">Blank Page</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Components</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Components:</h6>
+                        <a class="collapse-item" href="buttons.php">Buttons</a>
+                        <a class="collapse-item" href="cards.php">Cards</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Utilities</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <a class="collapse-item" href="utilities-color.html">Colors</a>
+                        <a class="collapse-item" href="utilities-border.html">Borders</a>
+                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                    </div>
+                </div>
+            </li>
+
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Charts</span></a>
+            </li>
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="tables.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Tables</span></a>
+            </li>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -245,6 +317,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && i
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+            <!-- Sidebar Message -->
+            <div class="sidebar-card d-none d-lg-flex">
+                <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
+                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
+                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
             </div>
 
         </ul>
@@ -264,16 +343,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && i
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar DATE AND TIME -->
-                    <div class="d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="date-and-time">
-                            <span class="calendar-logo"><i class='bx bx-calendar'></i></span>
-                            <span id="date_now" class="date-now"></span>
-                            <span id="current-time" class="time-now"></span>
+                    <!-- Topbar Search -->
+                    <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
                         </div>
+                    </form>
+
+                    <!-- Topbar Navbar -->
+                    <div class="date-and-time">
+                        <span id="date_now" class="date-now">
+                            <!-- JavaScript will update this -->
+                        </span>
+                        <span id="current-time" class="time-now">
+                            <!-- JavaScript will update this -->
+                        </span>
                     </div>
 
                     <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
 
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
@@ -325,7 +443,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && i
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                             </div>
                         </li>
-
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -334,7 +451,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && i
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                                 <img class="img-profile rounded-circle"
-                                    src="../img/profile-icons/undraw_pic_profile_re_7g2h.svg">
+                                    src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -393,27 +510,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && i
                     </div>
                     <div class="modal-body">
                     <form id="addCustomerForm" method="POST" action="customers.php">
-                        <div class="form-group">
-                            <label for="customerFirstName">First Name</label>
-                            <input type="text" class="form-control" id="customerFirstName" name="customerFirstName" required pattern="[A-Za-z]+" title="Only letters allowed">
-                        </div>
-                        <div class="form-group">
-                            <label for="customerLastName">Last Name</label>
-                            <input type="text" class="form-control" id="customerLastName" name="customerLastName" required pattern="[A-Za-z]+" title="Only letters allowed">
-                        </div>
-                        <div class="form-group">
-                            <label for="customerPhone">Phone Number</label>
-                            <input type="text" class="form-control" id="customerPhone" name="customerPhone" required pattern="[0-9]{11}" title="Phone number must be 11 digits">
-                        </div>
-                        <div class="form-group">
-                            <label for="paymentMethod">Payment Method</label>
-                            <select class="form-control" id="paymentMethod" name="paymentMethod">
-                                <option value="Credit Card">Credit Card</option>
-                                <option value="PayPal">PayPal</option>
-                                <option value="Bank Transfer">Bank Transfer</option>
-                            </select>
-                        </div>
-                    </form>
+            <div class="form-group">
+                <label for="customerFirstName">First Name</label>
+                <input type="text" class="form-control" id="customerFirstName" name="customerFirstName" required>
+            </div>
+            <div class="form-group">
+                <label for="customerLastName">Last Name</label>
+                <input type="text" class="form-control" id="customerLastName" name="customerLastName" required>
+            </div>
+            <div class="form-group">
+                <label for="customerPhone">Phone Number</label>
+                <input type="text" class="form-control" id="customerPhone" name="customerPhone" required>
+            </div>
+            <div class="form-group">
+                <label for="paymentMethod">Payment Method</label>
+                <select class="form-control" id="paymentMethod" name="paymentMethod">
+                    <option value="Credit Card">Credit Card</option>
+                    <option value="PayPal">PayPal</option>
+                    <option value="Bank Transfer">Bank Transfer</option>
+                </select>
+            </div>
+            </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -439,17 +556,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && i
                 <form id="editCustomerForm" method="POST" action="customers.php">
                     <div class="form-group">
                         <label for="editCustomerFirstName">First Name</label>
-                        <input type="text" class="form-control" id="editCustomerFirstName" name="editCustomerFirstName" required pattern="[A-Za-z]+" title="Only letters allowed">
+                        <input type="text" class="form-control" id="editCustomerFirstName" name="editCustomerFirstName" required>
                     </div>
                     <div class="form-group">
                         <label for="editCustomerLastName">Last Name</label>
-                        <input type="text" class="form-control" id="editCustomerLastName" name="editCustomerLastName" required pattern="[A-Za-z]+" title="Only letters allowed">
+                        <input type="text" class="form-control" id="editCustomerLastName" name="editCustomerLastName" required>
                     </div>
                     <div class="form-group">
                         <label for="editCustomerPhone">Phone Number</label>
-                        <input type="text" class="form-control" id="editCustomerPhone" name="editCustomerPhone" required pattern="[0-9]{11}" title="Phone number must be 11 digits">
+                        <input type="text" class="form-control" id="editCustomerPhone" name="editCustomerPhone" required>
                     </div>
-
                     <div class="form-group">
                         <label for="editPaymentMethod">Payment Method</label>
                         <select class="form-control" id="editPaymentMethod" name="editPaymentMethod">
@@ -514,7 +630,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && i
                                 echo "<td>" . htmlspecialchars($row["paymentMethod"]) . "</td>";
                                 // Edit button form
                                 echo "<td>
-                                <button type='button' class='btn btn-success centered-button' data-toggle='modal' data-target='#editCustomerModal' 
+                                <button type='button' class='btn btn-success' data-toggle='modal' data-target='#editCustomerModal' 
                                 onclick='setEditFormData(\"" . htmlspecialchars($row["id"]) . "\", \"" . htmlspecialchars($row["firstName"]) . "\", \"" . htmlspecialchars($row["lastName"]) . "\", \"" . htmlspecialchars($row["phone"]) . "\", \"" . htmlspecialchars($row["paymentMethod"]) . "\")'>
                                     <i class='fa fa-edit'></i> Edit
                                 </button>
@@ -523,7 +639,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && i
                                 echo "<td>
                                         <form method='POST' action='customers.php' onsubmit='return confirm(\"Are you sure you want to delete this record?\");'>
                                             <input type='hidden' name='id' value='" . $row["id"] . "'>
-                                            <button type='submit' class='btn btn-danger centered-button'><i class='fa fa-trash'></i> Delete</button>
+                                            <button type='submit' class='btn btn-danger'><i class='fa fa-trash'></i> Delete</button>
                                         </form>
                                     </td>";
                                 echo "</tr>";
