@@ -1,3 +1,88 @@
+<?php
+include 'cus_db.php'; // Include your database connection
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Collect post data
+    $firstName = isset($_POST['employeeFirstName']) ? $_POST['employeeFirstName'] : '';
+    $lastName = isset($_POST['employeeLastName']) ? $_POST['employeeLastName'] : '';
+    $role = isset($_POST['employeeRole']) ? $_POST['employeeRole'] : '';
+    $salary = isset($_POST['employeeSalary']) ? $_POST['employeeSalary'] : '';
+    $phone = isset($_POST['employeePhone']) ? $_POST['employeePhone'] : '';
+    
+    // Check if required fields are not empty
+    if (!empty($firstName)) {
+        // Prepare an insert statement
+        $sql = "INSERT INTO employees (first_name, last_name, role, salary, phone_no) VALUES (?, ?, ?, ?, ?)";
+        
+        if($stmt = $conn->prepare($sql)){
+            // Bind variables to the prepared statement as parameters
+            $stmt->bind_param("sssds", $firstName, $lastName, $role, $salary, $phone);
+            
+            // Execute the query
+            if($stmt->execute()){
+                echo "Records inserted successfully.";
+            } else{
+                echo "ERROR: Could not execute query: $sql. " . $conn->error;
+            }
+        } else{
+            echo "ERROR: Could not prepare query: $sql. " . $conn->error;
+        }
+    } else {
+        echo "ERROR: First Name is required.";
+    }
+}
+?>
+
+<!--DELETE-->
+<?php
+// Put this block at the top of the employees.php file
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['employee_id'])) {
+    include 'cus_db.php'; // Include your database connection file
+    $employee_id = $_POST['employee_id'];
+
+    // Prepare SQL and bind parameters
+    $stmt = $conn->prepare("DELETE FROM employees WHERE employee_id = ?");
+    $stmt->bind_param("i", $employee_id);
+    
+    if($stmt->execute()) {
+        // Record deleted successfully, you can set a session message here
+        $_SESSION['message'] = "Record deleted successfully";
+    } else {
+        $_SESSION['error'] = "Error deleting record: " . $conn->error;
+    }
+    
+    $stmt->close();
+    $conn->close();
+
+    header("Location: employees.php");
+    exit();
+}
+?>
+
+<!--EDIT-->
+<?php 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editEmployeeId"]) && isset($_POST["editEmployeeFirstName"]) && isset($_POST["editEmployeeLastName"]) && isset($_POST["editEmployeeRole"]) && isset($_POST["editEmployeeSalary"]) && isset($_POST["editEmployeePhone"])) {
+    $employee_id = $_POST["editEmployeeId"];
+    $firstName = $_POST["editEmployeeFirstName"];
+    $lastName = $_POST["editEmployeeLastName"];
+    $role = $_POST["editEmployeeRole"];
+    $salary = $_POST["editEmployeeSalary"];
+    $phone = $_POST["editEmployeePhone"];
+
+    // Update the employee data in the database
+    $sql = "UPDATE employees SET first_name='$firstName', last_name='$lastName', role='$role', salary='$salary', phone_no='$phone' WHERE employee_id=$employee_id";
+
+    if ($conn->query($sql) === TRUE) {
+        // If update successful, redirect to the previous page or show a success message
+        header("Location: {$_SERVER['HTTP_REFERER']}");
+        exit();
+    } else {
+        echo "Error updating record: " . $conn->error;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,6 +116,29 @@
 
     <!-- BOXICONS AWESOME ICONS -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+    .gradient-header {
+        background-image: linear-gradient(to right, #003366, #004080, #0059b3); 
+        color: white; /* White text color */
+            /* Add this CSS to your existing styles */
+    }
+    .edit-column button i,
+    .trash-column button i {
+        color: black; /* Set icon color to black */
+    }
+
+    .edit-column button:hover {
+        background-color: #28a745; /* Change background color to green on hover for edit button */
+        border-color: #28a745; /* Change border color to match background color */
+    }
+
+    .trash-column button:hover {
+        background-color: #dc3545; /* Change background color to red on hover for delete button */
+        border-color: #dc3545; /* Change border color to match background color */
+    }
+    
+    </style>
 
 </head>
 
@@ -267,18 +375,110 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Employees</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        <div>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal"
+                                data-target="#addEmployeeModal">
+                                <i class="fas fa-user-plus fa-sm text-white-50"></i> Add Employee
+                            </a>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        </div>
                     </div>
 
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3" style="display: flex; justify-content: space-between; background-color: transparent !important;">
-                            <h6 class="m-0 font-weight-bold text-primary"> </h6>
-                            <div class="add-button">
-                                <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" ><i
-                                    class="fas fa-solid fa-plus fa-sm text-white-50"></i> Add</a>
+                    <!-- MODAL FOR ADDING A EMPLOYEE -->
+                    <div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header gradient-header">
+                                    <h5 class="modal-title" id="addEmployeeModalLabel">Add New Employee</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="addEmployeeForm" method="POST" action="employees.php">
+                                        <div class="form-group">
+                                            <label for="employeeFirstName">First Name</label>
+                                            <input type="text" class="form-control" id="employeeFirstName" name="employeeFirstName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="employeeLastName">Last Name</label>
+                                            <input type="text" class="form-control" id="employeeLastName" name="employeeLastName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="employeeRole">Role/Designation</label>
+                                            <input type="text" class="form-control" id="employeeRole" name="employeeRole" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="employeeSalary">Salary</label>
+                                            <input type="text" class="form-control" id="employeeSalary" name="employeeSalary" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="employeePhone">Phone Number</label>
+                                            <input type="text" class="form-control" id="employeePhone" name="employeePhone" required pattern="[0-9]{11}" title="Phone number must be 11 digits">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" form="addEmployeeForm">Add Employee</button>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+
+
+                    <!-- MODAL FOR EDITING (EDIT BUTTON) THE EMPLOYEE -->
+                    <div class="modal fade" id="editEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="editEmployeeModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header gradient-header">
+                                    <h5 class="modal-title" id="editEmployeeModalLabel">Edit Employee</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="editEmployeeForm" method="POST" action="employees.php">
+                                        <div class="form-group">
+                                            <label for="editEmployeeFirstName">First Name</label>
+                                            <input type="text" class="form-control" id="editEmployeeFirstName" name="editEmployeeFirstName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editEmployeeLastName">Last Name</label>
+                                            <input type="text" class="form-control" id="editEmployeeLastName" name="editEmployeeLastName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editEmployeeRole">Role/Designation</label>
+                                            <input type="text" class="form-control" id="editEmployeeRole" name="editEmployeeRole" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editEmployeeSalary">Salary</label>
+                                            <input type="text" class="form-control" id="editEmployeeSalary" name="editEmployeeSalary" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editEmployeePhone">Phone Number</label>
+                                            <input type="text" class="form-control" id="editEmployeePhone" name="editEmployeePhone" required pattern="[0-9]{11}" title="Phone number must be 11 digits">
+                                        </div>
+                                    
+                                        <!-- Hidden field for employee ID -->
+                                        <input type="hidden" id="editEmployeeId" name="editEmployeeId">
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" form="editEmployeeForm">Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- DataTaleS -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 gradient-header" style="display: flex; justify-content: space-between;">
+                            <h6 class="m-0 font-weight-bold text-white">Employees List</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -286,60 +486,65 @@
                                     <thead>
                                         <tr>
                                             <th>Employee ID</th>
-                                            <th>Name</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
                                             <th>Role/Designation</th>
-                                            <th>Salary</th>
-                                            <th>Phone</th>
-                                            <th></th>
-                                            <th></th>
+                                            <th>salary</th>
+                                            <th>Phone No.</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Employee ID</th>
-                                            <th>Name</th>
-                                            <th>Role/Designation</th>
-                                            <th>Salary</th>
-                                            <th>Phone</th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
-                                        <tr>
-                                            <td>200</td>
-                                            <td>Mark Poe</td>
-                                            <td>Mechanic</td>
-                                            <td>Php5,000</td>
-                                            <td>09123456789</td>
-                                            <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
-                                            <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>201</td>
-                                            <td>Peter Rivera</td>
-                                            <td>Mechanic</td>
-                                            <td>Php5,000</td>
-                                            <td>09123456789</td>
-                                            <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
-                                            <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>202</td>
-                                            <td>Peter Rivera</td>
-                                            <td>Mechanic</td>
-                                            <td>Php5,000</td>
-                                            <td>09123456789</td>
-                                            <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
-                                            <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                                        </tr>
-                                
+                                        <?php
+                                        include 'cus_db.php'; // Include your database connection file
+
+                                        // SQL query to select data from database
+                                        $sql = "SELECT employee_id, first_name, last_name, role, salary, phone_no FROM employees";
+                                        $result = $conn->query($sql);
+
+                                        if ($result === false) {
+                                            // If the query failed and no result is returned
+                                            echo "Error: " . $conn->error;
+                                        } else {
+                                            // Check if there are rows returned
+                                            if ($result->num_rows > 0) {
+                                                // Output data of each row
+                                                while($row = $result->fetch_assoc()) {
+                                                    echo "<tr>";
+                                                    echo "<td>" . $row["employee_id"] . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row["first_name"]) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row["last_name"]) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row["role"]) . "</td>";
+                                                    echo "<td>Php" . htmlspecialchars(number_format(floatval($row["salary"]), 2)) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row["phone_no"]) . "</td>";
+                                                    // Edit button form
+                                                    echo "<td>
+                                                    <button type='button' class='btn btn-success centered-button' data-toggle='modal' data-target='#editEmployeeModal' 
+                                                    onclick='setEditFormData(\"" . htmlspecialchars($row["employee_id"]) . "\", \"" . htmlspecialchars($row["first_name"]) . "\", \"" . htmlspecialchars($row["last_name"]) . "\", \"" . htmlspecialchars($row["role"]) . "\", \"" . htmlspecialchars($row["salary"]) . "\", \"" . htmlspecialchars($row["phone_no"]) . "\")'>
+                                                        <i class='fa fa-edit'></i> Edit
+                                                    </button>
+                                                </td>";
+                                                    // Delete button form
+                                                    echo "<td>
+                                                            <form method='POST' action='employees.php' onsubmit='return confirm(\"Are you sure you want to delete this record?\");'>
+                                                                <input type='hidden' name='employee_id' value='" . $row["employee_id"] . "'>
+                                                                <button type='submit' class='btn btn-danger centered-button'><i class='fa fa-trash'></i> Delete</button>
+                                                            </form>
+                                                        </td>";
+                                                    echo "</tr>";
+                                                }
+                                            } else {
+                                                echo "<tr><td colspan='7'>No results found</td></tr>";
+                                            }
+                                        }
+                                        $conn->close();
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!-- /.container-fluid -->
 
@@ -410,6 +615,17 @@
 
     <!-- Page level custom scripts -->
     <script src="../js/demo/datatables-demo.js"></script>
+
+    <script>
+    function setEditFormData(employee_id, first_name, last_name, role, salary, phone_no) {
+        document.getElementById("editEmployeeFirstName").value = first_name;
+        document.getElementById("editEmployeeLastName").value = last_name;
+        document.getElementById("editEmployeeRole").value = role;
+        document.getElementById("editEmployeeSalary").value = salary;
+        document.getElementById("editEmployeePhone").value = phone_no;
+        document.getElementById("editEmployeeId").value = employee_id;
+    }
+    </script>
 
 </body>
 
