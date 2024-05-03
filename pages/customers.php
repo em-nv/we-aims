@@ -367,182 +367,181 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && i
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                <!-- Page Heading -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Customers</h1>
-                    <div>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal"
-                            data-target="#addCustomerModal">
-                            <i class="fas fa-user-plus fa-sm text-white-50"></i> Add Customer
-                        </a>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Customers</h1>
+                        <div>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal"
+                                data-target="#addCustomerModal">
+                                <i class="fas fa-user-plus fa-sm text-white-50"></i> Add Customer
+                            </a>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        </div>
+                    </div>
+
+                    <!-- MODAL FOR ADDING A CUSTOMER -->
+                    <div class="modal fade" id="addCustomerModal" tabindex="-1" role="dialog" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header gradient-header">
+                                    <h5 class="modal-title" id="addCustomerModalLabel">Add New Customer</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="addCustomerForm" method="POST" action="customers.php">
+                                        <div class="form-group">
+                                            <label for="customerFirstName">First Name</label>
+                                            <input type="text" class="form-control" id="customerFirstName" name="customerFirstName" required pattern="[A-Za-z]+" title="Only letters allowed">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="customerLastName">Last Name</label>
+                                            <input type="text" class="form-control" id="customerLastName" name="customerLastName" required pattern="[A-Za-z]+" title="Only letters allowed">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="customerPhone">Phone Number</label>
+                                            <input type="text" class="form-control" id="customerPhone" name="customerPhone" required pattern="[0-9]{11}" title="Phone number must be 11 digits">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="paymentMethod">Payment Method</label>
+                                            <select class="form-control" id="paymentMethod" name="paymentMethod">
+                                                <option value="Credit Card">Credit Card</option>
+                                                <option value="PayPal">PayPal</option>
+                                                <option value="Bank Transfer">Bank Transfer</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" form="addCustomerForm">Add Customer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- MODAL FOR EDITING (EDIT BUTTON) THE CUSTOMER -->
+                    <div class="modal fade" id="editCustomerModal" tabindex="-1" role="dialog" aria-labelledby="editCustomerModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header gradient-header">
+                                    <h5 class="modal-title" id="editCustomerModalLabel">Edit Customer</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="editCustomerForm" method="POST" action="customers.php">
+                                        <div class="form-group">
+                                            <label for="editCustomerFirstName">First Name</label>
+                                            <input type="text" class="form-control" id="editCustomerFirstName" name="editCustomerFirstName" required pattern="[A-Za-z]+" title="Only letters allowed">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editCustomerLastName">Last Name</label>
+                                            <input type="text" class="form-control" id="editCustomerLastName" name="editCustomerLastName" required pattern="[A-Za-z]+" title="Only letters allowed">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editCustomerPhone">Phone Number</label>
+                                            <input type="text" class="form-control" id="editCustomerPhone" name="editCustomerPhone" required pattern="[0-9]{11}" title="Phone number must be 11 digits">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="editPaymentMethod">Payment Method</label>
+                                            <select class="form-control" id="editPaymentMethod" name="editPaymentMethod">
+                                                <option value="Credit Card">Credit Card</option>
+                                                <option value="PayPal">PayPal</option>
+                                                <option value="Bank Transfer">Bank Transfer</option>
+                                            </select>
+                                        </div>
+                                        <!-- Hidden field for customer ID -->
+                                        <input type="hidden" id="editCustomerId" name="editCustomerId">
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" form="editCustomerForm">Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- DataTaleS -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 gradient-header" style="display: flex; justify-content: space-between;">
+                            <h6 class="m-0 font-weight-bold text-white">Customers List</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Customer ID</th>
+                                            <th>F Name</th>
+                                            <th>L Name</th>
+                                            <th>Phone No.</th>
+                                            <th>Payment Method</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        include 'cus_db.php'; // Include your database connection file
+
+                                        // SQL query to select data from database
+                                        $sql = "SELECT id, firstName, lastName, phone, paymentMethod FROM customers";
+                                        $result = $conn->query($sql);
+
+                                        if ($result === false) {
+                                            // If the query failed and no result is returned
+                                            echo "Error: " . $conn->error;
+                                        } else {
+                                            // Check if there are rows returned
+                                            if ($result->num_rows > 0) {
+                                                // Output data of each row
+                                                while($row = $result->fetch_assoc()) {
+                                                    echo "<tr>";
+                                                    echo "<td>" . $row["id"] . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row["firstName"]) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row["lastName"]) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row["phone"]) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row["paymentMethod"]) . "</td>";
+                                                    // Edit button form
+                                                    echo "<td>
+                                                    <button type='button' class='btn btn-success centered-button' data-toggle='modal' data-target='#editCustomerModal' 
+                                                    onclick='setEditFormData(\"" . htmlspecialchars($row["id"]) . "\", \"" . htmlspecialchars($row["firstName"]) . "\", \"" . htmlspecialchars($row["lastName"]) . "\", \"" . htmlspecialchars($row["phone"]) . "\", \"" . htmlspecialchars($row["paymentMethod"]) . "\")'>
+                                                        <i class='fa fa-edit'></i> Edit
+                                                    </button>
+                                                </td>";
+                                                    // Delete button form
+                                                    echo "<td>
+                                                            <form method='POST' action='customers.php' onsubmit='return confirm(\"Are you sure you want to delete this record?\");'>
+                                                                <input type='hidden' name='id' value='" . $row["id"] . "'>
+                                                                <button type='submit' class='btn btn-danger centered-button'><i class='fa fa-trash'></i> Delete</button>
+                                                            </form>
+                                                        </td>";
+                                                    echo "</tr>";
+                                                }
+                                            } else {
+                                                echo "<tr><td colspan='7'>No results found</td></tr>";
+                                            }
+                                        }
+                                        $conn->close();
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-        <!-- MODAL FOR ADDING A CUSTOMER -->
-        <div class="modal fade" id="addCustomerModal" tabindex="-1" role="dialog" aria-labelledby="addCustomerModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header gradient-header">
-                        <h5 class="modal-title" id="addCustomerModalLabel">Add New Customer</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                    <form id="addCustomerForm" method="POST" action="customers.php">
-                        <div class="form-group">
-                            <label for="customerFirstName">First Name</label>
-                            <input type="text" class="form-control" id="customerFirstName" name="customerFirstName" required pattern="[A-Za-z]+" title="Only letters allowed">
-                        </div>
-                        <div class="form-group">
-                            <label for="customerLastName">Last Name</label>
-                            <input type="text" class="form-control" id="customerLastName" name="customerLastName" required pattern="[A-Za-z]+" title="Only letters allowed">
-                        </div>
-                        <div class="form-group">
-                            <label for="customerPhone">Phone Number</label>
-                            <input type="text" class="form-control" id="customerPhone" name="customerPhone" required pattern="[0-9]{11}" title="Phone number must be 11 digits">
-                        </div>
-                        <div class="form-group">
-                            <label for="paymentMethod">Payment Method</label>
-                            <select class="form-control" id="paymentMethod" name="paymentMethod">
-                                <option value="Credit Card">Credit Card</option>
-                                <option value="PayPal">PayPal</option>
-                                <option value="Bank Transfer">Bank Transfer</option>
-                            </select>
-                        </div>
-                    </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="addCustomerForm">Add Customer</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- MODAL FOR EDITING (EDIT BUTTON) THE CUSTOMER -->
-<div class="modal fade" id="editCustomerModal" tabindex="-1" role="dialog" aria-labelledby="editCustomerModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header gradient-header">
-                <h5 class="modal-title" id="editCustomerModalLabel">Edit Customer</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="editCustomerForm" method="POST" action="customers.php">
-                    <div class="form-group">
-                        <label for="editCustomerFirstName">First Name</label>
-                        <input type="text" class="form-control" id="editCustomerFirstName" name="editCustomerFirstName" required pattern="[A-Za-z]+" title="Only letters allowed">
-                    </div>
-                    <div class="form-group">
-                        <label for="editCustomerLastName">Last Name</label>
-                        <input type="text" class="form-control" id="editCustomerLastName" name="editCustomerLastName" required pattern="[A-Za-z]+" title="Only letters allowed">
-                    </div>
-                    <div class="form-group">
-                        <label for="editCustomerPhone">Phone Number</label>
-                        <input type="text" class="form-control" id="editCustomerPhone" name="editCustomerPhone" required pattern="[0-9]{11}" title="Phone number must be 11 digits">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="editPaymentMethod">Payment Method</label>
-                        <select class="form-control" id="editPaymentMethod" name="editPaymentMethod">
-                            <option value="Credit Card">Credit Card</option>
-                            <option value="PayPal">PayPal</option>
-                            <option value="Bank Transfer">Bank Transfer</option>
-                        </select>
-                    </div>
-                    <!-- Hidden field for customer ID -->
-                    <input type="hidden" id="editCustomerId" name="editCustomerId">
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="editCustomerForm">Save Changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- DataTaleS -->
-<div class="card shadow mb-4">
-    <div class="card-header py-3 gradient-header" style="display: flex; justify-content: space-between;">
-        <h6 class="m-0 font-weight-bold text-white">Customers List</h6>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>Customer ID</th>
-                        <th>F Name</th>
-                        <th>L Name</th>
-                        <th>Phone No.</th>
-                        <th>Payment Method</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    include 'cus_db.php'; // Include your database connection file
-
-                    // SQL query to select data from database
-                    $sql = "SELECT id, firstName, lastName, phone, paymentMethod FROM customers";
-                    $result = $conn->query($sql);
-
-                    if ($result === false) {
-                        // If the query failed and no result is returned
-                        echo "Error: " . $conn->error;
-                    } else {
-                        // Check if there are rows returned
-                        if ($result->num_rows > 0) {
-                            // Output data of each row
-                            while($row = $result->fetch_assoc()) {
-                                echo "<tr>";
-                                echo "<td>" . $row["id"] . "</td>";
-                                echo "<td>" . htmlspecialchars($row["firstName"]) . "</td>";
-                                echo "<td>" . htmlspecialchars($row["lastName"]) . "</td>";
-                                echo "<td>" . htmlspecialchars($row["phone"]) . "</td>";
-                                echo "<td>" . htmlspecialchars($row["paymentMethod"]) . "</td>";
-                                // Edit button form
-                                echo "<td>
-                                <button type='button' class='btn btn-success centered-button' data-toggle='modal' data-target='#editCustomerModal' 
-                                onclick='setEditFormData(\"" . htmlspecialchars($row["id"]) . "\", \"" . htmlspecialchars($row["firstName"]) . "\", \"" . htmlspecialchars($row["lastName"]) . "\", \"" . htmlspecialchars($row["phone"]) . "\", \"" . htmlspecialchars($row["paymentMethod"]) . "\")'>
-                                    <i class='fa fa-edit'></i> Edit
-                                </button>
-                            </td>";
-                                // Delete button form
-                                echo "<td>
-                                        <form method='POST' action='customers.php' onsubmit='return confirm(\"Are you sure you want to delete this record?\");'>
-                                            <input type='hidden' name='id' value='" . $row["id"] . "'>
-                                            <button type='submit' class='btn btn-danger centered-button'><i class='fa fa-trash'></i> Delete</button>
-                                        </form>
-                                    </td>";
-                                echo "</tr>";
-                            }
-                        } else {
-                            echo "<tr><td colspan='7'>No results found</td></tr>";
-                        }
-                    }
-                    $conn->close();
-                    ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-</div>
- 
             </div>
             <!-- End of Main Content -->
+            
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -581,35 +580,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && i
         </div>
     </div>
 
-<!-- CUSTOMIZED JS -->
-<script src="../js/customized.js"></script>
-<script src="../js/date-and-time.js"></script>
+    <!-- CUSTOMIZED JS -->
+    <script src="../js/customized.js"></script>
+    <script src="../js/date-and-time.js"></script>
 
-<!-- Bootstrap core JavaScript-->
-<script src="../vendor/jquery/jquery.min.js"></script>
-<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<!-- Core plugin JavaScript-->
-<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 
-<!-- Custom scripts for all pages-->
-<script src="../js/sb-admin-2.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="../js/sb-admin-2.min.js"></script>
 
-<!-- Page level plugins -->
-<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-<!-- Page level custom scripts -->
-<script src="../js/demo/datatables-demo.js"></script>
+    <!-- Page level custom scripts -->
+    <script src="../js/demo/datatables-demo.js"></script>
 
-<script>
-function setEditFormData(id, firstName, lastName, phone, paymentMethod) {
-    document.getElementById("editCustomerFirstName").value = firstName;
-    document.getElementById("editCustomerLastName").value = lastName;
-    document.getElementById("editCustomerPhone").value = phone;
-    document.getElementById("editPaymentMethod").value = paymentMethod;
-    document.getElementById("editCustomerId").value = id;
-}
-</script>
+    <script>
+    function setEditFormData(id, firstName, lastName, phone, paymentMethod) {
+        document.getElementById("editCustomerFirstName").value = firstName;
+        document.getElementById("editCustomerLastName").value = lastName;
+        document.getElementById("editCustomerPhone").value = phone;
+        document.getElementById("editPaymentMethod").value = paymentMethod;
+        document.getElementById("editCustomerId").value = id;
+    }
+    </script>
 </body>
 </html>
