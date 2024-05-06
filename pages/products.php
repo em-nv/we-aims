@@ -581,11 +581,11 @@ $stmt->bind_param("issdddddi", $supplierId, $companyName, $productName, $costPri
                                         </div>
                                         <div class="form-group">
                                             <label for="costPrice">Cost Price</label>
-                                            <input type="text" class="form-control" id="costPrice" name="costPrice" required onchange="ADDcalculateTotalPrices();">
+                                            <input type="text" class="form-control" id="costPrice" name="costPrice" required onchange="validatePrices(); ADDcalculateTotalPrices();">
                                         </div>
                                         <div class="form-group">
                                             <label for="retailPrice">Retail Price</label>
-                                            <input type="text" class="form-control" id="retailPrice" name="retailPrice" required onchange="ADDcalculateTotalPrices();">
+                                            <input type="text" class="form-control" id="retailPrice" name="retailPrice" required onchange="validatePrices(); ADDcalculateTotalPrices();">
                                         </div>
                                         <div class="form-group">
                                             <label for="quantity">Quantity</label>
@@ -644,11 +644,11 @@ $stmt->bind_param("issdddddi", $supplierId, $companyName, $productName, $costPri
                                         </div>
                                         <div class="form-group">
                                             <label for="ep_editCostPrice">Cost Price</label>
-                                            <input type="text" class="form-control" id="ep_editCostPrice" name="ep_costPrice" required onchange="calculateTotalPrices('edit');">
+                                            <input type="text" class="form-control" id="ep_editCostPrice" name="ep_costPrice" required onchange="validatePricesEdit(); calculateTotalPrices('edit');">
                                         </div>
                                         <div class="form-group">
                                             <label for="ep_editRetailPrice">Retail Price</label>
-                                            <input type="text" class="form-control" id="ep_editRetailPrice" name="ep_retailPrice" required onchange="calculateTotalPrices('edit');">
+                                            <input type="text" class="form-control" id="ep_editRetailPrice" name="ep_retailPrice" required onchange="validatePricesEdit(); calculateTotalPrices('edit');">
                                         </div>
                                         <div class="form-group">
                                             <label for="ep_editQuantity">Quantity</label>
@@ -900,6 +900,33 @@ $stmt->bind_param("issdddddi", $supplierId, $companyName, $productName, $costPri
 
         }
 
+    </script>
+
+
+
+    <!-- SCRIPT FOR VALIDATING PRICES -->
+    <script>
+    function validatePrices() {
+        var costPrice = parseFloat(document.getElementById('costPrice').value);
+        var retailPrice = parseFloat(document.getElementById('retailPrice').value);
+
+        if (retailPrice < costPrice) {
+            alert("Retail price cannot be less than the cost price.");
+            document.getElementById('retailPrice').value = costPrice;
+        }
+    }
+    </script>
+
+<script>
+    function validatePricesEdit() {
+        var ep_editCostPrice = parseFloat(document.getElementById('ep_editCostPrice').value);
+        var ep_editRetailPrice = parseFloat(document.getElementById('ep_editRetailPrice').value);
+
+        if (ep_editRetailPrice < ep_editCostPrice) {
+            alert("Retail price cannot be less than the cost price.");
+            document.getElementById('ep_editRetailPrice').value = ep_editCostPrice;
+        }
+    }
     </script>
 
 </body>

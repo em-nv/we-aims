@@ -720,7 +720,7 @@ $conn->close();
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive-dashboard">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>Product Name</th>
@@ -752,19 +752,40 @@ $conn->close();
                             <!-- EMPLOYEE TABLE -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">EMPLOYEE TABLE</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">EMPLOYEE PREVIEW</h6>
                                 </div>
                                 <div class="card-body">
-                                    <div class="text-center">
-                                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                            src="img/undraw_posting_photo.svg" alt="...">
-                                    </div>
-                                    <p>Add some quality, svg illustrations to your project courtesy of <a
-                                            target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
-                                        constantly updated collection of beautiful svg images that you can use
-                                        completely free and without attribution!</p>
-                                    <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on
-                                        unDraw &rarr;</a>
+                                <div class="table-responsive-dashboard">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Employee ID</th>
+                                                <th>Name</th>
+                                                <th>Designation</th>
+                                                <th>Phone No.</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php 
+                                            include 'pages/cus_db.php'; // database connection file
+                                            $sql = "SELECT employee_ID, first_name, last_name, role, phone_no FROM employees LIMIT 4"; // Selecting required columns
+
+                                            $result = mysqli_query($conn, $sql); // Executing SQL query
+
+                                            // Fetching data from the result set and displaying it in table rows
+                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                echo "<tr>";
+                                                echo "<td>" . $row['employee_ID'] . "</td>";
+                                                echo "<td>" . $row['first_name'] . " " . $row['last_name'] . "</td>"; // Combining first name and last name
+                                                echo "<td>" . $row['role'] . "</td>";
+                                                echo "<td>" . $row['phone_no'] . "</td>";
+                                                echo "</tr>";
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                    <a href="pages/customers.php" style="padding: 5px; display: block; margin: 0 auto; width: fit-content;">See more...</a>
+                                </div>
                                 </div>
                             </div>
 
