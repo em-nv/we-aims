@@ -784,7 +784,7 @@ $conn->close();
                                             ?>
                                         </tbody>
                                     </table>
-                                    <a href="pages/customers.php" style="padding: 5px; display: block; margin: 0 auto; width: fit-content;">See more...</a>
+                                    <a href="pages/employees.php" style="padding: 5px; display: block; margin: 0 auto; width: fit-content;">See more...</a>
                                 </div>
                                 </div>
                             </div>
