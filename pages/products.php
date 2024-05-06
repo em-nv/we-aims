@@ -686,9 +686,9 @@ $stmt->bind_param("issdddddi", $supplierId, $companyName, $productName, $costPri
                                     <thead>
                                         <tr>
                                             <th>Product ID</th>
+                                            <th>Product Name</th>
                                             <th>Supplier ID</th>
                                             <th>Company Name</th>
-                                            <th>Product Name</th>
                                             <th>Cost Price</th>
                                             <th>Retail Price</th>
                                             <th>Quantity</th>
@@ -718,9 +718,9 @@ $stmt->bind_param("issdddddi", $supplierId, $companyName, $productName, $costPri
                                                     while ($row = $result->fetch_assoc()) {
                                                         echo "<tr>";
                                                         echo "<td>" . htmlspecialchars($row["productId"]) . "</td>";
+                                                        echo "<td>" . htmlspecialchars($row["productName"]) . "</td>";
                                                         echo "<td>" . htmlspecialchars($row["Sup_Id"]) . "</td>";
                                                         echo "<td>" . htmlspecialchars($row["companyName"]) . "</td>";
-                                                        echo "<td>" . htmlspecialchars($row["productName"]) . "</td>";
                                                         echo "<td>Php" . htmlspecialchars(number_format($row["costPrice"], 2)) . "</td>";
                                                         echo "<td>Php" . htmlspecialchars(number_format($row["retailPrice"], 2)) . "</td>";
                                                         echo "<td>" . htmlspecialchars($row["quantity"]) . "</td>";
