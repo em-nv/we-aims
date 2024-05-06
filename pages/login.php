@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (isset($_SESSION["user"])) {
+    header("Location: ../index.php");
+} 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,15 +51,38 @@
                                     <div class="text-center">
                                         <img src="../img/logo/Red-and-Black-WE-AIMS-Logo.png" class="logo-login">
                                     </div>
-                                    <form class="user">
+                                    <?php
+                                    if (isset($_POST["login"])) {
+                                        $email = $_POST["email"];
+                                        $password = $_POST["password"];
+                                        require_once "database_login.php";
+                                        $sql = "SELECT * FROM admin WHERE email = '$email'";
+                                        $result = mysqli_query($con_login, $sql);
+                                        $user = mysqli_fetch_array($result, MYSQLI_ASSOC);
+                                        if ($user) {
+                                            if ($password === $user["password"]) {
+                                                session_start();
+                                                $_SESSION["user"] = "yes";
+                                                $_SESSION["email"] = $email;
+                                                header("Location: ../index.php");
+                                                die();
+                                            } else {
+                                                echo "<div class='alert alert-danger'>Incorrect Password</div>";
+                                            }
+                                        } else {
+                                            echo "<div class='alert alert-danger'>Incorrect Email</div>";
+                                        }
+                                    }
+                                    ?>
+                                    <form class="user" action="login.php" method="post">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
+                                                placeholder="Enter Email Address..." name="email" required>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                                id="exampleInputPassword" placeholder="Password" name="password" required>
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -61,9 +91,8 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <a href="index.php" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </a>
+                                        
+                                        <input type="submit" class="btn btn-primary btn-user btn-block" value="Login" name="login">
                                       
                                     </form>
                                     <hr>

@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (isset($_SESSION["user"])) {
+    header("Location: ../index.php");
+} 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,34 +46,78 @@
                             <div class="text-center">
                                 <img src="../img/logo/Red-and-Black-WE-AIMS-Logo.png" class="logo-register">
                             </div>
-                            <form class="user">
+                            <?php 
+                            if (isset($_POST["submit"])) {
+                                $fname = $_POST["fname"];
+                                $lname = $_POST["lname"];
+                                $email = $_POST["email"];
+                                $password = $_POST["password"];
+                                $rpassword = $_POST["rpassword"];
+                                $errors = array();
+
+                                if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                                    array_push($errors, "Email is not valid");
+                                }
+                                if (strlen($password) < 8) {
+                                    array_push($errors, "Password must be at least 8 characters long");
+                                }
+                                if ($password !== $rpassword) {
+                                    array_push($errors, "Password does not match");
+                                }
+
+                                require_once "database_login.php";
+                                $sql = "SELECT * FROM admin WHERE email = '$email'";
+                                $result = mysqli_query($con_login, $sql);
+                                $rowCount = mysqli_num_rows($result);
+                                if($rowCount > 0) {
+                                    array_push($errors, "Email already exists!");
+                                }
+
+                                if (count($errors) > 0) {
+                                    foreach ($errors as $error) {
+                                        echo "<div class='alert alert-danger'>$error</div>";
+                                    }
+                                } else {
+                                    $sql = "INSERT INTO admin (fname, lname, email, password) VALUES ( ?, ?, ?, ? )";
+                                    $stmt = mysqli_stmt_init($con_login);
+                                    $prepareStmt = mysqli_stmt_prepare($stmt, $sql);
+                                    if ($prepareStmt) {
+                                        mysqli_stmt_bind_param($stmt,"ssss", $fname, $lname, $email, $password);
+                                        mysqli_stmt_execute($stmt);
+                                        echo "<div class='alert alert-success'>You are registered successfully.</div>";
+                                    } else {
+                                        die("Something went wrong");
+                                    }
+                                }
+                            }
+                            ?>
+                            <form class="user" action="register.php" method="post">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="First Name">
+                                            placeholder="First Name" name="fname" required>
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                            placeholder="Last Name">
+                                            placeholder="Last Name" name="lname" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                        placeholder="Email Address">
+                                        placeholder="Email Address" name="email" required>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="password" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Password">
+                                            id="exampleInputPassword" placeholder="Password" name="password" required>
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="password" class="form-control form-control-user"
-                                            id="exampleRepeatPassword" placeholder="Repeat Password">
+                                            id="exampleRepeatPassword" placeholder="Repeat Password" name="rpassword" required>
                                     </div>
                                 </div>
-                                <a href="login.php" class="btn btn-primary btn-user btn-block">
-                                    Register Account
-                                </a>
+                                
+                                <input type="submit" class="btn btn-primary btn-user btn-block" value="Register Account" name="submit">
                             </form>
                             <hr>
                             <div class="text-center">

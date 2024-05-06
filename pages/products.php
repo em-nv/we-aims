@@ -1,4 +1,22 @@
+<!-- FOR LOGIN -->
+<?php
+session_start();
 
+if (!isset($_SESSION["user"])) {
+    header("Location: login.php");
+}
+
+include ("database_login.php");
+if (isset($_SESSION['email'])) {
+    $email = $_SESSION['email'];
+    $query = "SELECT * FROM admin WHERE email = '$email' limit 1";
+
+    $result = mysqli_query($con_login, $query);
+    if($result && mysqli_num_rows($result) > 0) {
+        $user_data = mysqli_fetch_assoc($result);
+    }
+}
+?>
 
 <!-- ADD -->
 <?php
@@ -502,7 +520,7 @@ $stmt->bind_param("issdddddi", $supplierId, $companyName, $productName, $costPri
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $user_data['fname']?> <?php echo $user_data['lname']?></span>
                                 <img class="img-profile rounded-circle"
                                     src="../img/profile-icons/undraw_pic_profile_re_7g2h.svg">
                             </a>
@@ -791,7 +809,7 @@ $stmt->bind_param("issdddddi", $supplierId, $companyName, $productName, $costPri
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.php">Logout</a>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
                 </div>
             </div>
         </div>
