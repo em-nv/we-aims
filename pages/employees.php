@@ -407,7 +407,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editEmployeeId"]) && i
                                         </div>
                                         <div class="form-group">
                                             <label for="employeeRole">Role/Designation</label>
-                                            <input type="text" class="form-control" id="employeeRole" name="employeeRole" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                            <select class="form-control" id="employeeRole" name="employeeRole">
+                                                <option value="Store Manager">Store Manager</option>
+                                                <option value="Marketing and Sales Manager">Marketing and Sales Manager</option>
+                                                <option value="Sales Associate">Sales Associate</option>
+                                                <option value="Inventory Manager">Inventory Manager</option>
+                                                <option value="Parts Specialist">Parts Specialist</option>
+                                                <option value="Installation Technician">Installation Technician</option>
+                                                <option value="Quality Control Inspector">Quality Control Inspector</option>
+                                                <option value="Administrative Staff">Administrative Staff</option>
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="employeeSalary">Salary</label>
@@ -451,7 +460,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editEmployeeId"]) && i
                                         </div>
                                         <div class="form-group">
                                             <label for="editEmployeeRole">Role/Designation</label>
-                                            <input type="text" class="form-control" id="editEmployeeRole" name="editEmployeeRole" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                            <select class="form-control" id="editEmployeeRole" name="editEmployeeRole">
+                                                <option value="Store Manager">Store Manager</option>
+                                                <option value="Marketing and Sales Manager">Marketing and Sales Manager</option>
+                                                <option value="Sales Associate">Sales Associate</option>
+                                                <option value="Inventory Manager">Inventory Manager</option>
+                                                <option value="Parts Specialist">Parts Specialist</option>
+                                                <option value="Installation Technician">Installation Technician</option>
+                                                <option value="Quality Control Inspector">Quality Control Inspector</option>
+                                                <option value="Administrative Staff">Administrative Staff</option>
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="editEmployeeSalary">Salary</label>
