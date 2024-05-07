@@ -462,7 +462,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editSupplierId"])) {
                                         </div>
                                         <div class="form-group">
                                             <label for="supplierCity">City/Municipality</label>
-                                            <input type="text" class="form-control" id="supplierCity" required pattern="[A-Za-z -]+" title="Only letters and spaces allowed">
+                                            <input type="text" class="form-control" id="supplierCity" name="supplierCity" required pattern="[A-Za-z -]+" title="Only letters, spaces, and dashes allowed">
                                         </div>
                                         <div class="form-group">
                                             <label for="supplierZipCode">Zip Code</label>
