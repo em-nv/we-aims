@@ -120,18 +120,11 @@
                 <div id="collapseTransactions" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="buttons.php">Transaction Customer</a>
-                        <a class="collapse-item" href="cards.php">Products</a>
-                        <a class="collapse-item" href="cards.php">Supplier</a>
+                        <a class="collapse-item" href="">Customer Transactions</a>
+                        <a class="collapse-item" href="">Product Transactions</a>
+                        <a class="collapse-item" href="">Supplier Transactions</a>
                     </div>
                 </div>
-            </li>
-
-            <!-- Nav Item - ADMIN -->
-            <li class="nav-item">
-                <a class="nav-link" href="admin.php">
-                    <i class="fas fa-fw fa-solid fa-user-tie"></i>
-                    <span>Admin</span></a>
             </li>
 
             <!-- Divider -->
@@ -234,17 +227,9 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="admin.php">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
+                                    Admin
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">

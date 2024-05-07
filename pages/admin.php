@@ -253,13 +253,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['admin_id'])) {
                 </div>
             </li>
 
-            <!-- Nav Item - ADMIN -->
-            <li class="nav-item active">
-                <a class="nav-link" href="admin.php">
-                    <i class="fas fa-fw fa-solid fa-user-tie"></i>
-                    <span>Admin</span></a>
-            </li>
-
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -390,7 +383,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['admin_id'])) {
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Admins</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Admin</h1>
                     <div>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal"
                             data-target="#addAdminModal">
