@@ -18,6 +18,8 @@ if (isset($_SESSION['email'])) {
 }
 ?>
 
+
+<!-- ADD CUSTOMER -->
 <?php
 include 'cus_db.php'; // Include your database connection
 
@@ -53,7 +55,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<!--DELETE-->
+<!--EDIT CUSTOMER-->
+<?php 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && isset($_POST["editCustomerFirstName"]) && isset($_POST["editCustomerLastName"]) && isset($_POST["editCustomerPhone"]) && isset($_POST["editPaymentMethod"])) {
+    $id = $_POST["editCustomerId"];
+    $firstName = $_POST["editCustomerFirstName"];
+    $lastName = $_POST["editCustomerLastName"];
+    $phone = $_POST["editCustomerPhone"];
+    $paymentMethod = $_POST["editPaymentMethod"];
+
+    // Update the customer data in the database
+    $sql = "UPDATE customers SET firstName='$firstName', lastName='$lastName', phone='$phone', paymentMethod='$paymentMethod' WHERE id=$id";
+
+    if ($conn->query($sql) === TRUE) {
+        // If update successful, redirect to the previous page or show a success message
+        header("Location: {$_SERVER['HTTP_REFERER']}");
+        exit();
+    } else {
+        echo "Error updating record: " . $conn->error;
+    }
+}
+?>
+
+<!--DELETE CUSTOMER-->
 <?php
 // Put this block at the top of the customers.php file
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
@@ -76,28 +100,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
 
     header("Location: customers.php");
     exit();
-}
-?>
-
-<!--EDIT-->
-<?php 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && isset($_POST["editCustomerFirstName"]) && isset($_POST["editCustomerLastName"]) && isset($_POST["editCustomerPhone"]) && isset($_POST["editPaymentMethod"])) {
-    $id = $_POST["editCustomerId"];
-    $firstName = $_POST["editCustomerFirstName"];
-    $lastName = $_POST["editCustomerLastName"];
-    $phone = $_POST["editCustomerPhone"];
-    $paymentMethod = $_POST["editPaymentMethod"];
-
-    // Update the customer data in the database
-    $sql = "UPDATE customers SET firstName='$firstName', lastName='$lastName', phone='$phone', paymentMethod='$paymentMethod' WHERE id=$id";
-
-    if ($conn->query($sql) === TRUE) {
-        // If update successful, redirect to the previous page or show a success message
-        header("Location: {$_SERVER['HTTP_REFERER']}");
-        exit();
-    } else {
-        echo "Error updating record: " . $conn->error;
-    }
 }
 ?>
 
@@ -135,11 +137,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && i
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <style>
-    /* .gradient-header {
+    .gradient-header {
         background-image: linear-gradient(to right, #003366, #004080, #0059b3); 
         color: white;
             
-    } */
+    }
     .edit-column button i,
     .trash-column button i {
         color: black; /* Set icon color to black */
@@ -518,16 +520,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && i
                                                     echo "<td>" . htmlspecialchars($row["paymentMethod"]) . "</td>";
                                                     // Edit button form
                                                     echo "<td>
-                                                    <button type='button' class='btn btn-success centered-button' data-toggle='modal' data-target='#editCustomerModal' 
-                                                    onclick='setEditFormData(\"" . htmlspecialchars($row["id"]) . "\", \"" . htmlspecialchars($row["firstName"]) . "\", \"" . htmlspecialchars($row["lastName"]) . "\", \"" . htmlspecialchars($row["phone"]) . "\", \"" . htmlspecialchars($row["paymentMethod"]) . "\")'>
-                                                        <i class='fa fa-edit'></i> Edit
+                                                    <button type='button' class='btn btn-success centered-button' data-toggle='modal' data-target='#editCustomerModal' onclick='setEditFormData(\"" . htmlspecialchars($row["id"]) . "\", \"" . htmlspecialchars($row["firstName"]) . "\", \"" . htmlspecialchars($row["lastName"]) . "\", \"" . htmlspecialchars($row["phone"]) . "\", \"" . htmlspecialchars($row["paymentMethod"]) . "\")'>
+                                                        <i class='fa fa-edit'></i>
                                                     </button>
                                                 </td>";
                                                     // Delete button form
                                                     echo "<td>
                                                             <form method='POST' action='customers.php' onsubmit='return confirm(\"Are you sure you want to delete this record?\");'>
                                                                 <input type='hidden' name='id' value='" . $row["id"] . "'>
-                                                                <button type='submit' class='btn btn-danger centered-button'><i class='fa fa-trash'></i> Delete</button>
+                                                                <button type='submit' class='btn btn-danger centered-button'>
+                                                                    <i class='fa fa-trash'></i>
+                                                                </button>
                                                             </form>
                                                         </td>";
                                                     echo "</tr>";

@@ -542,16 +542,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editEmployeeId"]) && i
                                                     echo "<td>" . htmlspecialchars($row["phone_no"]) . "</td>";
                                                     // Edit button form
                                                     echo "<td>
-                                                    <button type='button' class='btn btn-success centered-button' data-toggle='modal' data-target='#editEmployeeModal' 
-                                                    onclick='setEditFormData(\"" . htmlspecialchars($row["employee_id"]) . "\", \"" . htmlspecialchars($row["first_name"]) . "\", \"" . htmlspecialchars($row["last_name"]) . "\", \"" . htmlspecialchars($row["role"]) . "\", \"" . htmlspecialchars($row["salary"]) . "\", \"" . htmlspecialchars($row["phone_no"]) . "\")'>
-                                                        <i class='fa fa-edit'></i> Edit
-                                                    </button>
-                                                </td>";
+                                                            <button type='button' class='btn btn-success centered-button' data-toggle='modal' data-target='#editEmployeeModal' onclick='setEditFormData(\"" . htmlspecialchars($row["employee_id"]) . "\", \"" . htmlspecialchars($row["first_name"]) . "\", \"" . htmlspecialchars($row["last_name"]) . "\", \"" . htmlspecialchars($row["role"]) . "\", \"" . htmlspecialchars($row["salary"]) . "\", \"" . htmlspecialchars($row["phone_no"]) . "\")'>
+                                                                <i class='fa fa-edit'></i>
+                                                            </button>
+                                                        </td>";
                                                     // Delete button form
                                                     echo "<td>
                                                             <form method='POST' action='employees.php' onsubmit='return confirm(\"Are you sure you want to delete this record?\");'>
                                                                 <input type='hidden' name='employee_id' value='" . $row["employee_id"] . "'>
-                                                                <button type='submit' class='btn btn-danger centered-button'><i class='fa fa-trash'></i> Delete</button>
+                                                                <button type='submit' class='btn btn-danger centered-button'>
+                                                                    <i class='fa fa-trash'></i>
+                                                                </button>
                                                             </form>
                                                         </td>";
                                                     echo "</tr>";
