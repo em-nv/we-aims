@@ -95,10 +95,42 @@ $conn->close();
     <!-- BOXICONS AWESOME ICONS -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-
-    
-
-    
+    <style>
+        .reminders {
+            padding: 10px 25px 0px 25px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .remindtable {
+            border: none;
+            margin-bottom: 10px;
+        }
+        .remindtable h1 {
+            margin: 0px 0px 3px 0px;
+            font-size: 18px;
+        }
+        .remindtable span {
+            font-weight: bold;
+            color: #5e8dab;
+        }
+        .remindtable p {
+            margin: 0px;
+            font-size: 14px;
+        }
+        .remindtable tr {
+            padding: 50px;
+        }
+        .remindtable td {
+            padding: 15px 10px 15px 10px;
+            border-bottom: 1px solid #e3e6f0;
+        }
+        .centered {
+            text-align: center;
+        }
+        .noremind {
+            border-bottom: none !important;
+        }
+    </style>
 
 </head>
 
@@ -609,22 +641,50 @@ $conn->close();
                                     </div>
                                 </div>
                                 <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
-                                        </span>
-                                    </div>
+                                <div class="reminders">
+                                    <table class="remindtable" id="dataTable" width="100%" cellspacing="0">
+                                        <!-- <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Phone No.</th>
+                                            </tr>
+                                        </thead> -->
+                                        <!-- <tbody> -->
+                                        <?php
+                                            include 'pages/cus_db.php'; // database connection file
+                                            $sql = "SELECT productName, quantity FROM products WHERE quantity <= 20"; // Selecting required columns
+
+                                            $result = $conn->query($sql);
+
+                                            // Fetching data from the result set and displaying it in table rows
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    echo "<tr>";
+                                                    echo "<td>";
+                                                    echo "<i class='fa-solid fa-boxes-stacked fa-lg' style='color: #5e8dab;'></i>";
+                                                    // echo "<i class='fa-solid fa-boxes-stacked fa-xl' style='color: #016193;'></i>";
+                                                    echo "</td>";
+
+                                                    echo "<td>";
+                                                    echo "<h1><span>{$row['productName']}</span> is low in supply!</h1>";
+                                                    echo "<p>{$row['quantity']} stocks left</p>";
+                                                    echo "</td>";
+                                                    echo "</tr>";
+                                                }
+                                            } else {
+                                                echo "<tr class='centered'><td class='noremind'><h1>There are no current reminders!</h1></td></tr>";
+                                            }
+                                            $conn->close();
+                                        ?>
+                                        <!-- </tbody> -->
+                                    </table>
+                                    
                                 </div>
+                                <?php
+                                if ($result->num_rows > 0) {
+                                    echo "<a href='pages/products.php' style='padding: 20px; display: block; margin: 0 auto; width: fit-content;'>View Products page</a>";
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
