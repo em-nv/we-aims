@@ -33,6 +33,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     // Check if required fields are not empty
     if (!empty($firstName)) {
+        // Check if phone number already exists
+        $check_query = "SELECT COUNT(*) AS count FROM customers WHERE phone = ?";
+        if ($stmt = $conn->prepare($check_query)) {
+            $stmt->bind_param("s", $phone);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $phone_count = $row['count'];
+            if ($phone_count > 0) {
+                echo "ERROR: Phone number already exists.";
+                exit; // Stop further execution
+            }
+        }
+
         // Prepare an insert statement
         $sql = "INSERT INTO customers (firstName, lastName, phone, paymentMethod) VALUES (?, ?, ?, ?)";
         
@@ -55,14 +69,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<!--EDIT CUSTOMER-->
+<!-- EDIT CUSTOMER -->
 <?php 
+include 'cus_db.php'; // Include your database connection
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && isset($_POST["editCustomerFirstName"]) && isset($_POST["editCustomerLastName"]) && isset($_POST["editCustomerPhone"]) && isset($_POST["editPaymentMethod"])) {
     $id = $_POST["editCustomerId"];
     $firstName = $_POST["editCustomerFirstName"];
     $lastName = $_POST["editCustomerLastName"];
     $phone = $_POST["editCustomerPhone"];
     $paymentMethod = $_POST["editPaymentMethod"];
+
+    // Check if phone number already exists
+    $check_query = "SELECT COUNT(*) AS count FROM customers WHERE phone = ? AND id != ?";
+    if ($stmt = $conn->prepare($check_query)) {
+        $stmt->bind_param("si", $phone, $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $phone_count = $row['count'];
+        if ($phone_count > 0) {
+            echo 'ERROR: Phone number already exists.';
+            exit; // Stop further execution
+        }
+    }
 
     // Update the customer data in the database
     $sql = "UPDATE customers SET firstName='$firstName', lastName='$lastName', phone='$phone', paymentMethod='$paymentMethod' WHERE id=$id";
@@ -402,14 +432,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
                                         <div class="form-group">
                                             <label for="customerFirstName">First Name</label>
                                             <input type="text" class="form-control" id="customerFirstName" name="customerFirstName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                            <span id="firstNameError" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <label for="customerLastName">Last Name</label>
                                             <input type="text" class="form-control" id="customerLastName" name="customerLastName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                            <span id="lastNameError" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <label for="customerPhone">Phone Number</label>
                                             <input type="text" class="form-control" id="customerPhone" name="customerPhone" required pattern="[0-9]{11}" title="Phone number must be 11 digits">
+                                            <span id="phoneError" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <label for="paymentMethod">Payment Method</label>
@@ -423,7 +456,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary" form="addCustomerForm">Add Customer</button>
+                                    <button type="button" class="btn btn-primary" id="addCustomerBtn">Add Customer</button>
                                 </div>
                             </div>
                         </div>
@@ -431,8 +464,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
 
 
                     <!-- MODAL FOR EDITING (EDIT BUTTON) THE CUSTOMER -->
-                    <div class="modal fade" id="editCustomerModal" tabindex="-1" role="dialog" aria-labelledby="editCustomerModalLabel"
-                        aria-hidden="true">
+                    <div class="modal fade" id="editCustomerModal" tabindex="-1" role="dialog" aria-labelledby="editCustomerModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header gradient-header">
@@ -446,14 +478,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
                                         <div class="form-group">
                                             <label for="editCustomerFirstName">First Name</label>
                                             <input type="text" class="form-control" id="editCustomerFirstName" name="editCustomerFirstName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                            <span id="editFirstNameError" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <label for="editCustomerLastName">Last Name</label>
                                             <input type="text" class="form-control" id="editCustomerLastName" name="editCustomerLastName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                            <span id="editLastNameError" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <label for="editCustomerPhone">Phone Number</label>
                                             <input type="text" class="form-control" id="editCustomerPhone" name="editCustomerPhone" required pattern="[0-9]{11}" title="Phone number must be 11 digits">
+                                            <span id="editPhoneError" class="text-danger"></span>
                                         </div>
 
                                         <div class="form-group">
@@ -470,7 +505,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary" form="editCustomerForm">Save Changes</button>
+                                    <button type="button" class="btn btn-primary" id="saveEditBtn">Save Changes</button>
                                 </div>
                             </div>
                         </div>
@@ -608,6 +643,127 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
 
     <!-- Page level custom scripts -->
     <script src="../js/demo/datatables-demo.js"></script>
+
+
+
+    <!-- ADD CUSTOMER VALIDATION -->
+    <script>
+        $(document).ready(function(){
+            $('#addCustomerBtn').click(function(){
+                var firstName = $('#customerFirstName').val();
+                var lastName = $('#customerLastName').val();
+                var phone = $('#customerPhone').val();
+                var phonePattern = /^[0-9]{11}$/;
+                var namePattern = /^[A-Za-z ]+$/;
+
+                // Validate first name
+                if(firstName.trim() == '' || !namePattern.test(firstName)){
+                    $('#firstNameError').text('Please enter a valid first name.');
+                    $('#customerFirstName').addClass('is-invalid');
+                    return false;
+                } else {
+                    $('#firstNameError').text('');
+                    $('#customerFirstName').removeClass('is-invalid');
+                }
+
+                // Validate last name
+                if(lastName.trim() == '' || !namePattern.test(lastName)){
+                    $('#lastNameError').text('Please enter a valid last name.');
+                    $('#customerLastName').addClass('is-invalid');
+                    return false;
+                } else {
+                    $('#lastNameError').text('');
+                    $('#customerLastName').removeClass('is-invalid');
+                }
+
+                // Validate phone number
+                if(phone.trim() == '' || !phonePattern.test(phone)){
+                    $('#phoneError').text('Phone number must be 11 digits.');
+                    $('#customerPhone').addClass('is-invalid');
+                    return false;
+                } else {
+                    $('#phoneError').text('');
+                    $('#customerPhone').removeClass('is-invalid');
+                }
+
+                // AJAX request
+                $.ajax({
+                    url: 'cus_check_add_phone_existence.php', // PHP script to check phone number
+                    type: 'post',
+                    data: $('#addCustomerForm').serialize(),
+                    success: function(response){
+                        if(response == 'exists'){
+                            $('#phoneError').text('Phone number already exists.');
+                        } else {
+                            $('#phoneError').text('');
+                            $('#addCustomerForm').submit();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    <!-- EDIT CUSTOMER VALIDATION -->
+    <script>
+        $(document).ready(function(){
+            $('#saveEditBtn').click(function(){
+                var firstName = $('#editCustomerFirstName').val();
+                var lastName = $('#editCustomerLastName').val();
+                var phone = $('#editCustomerPhone').val();
+                var phonePattern = /^[0-9]{11}$/;
+                var namePattern = /^[A-Za-z ]+$/;
+
+                // Validate first name
+                if(firstName.trim() == '' || !namePattern.test(firstName)){
+                    $('#editFirstNameError').text('Please enter a valid first name.');
+                    $('#editCustomerFirstName').addClass('is-invalid');
+                    return false;
+                } else {
+                    $('#editFirstNameError').text('');
+                    $('#editCustomerFirstName').removeClass('is-invalid');
+                }
+
+                // Validate last name
+                if(lastName.trim() == '' || !namePattern.test(lastName)){
+                    $('#editLastNameError').text('Please enter a valid last name.');
+                    $('#editCustomerLastName').addClass('is-invalid');
+                    return false;
+                } else {
+                    $('#editLastNameError').text('');
+                    $('#editCustomerLastName').removeClass('is-invalid');
+                }
+
+                // Validate phone number
+                if(phone.trim() == '' || !phonePattern.test(phone)){
+                    $('#editPhoneError').text('Phone number must be 11 digits.');
+                    $('#editCustomerPhone').addClass('is-invalid');
+                    return false;
+                } else {
+                    $('#editPhoneError').text('');
+                    $('#editCustomerPhone').removeClass('is-invalid');
+                }
+
+                // AJAX request
+                $.ajax({
+                    url: 'cus_check_edit_phone_existence.php', // PHP script to check phone number
+                    type: 'post',
+                    data: $('#editCustomerForm').serialize(),
+                    success: function(response){
+                        if(response == 'exists'){
+                            $('#editPhoneError').text('Phone number already exists.');
+                        } else {
+                            $('#editPhoneError').text('');
+                            $('#editCustomerForm').submit();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+
 
     <script>
     function setEditFormData(id, firstName, lastName, phone, paymentMethod) {

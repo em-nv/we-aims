@@ -3,7 +3,7 @@
 session_start();
 
 if (!isset($_SESSION["user"])) {
-    header("Location: pages/login.php");
+    header("Location: pages/home.php");
 }
 
 include ("pages/database_login.php");

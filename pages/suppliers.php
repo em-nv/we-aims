@@ -29,12 +29,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $zipCode = isset($_POST['supplierZipCode']) ? $_POST['supplierZipCode'] : '';
     $phoneNumber = isset($_POST['supplierPhoneNumber']) ? $_POST['supplierPhoneNumber'] : '';
 
-
     if (!empty($companyName)){
+        $check_query = "SELECT COUNT(*) AS count FROM suppliers WHERE phoneNumber = ?";
+        if ($stmt = $conn->prepare($check_query)) {
+            $stmt->bind_param("s", $phoneNumber);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $phoneNumber_count = $row['count'];
+            if ($phoneNumber_count > 0) {
+                echo "ERROR: Phone number already exists.";
+                exit; // Stop further execution
+            }
+        }
+
         $sql = "INSERT INTO suppliers (companyName, province, city, zipCode, phoneNumber) VALUES (?, ?, ?, ?, ?)";
 
         if($stmt = $conn->prepare($sql)){
+            
             $stmt->bind_param("sssss", $companyName, $province, $city, $zipCode, $phoneNumber);
+            
             if($stmt->execute()){
                 echo "Records inserted successfully.";
             } else{
@@ -43,30 +57,63 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else{
             echo "ERROR: Could not prepare query: $sql. " . $conn->error;
         }
-
-
+    
     } else {
         echo "ERROR: Company Name is required.";
     }
-
-
-
-
-    /* $sql = "INSERT INTO suppliers (companyName, province, city, zipCode, phoneNumber) VALUES (?, ?, ?, ?, ?)";
-
-    if($stmt = $conn->prepare($sql)){
-        $stmt->bind_param("sssss", $companyName, $province, $city, $zipCode, $phoneNumber);
-        if($stmt->execute()){
-            echo "Records inserted successfully.";
-        } else{
-            echo "ERROR: Could not execute query: $sql. " . $conn->error;
-        }
-    } else{
-        echo "ERROR: Could not prepare query: $sql. " . $conn->error;
-    } */
 }
 ?>
 
+
+<!-- EDIT SUPPLIER -->
+<?php 
+include 'cus_db.php'; // Include your database connection
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editSupplierId"])) {
+    // Retrieve the old Supplier ID from the form
+    $supplier_id = $_POST["editSupplierId"];
+    
+    // Retrieve other updated supplier information from the form
+    $companyName = $_POST["editSupplierCompanyName"];
+    $province = $_POST["editSupplierProvince"];
+    $city = $_POST["editSupplierCity"];
+    $zipCode = $_POST["editSupplierZipCode"];
+    $phoneNumber = $_POST["editSupplierPhoneNumber"];
+
+    // Check if phone number already exists
+    $check_query = "SELECT COUNT(*) AS count FROM suppliers WHERE phoneNumber = ? AND Sup_Id != ?";
+    if ($stmt = $conn->prepare($check_query)) {
+        $stmt->bind_param("si", $phoneNumber, $supplier_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $phoneNumber_count = $row['count'];
+        if ($phoneNumber_count > 0) {
+            echo 'ERROR: Phone number already exists.';
+            exit; // Stop further execution
+        }
+    }
+
+    // Prepare the SQL query to update supplier information in the suppliers table
+    $sql = "UPDATE suppliers SET companyName=?, province=?, city=?, zipCode=?, phoneNumber=? WHERE Sup_Id=?";
+    
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param("sssssi", $companyName, $province, $city, $zipCode, $phoneNumber, $supplier_id);
+        if ($stmt->execute()) {
+            // If update successful, redirect to the previous page or show a success message
+            header("Location: {$_SERVER['HTTP_REFERER']}");
+            exit();
+        } else {
+            echo "Error updating record: " . $stmt->error;
+        }
+    } else {
+        echo "Error preparing statement: " . $conn->error;
+    }
+}
+?>
+
+
+<!-- DELETE SUPPLIERS -->
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['supplierId'])) {
     include 'cus_db.php'; // Ensure this file correctly initializes the database connection.
@@ -102,58 +149,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['supplierId'])) {
 }
 ?>
 
-
-
-<?php 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editSupplierId"])) {
-    // Retrieve the old Supplier ID from the form
-    $old_Sup_Id = $_POST["editSupplierId"];
-    
-    // Retrieve other updated supplier information from the form
-    $companyName = $_POST["editSupplierCompanyName"];
-    $province = $_POST["editSupplierProvince"];
-    $city = $_POST["editSupplierCity"];
-    $zipCode = $_POST["editSupplierZipCode"];
-    $phoneNumber = $_POST["editSupplierPhoneNumber"];
-
-    // Prepare the SQL query to update supplier information in the suppliers table
-    $sql = "UPDATE suppliers SET companyName=?, province=?, city=?, zipCode=?, phoneNumber=? WHERE Sup_Id=?";
-
-    if ($stmt = $conn->prepare($sql)) {
-        // Bind parameters to the prepared statement
-        $stmt->bind_param("sssssi", $companyName, $province, $city, $zipCode, $phoneNumber, $old_Sup_Id);
-        
-        // Execute the prepared statement to update supplier information
-        if ($stmt->execute()) {
-            // If the Sup_Id is updated, also update the corresponding Sup_Id in the products table
-            $sql_update_products = "UPDATE products SET Sup_Id=? WHERE Sup_Id=?";
-            $stmt_update_products = $conn->prepare($sql_update_products);
-            
-            // Bind parameters for the products table update statement
-            $stmt_update_products->bind_param("ii", $old_Sup_Id, $old_Sup_Id);
-            
-            // Execute the products table update statement
-            if ($stmt_update_products->execute()) {
-                // Redirect to the suppliers page after successful updates
-                header("Location: suppliers.php");
-                exit();
-            } else {
-                // Handle errors in the products table update
-                echo "Error updating products table: " . $conn->error;
-            }
-        } else {
-            // Handle errors in the suppliers table update
-            echo "Error updating suppliers table: " . $conn->error;
-        }
-        
-        // Close the prepared statement
-        $stmt->close();
-    } else {
-        // Handle errors in preparing the SQL query
-        echo "ERROR: Could not prepare query: $sql. " . $conn->error;
-    }
-}
-?>
 
 
 <!DOCTYPE html>
@@ -451,33 +446,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editSupplierId"])) {
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="addSupplierForm" method="POST" action="suppliers.php">
+                                     <form id="addSupplierForm" method="POST" action="suppliers.php">
                                         <div class="form-group">
                                             <label for="supplierCompanyName">Company Name</label>
                                             <input type="text" class="form-control" id="supplierCompanyName" name="supplierCompanyName" required>
+                                            <span id="companyNameError" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <label for="supplierProvince">Province</label>
                                             <input type="text" class="form-control" id="supplierProvince" name="supplierProvince" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                            <span id="provinceError" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <label for="supplierCity">City/Municipality</label>
                                             <input type="text" class="form-control" id="supplierCity" name="supplierCity" required pattern="[A-Za-z -]+" title="Only letters, spaces, and dashes allowed">
+                                            <span id="cityError" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <label for="supplierZipCode">Zip Code</label>
-                                            <input type="text" class="form-control" id="supplierZipCode" name="supplierZipCode" required pattern="[0-9]{4}" title="Phone number must be 4 digits">
+                                            <input type="text" class="form-control" id="supplierZipCode" name="supplierZipCode" required>
+                                            <span id="zipCodeError" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <label for="supplierPhoneNumber">Phone Number</label>
                                             <input type="text" class="form-control" id="supplierPhoneNumber" name="supplierPhoneNumber" required pattern="[0-9]{11}" title="Phone number must be 11 digits">
+                                            <span id="phoneNumberError" class="text-danger"></span>
                                         </div>
                                         
                                     </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary" form="addSupplierForm">Add Supplier</button>
+                                    <button type="submit" class="btn btn-primary" id="addSupplierBtn">Add Supplier</button>
                                 </div>
                             </div>
                         </div>
@@ -499,22 +499,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editSupplierId"])) {
                                 <div class="form-group">
                                     <label for="editSupplierCompanyName">Company Name</label>
                                     <input type="text" class="form-control" id="editSupplierCompanyName" name="editSupplierCompanyName" required>
+                                    <span id="editCompanyNameError" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="editSupplierProvince">Province</label>
                                     <input type="text" class="form-control" id="editSupplierProvince" name="editSupplierProvince" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                    <span id="editProvinceError" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="editSupplierCity">City/Municipality</label>
                                     <input type="text" class="form-control" id="editSupplierCity" name="editSupplierCity" required pattern="[A-Za-z -]+" title="Only letters and spaces allowed">
+                                    <span id="editCityError" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="editSupplierZipCode">Zip Code</label>
                                     <input type="text" class="form-control" id="editSupplierZipCode" name="editSupplierZipCode" required pattern="[0-9]{4}" title="Phone number must be 4 digits">
+                                    <span id="editZipCodeError" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="editSupplierPhoneNumber">Phone Number</label>
                                     <input type="text" class="form-control" id="editSupplierPhoneNumber" name="editSupplierPhoneNumber" required pattern="[0-9]{11}" title="Phone number must be 11 digits">
+                                    <span id="editPhoneNumberError" class="text-danger"></span>
                                 </div>
                             
                                 <!-- Hidden field for supplier ID -->
@@ -524,7 +529,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editSupplierId"])) {
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary" form="editSupplierForm">Save Changes</button>
+                                    <button type="submit" class="btn btn-primary" id="saveCustomerBtn">Save Changes</button>
                                 </div>
                             </div>
                         </div>
@@ -667,6 +672,184 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editSupplierId"])) {
 
     <!-- Page level custom scripts -->
     <script src="../js/demo/datatables-demo.js"></script>
+
+
+    <!-- ADD SUPPLIER VALIDATION -->
+    <script>
+        $(document).ready(function(){
+            $('#addSupplierBtn').click(function(){
+                var companyName = $('#supplierCompanyName').val();
+                var province = $('#supplierProvince').val();
+                var city = $('#supplierCity').val();
+                var zipCode = $('#supplierZipCode').val();
+                var phoneNumber = $('#supplierPhoneNumber').val();
+
+                var companyNamePattern = /^[A-Za-z !"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]+$/;
+                var addressPattern = /^[A-Za-z\- ]+$/;
+                var zipCodePattern = /^\d{4}$/;
+                var phoneNumberPattern = /^[0-9]{11}$/;
+
+                // Validate Company name
+                if(companyName.trim() == '' || !companyNamePattern.test(companyName)){
+                    $('#companyNameError').text('Please enter a valid company name.');
+                    $('#supplierCompanyName').addClass('is-invalid');
+                    return false;
+                } else {
+                    $('#companyNameError').text('');
+                    $('#supplierCompanyName').removeClass('is-invalid');
+                }
+
+                // Validate PROVINCE
+                if(province.trim() == '' || !addressPattern.test(province)){
+                    $('#provinceError').text('Please enter a valid province.');
+                    $('#supplierProvince').addClass('is-invalid');
+                    return false;
+                } else {
+                    $('#provinceError').text('');
+                    $('#supplierProvince').removeClass('is-invalid');
+                }
+
+                // Validate CITY
+                if(city.trim() == '' || !addressPattern.test(city)){
+                    $('#cityError').text('Please enter a valid city.');
+                    $('#supplierCity').addClass('is-invalid');
+                    return false;
+                } else {
+                    $('#cityError').text('');
+                    $('#supplierCity').removeClass('is-invalid');
+                }
+
+                // Validate ZIP CODE
+                if(zipCode.trim() == '' || !zipCodePattern.test(zipCode)){
+                    $('#zipCodeError').text('Please enter a valid zip code.');
+                    $('#supplierZipCode').addClass('is-invalid');
+                    return false;
+                } else {
+                    $('#zipCodeError').text('');
+                    $('#supplierZipCode').removeClass('is-invalid');
+                }
+
+                // Validate phone number
+                if(phoneNumber.trim() == '' || !phoneNumberPattern.test(phoneNumber)){
+                    $('#phoneNumberError').text('Phone number must be 11 digits.');
+                    $('#customerPhoneNumber').addClass('is-invalid');
+                    return false;
+                } else {
+                    $('#phoneNumberError').text('');
+                    $('#customerPhoneNumber').removeClass('is-invalid');
+                }
+
+                // AJAX request
+                $.ajax({
+                    url: 'sup_check_add_phone_existence.php', // PHP script to check phone number
+                    type: 'post',
+                    data: $('#addSupplierForm').serialize(),
+                    success: function(response){
+                        if(response == 'exists'){
+                            $('#phoneNumberError').text('Phone number already exists.');
+                        } else {
+                            $('#phoneNumberError').text('');
+                            $('#addSupplierForm').submit();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+
+
+    <!-- EDIT SUPPLIER VALIDATION -->
+    <script>
+        $(document).ready(function(){
+            $('#saveCustomerBtn').click(function(){
+
+                var companyName = $('#editSupplierCompanyName').val();
+                var province = $('#editSupplierProvince').val();
+                var city = $('#editSupplierCity').val();
+                var zipCode = $('#editSupplierZipCode').val();
+                var phoneNumber = $('#editSupplierPhoneNumber').val();
+
+                var companyNamePattern = /^[A-Za-z !"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]+$/;
+                var addressPattern = /^[A-Za-z\- ]+$/;
+                var zipCodePattern = /^\d{4}$/;
+                var phoneNumberPattern = /^[0-9]{11}$/;
+
+                // Validate Company name
+                if(companyName.trim() == '' || !companyNamePattern.test(companyName)){
+                    $('#editCompanyNameError').text('Please enter a valid company name.');
+                    $('#editSupplierCompanyName').addClass('is-invalid');
+                    return false;
+                } else {
+                    $('#editCompanyNameError').text('');
+                    $('#editSupplierCompanyName').removeClass('is-invalid');
+                }
+
+                // Validate PROVINCE
+                if(province.trim() == '' || !addressPattern.test(province)){
+                    $('#editProvinceError').text('Please enter a valid province.');
+                    $('#editSupplierProvince').addClass('is-invalid');
+                    return false;
+                } else {
+                    $('#editProvinceError').text('');
+                    $('#editSupplierProvince').removeClass('is-invalid');
+                }
+
+                // Validate CITY
+                if(city.trim() == '' || !addressPattern.test(city)){
+                    $('#editCityError').text('Please enter a valid city.');
+                    $('#editSupplierCity').addClass('is-invalid');
+                    return false;
+                } else {
+                    $('#editCityError').text('');
+                    $('#editSupplierCity').removeClass('is-invalid');
+                }
+
+                // Validate ZIP CODE
+                if(zipCode.trim() == '' || !zipCodePattern.test(zipCode)){
+                    $('#editZipCodeError').text('Please enter a valid zip code.');
+                    $('#editSupplierZipCode').addClass('is-invalid');
+                    return false;
+                } else {
+                    $('#editZipCodeError').text('');
+                    $('#editSupplierZipCode').removeClass('is-invalid');
+                }
+
+                // Validate phone number
+                if(phoneNumber.trim() == '' || !phoneNumberPattern.test(phoneNumber)){
+                    $('#editPhoneNumberError').text('Phone number must be 11 digits.');
+                    $('#editSupplierPhoneNumber').addClass('is-invalid');
+                    return false;
+                } else {
+                    $('#editPhoneNumberError').text('');
+                    $('#editSupplierPhoneNumber').removeClass('is-invalid');
+                }
+
+                // AJAX request
+                $.ajax({
+                    url: 'sup_check_edit_phone_existence.php', // PHP script to check phone number
+                    type: 'post',
+                    data: $('#editSupplierForm').serialize(),
+                    success: function(response){
+                        if(response.trim() == 'exists'){
+                            $('#editPhoneNumberError').text('Phone number already exists.');
+                        } else {
+                            $('#editPhoneNumberError').text('');
+                            $('#editSupplierForm').submit();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
     <script>
         function setEditSupplierFormData(Sup_Id, companyName, province, city, zipCode, phoneNumber, productID) {
             document.getElementById("editSupplierId").value = Sup_Id;

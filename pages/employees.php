@@ -18,6 +18,7 @@ if (isset($_SESSION['email'])) {
 }
 ?>
 
+<!-- ADD EMPLOYEE -->
 <?php
 include 'cus_db.php'; // Include your database connection
 
@@ -28,16 +29,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lastName = isset($_POST['employeeLastName']) ? $_POST['employeeLastName'] : '';
     $role = isset($_POST['employeeRole']) ? $_POST['employeeRole'] : '';
     $salary = isset($_POST['employeeSalary']) ? $_POST['employeeSalary'] : '';
-    $phone = isset($_POST['employeePhone']) ? $_POST['employeePhone'] : '';
+    $phone_no = isset($_POST['employeePhone']) ? $_POST['employeePhone'] : '';
     
     // Check if required fields are not empty
     if (!empty($firstName)) {
+        $check_query = "SELECT COUNT(*) AS count FROM employees WHERE phone_no = ?";
+        if ($stmt = $conn->prepare($check_query)) {
+            $stmt->bind_param("s", $phone_no);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $phone_no_count = $row['count'];
+            if ($phone_no_count > 0) {
+                echo "ERROR: Phone number already exists.";
+                exit; // Stop further execution
+            }
+        }
+
+
         // Prepare an insert statement
         $sql = "INSERT INTO employees (first_name, last_name, role, salary, phone_no) VALUES (?, ?, ?, ?, ?)";
         
         if($stmt = $conn->prepare($sql)){
             // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("sssds", $firstName, $lastName, $role, $salary, $phone);
+            $stmt->bind_param("sssds", $firstName, $lastName, $role, $salary, $phone_no);
             
             // Execute the query
             if($stmt->execute()){
@@ -54,7 +69,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<!--DELETE-->
+<!--EDIT EMPLOYEE-->
+<?php 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editEmployeeId"]) && isset($_POST["editEmployeeFirstName"]) && isset($_POST["editEmployeeLastName"]) && isset($_POST["editEmployeeRole"]) && isset($_POST["editEmployeeSalary"]) && isset($_POST["editEmployeePhone"])) {
+    $employee_id = $_POST["editEmployeeId"];
+    $firstName = $_POST["editEmployeeFirstName"];
+    $lastName = $_POST["editEmployeeLastName"];
+    $role = $_POST["editEmployeeRole"];
+    $salary = $_POST["editEmployeeSalary"];
+    $phone_no = $_POST["editEmployeePhone"];
+
+    // Check if phone number already exists
+    $check_query = "SELECT COUNT(*) AS count FROM employees WHERE phone_no = ? AND employee_id != ?";
+    if ($stmt = $conn->prepare($check_query)) {
+        $stmt->bind_param("si", $phone_no, $employee_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $phone_no_count = $row['count'];
+        if ($phone_no_count > 0) {
+            echo 'ERROR: Phone number already exists.';
+            exit; // Stop further execution
+        }
+    }
+
+    $sql = "UPDATE employees SET first_name=?, last_name=?, role=?, salary=?, phone_no=? WHERE employee_id=?";
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param("sssssi", $firstName, $lastName, $role, $salary, $phone_no, $employee_id);
+        if ($stmt->execute()) {
+            // If update successful, redirect to the previous page or show a success message
+            header("Location: {$_SERVER['HTTP_REFERER']}");
+            exit();
+        } else {
+            echo "Error updating record: " . $stmt->error;
+        }
+    } else {
+        echo "Error preparing statement: " . $conn->error;
+    }
+
+}
+?>
+
+<!--DELETE EMPLOYEE-->
 <?php
 // Put this block at the top of the employees.php file
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['employee_id'])) {
@@ -80,28 +136,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['employee_id'])) {
 }
 ?>
 
-<!--EDIT-->
-<?php 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editEmployeeId"]) && isset($_POST["editEmployeeFirstName"]) && isset($_POST["editEmployeeLastName"]) && isset($_POST["editEmployeeRole"]) && isset($_POST["editEmployeeSalary"]) && isset($_POST["editEmployeePhone"])) {
-    $employee_id = $_POST["editEmployeeId"];
-    $firstName = $_POST["editEmployeeFirstName"];
-    $lastName = $_POST["editEmployeeLastName"];
-    $role = $_POST["editEmployeeRole"];
-    $salary = $_POST["editEmployeeSalary"];
-    $phone = $_POST["editEmployeePhone"];
 
-    // Update the employee data in the database
-    $sql = "UPDATE employees SET first_name='$firstName', last_name='$lastName', role='$role', salary='$salary', phone_no='$phone' WHERE employee_id=$employee_id";
 
-    if ($conn->query($sql) === TRUE) {
-        // If update successful, redirect to the previous page or show a success message
-        header("Location: {$_SERVER['HTTP_REFERER']}");
-        exit();
-    } else {
-        echo "Error updating record: " . $conn->error;
-    }
-}
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -404,10 +440,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editEmployeeId"]) && i
                                         <div class="form-group">
                                             <label for="employeeFirstName">First Name</label>
                                             <input type="text" class="form-control" id="employeeFirstName" name="employeeFirstName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                            <span id="firstNameError" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <label for="employeeLastName">Last Name</label>
                                             <input type="text" class="form-control" id="employeeLastName" name="employeeLastName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                            <span id="lastNameError" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <label for="employeeRole">Role/Designation</label>
@@ -425,16 +463,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editEmployeeId"]) && i
                                         <div class="form-group">
                                             <label for="employeeSalary">Salary</label>
                                             <input type="text" class="form-control" id="employeeSalary" name="employeeSalary" required>
+                                            <span id="salaryError" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <label for="employeePhone">Phone Number</label>
                                             <input type="text" class="form-control" id="employeePhone" name="employeePhone" required pattern="[0-9]{11}" title="Phone number must be 11 digits">
+                                            <span id="phoneNumberError" class="text-danger"></span>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary" form="addEmployeeForm">Add Employee</button>
+                                    <button type="submit" class="btn btn-primary" form="addEmployeeForm" id="addEmployeeBtn">Add Employee</button>
                                 </div>
                             </div>
                         </div>
@@ -457,10 +497,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editEmployeeId"]) && i
                                         <div class="form-group">
                                             <label for="editEmployeeFirstName">First Name</label>
                                             <input type="text" class="form-control" id="editEmployeeFirstName" name="editEmployeeFirstName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                            <span id="editFirstNameError" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <label for="editEmployeeLastName">Last Name</label>
                                             <input type="text" class="form-control" id="editEmployeeLastName" name="editEmployeeLastName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                            <span id="editLastNameError" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <label for="editEmployeeRole">Role/Designation</label>
@@ -478,10 +520,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editEmployeeId"]) && i
                                         <div class="form-group">
                                             <label for="editEmployeeSalary">Salary</label>
                                             <input type="text" class="form-control" id="editEmployeeSalary" name="editEmployeeSalary" required>
+                                            <span id="editSalaryError" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <label for="editEmployeePhone">Phone Number</label>
                                             <input type="text" class="form-control" id="editEmployeePhone" name="editEmployeePhone" required pattern="[0-9]{11}" title="Phone number must be 11 digits">
+                                            <span id="editPhoneNumberError" class="text-danger"></span>
                                         </div>
                                     
                                         <!-- Hidden field for employee ID -->
@@ -490,7 +534,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editEmployeeId"]) && i
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary" form="editEmployeeForm">Save Changes</button>
+                                    <button type="submit" class="btn btn-primary" form="editEmployeeForm" id="editEmployeeBtn">Save Changes</button>
                                 </div>
                             </div>
                         </div>
@@ -638,6 +682,160 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editEmployeeId"]) && i
 
     <!-- Page level custom scripts -->
     <script src="../js/demo/datatables-demo.js"></script>
+
+
+    <!-- ADD SUPPLIER VALIDATION -->
+    <script>
+        $(document).ready(function(){
+        $('#addEmployeeBtn').click(function(event){
+            event.preventDefault(); // Prevent default form submission
+            
+            var firstName = $('#employeeFirstName').val();
+            var lastName = $('#employeeLastName').val();
+            var salary = $('#employeeSalary').val();
+            var phone_no = $('#employeePhone').val();
+
+            var namePattern = /^[A-Za-z ]+$/;
+            var salaryPattern = /^[0-9.]+$/;
+            var phone_noPattern = /^[0-9]{11}$/;
+
+            // Validate First name
+            if(firstName.trim() == '' || !namePattern.test(firstName)){
+                $('#firstNameError').text('Please enter a valid first name.');
+                $('#employeeFirstName').addClass('is-invalid');
+                return false;
+            } else {
+                $('#firstNameError').text('');
+                $('#employeeFirstName').removeClass('is-invalid');
+            }
+
+            // Validate Last name
+            if(lastName.trim() == '' || !namePattern.test(lastName)){
+                $('#lastNameError').text('Please enter a valid last name.');
+                $('#employeeLastName').addClass('is-invalid');
+                return false;
+            } else {
+                $('#lastNameError').text('');
+                $('#employeeLastName').removeClass('is-invalid');
+            }
+
+            // Validate salary
+            if(salary.trim() == '' || !salaryPattern.test(salary)){
+                $('#salaryError').text('Please enter a valid salary.');
+                $('#employeeSalary').addClass('is-invalid');
+                return false;
+            } else {
+                $('#salaryError').text('');
+                $('#employeeSalary').removeClass('is-invalid');
+            }
+
+            // Validate phone number
+            if(phone_no.trim() == '' || !phone_noPattern.test(phone_no)){
+                $('#phoneNumberError').text('Phone number must be 11 digits.');
+                $('#employeePhone').addClass('is-invalid');
+                return false;
+            } else {
+                $('#phoneNumberError').text('');
+                $('#employeePhone').removeClass('is-invalid');
+            }
+
+            // AJAX request
+            $.ajax({
+                url: 'emp_check_add_phone_existence.php', // PHP script to check phone number
+                type: 'post',
+                data: { phone_no: phone_no }, // Corrected field name
+                success: function(response){
+                    if(response.trim() == 'exists'){ // Added trim to response
+                        $('#phoneNumberError').text('Phone number already exists.');
+                    } else {
+                        $('#phoneNumberError').text('');
+                        $('#addEmployeeForm').submit(); // Submit form if phone number is unique
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#phoneNumberError').text('Error occurred while checking phone number existence.');
+                }
+            });
+        });
+    });
+    </script>
+
+
+    <!-- EDIT SUPPLIER VALIDATION -->
+    <script>
+        $(document).ready(function(){
+        $('#editEmployeeBtn').click(function(event){
+            event.preventDefault(); // Prevent default form submission
+            
+            var firstName = $('#editEmployeeFirstName').val();
+            var lastName = $('#editEmployeeLastName').val();
+            var salary = $('#editEmployeeSalary').val();
+            var phone_no = $('#editEmployeePhone').val();
+
+            var namePattern = /^[A-Za-z ]+$/;
+            var salaryPattern = /^[0-9.]+$/;
+            var phone_noPattern = /^[0-9]{11}$/;
+
+            // Validate First name
+            if(firstName.trim() == '' || !namePattern.test(firstName)){
+                $('#editFirstNameError').text('Please enter a valid first name.');
+                $('#editEmployeeFirstName').addClass('is-invalid');
+                return false;
+            } else {
+                $('#editFirstNameError').text('');
+                $('#editEmployeeFirstName').removeClass('is-invalid');
+            }
+
+            // Validate Last name
+            if(lastName.trim() == '' || !namePattern.test(lastName)){
+                $('#editLastNameError').text('Please enter a valid last name.');
+                $('#editEmployeeLastName').addClass('is-invalid');
+                return false;
+            } else {
+                $('#editLastNameError').text('');
+                $('#editEmployeeLastName').removeClass('is-invalid');
+            }
+
+            // Validate salary
+            if(salary.trim() == '' || !salaryPattern.test(salary)){
+                $('#editSalaryError').text('Please enter a valid salary.');
+                $('#editEmployeeSalary').addClass('is-invalid');
+                return false;
+            } else {
+                $('#editSalaryError').text('');
+                $('#editEmployeeSalary').removeClass('is-invalid');
+            }
+
+            // Validate phone number
+            if(phone_no.trim() == '' || !phone_noPattern.test(phone_no)){
+                $('#editPhoneNumberError').text('Phone number must be 11 digits.');
+                $('#editEmployeePhone').addClass('is-invalid');
+                return false;
+            } else {
+                $('#editPhoneNumberError').text('');
+                $('#editEmployeePhone').removeClass('is-invalid');
+            }
+
+            // AJAX request
+            $.ajax({
+                url: 'emp_check_edit_phone_existence.php', // PHP script to check phone number
+                type: 'post',
+                data: $('#editEmployeeForm').serialize(),
+                success: function(response){
+                    if(response.trim() == 'exists'){
+                        $('#editPhoneNumberError').text('Phone number already exists.');
+                    } else {
+                        $('#editPhoneNumberError').text('');
+                        $('#editEmployeeForm').submit();
+                    }
+                }
+            });
+        });
+    });
+    </script>
+
+
+
 
     <script>
     function setEditFormData(employee_id, first_name, last_name, role, salary, phone_no) {
