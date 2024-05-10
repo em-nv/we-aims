@@ -18,7 +18,7 @@ if (isset($_SESSION['email'])) {
 }
 ?>
 
-<!-- ADD -->
+<!-- ADD PRODUCT -->
 <?php
 include 'cus_db.php'; // Include your database connection for suppliers
 
@@ -105,13 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['productName'])) {
 
 ?>
 
-
-
-
-
-
-
-
 <!-- FETCH AGAIN -->
 <?php
 // Connect to the database
@@ -137,37 +130,69 @@ $conn->close();
 ?>
 
 
-
-
-
-
-<!-- DELETE -->
+<!-- DELETE PRODUCT -->
 <?php
-include 'cus_db.php'; // Include your database connection file
+include 'cus_db.php';  // Include your database connection file
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deleteProductId'])) {
-    // Retrieve product ID from the POST request
     $productId = $_POST['deleteProductId'];
 
-    // Prepare and execute the DELETE statement
-    $sql_delete = "DELETE FROM products WHERE productId=?";
-    $stmt = $conn->prepare($sql_delete);
-    
-    // Bind the product ID parameter
-    $stmt->bind_param("i", $productId);
-    
-    // Check if the delete operation was successful
-    if ($stmt->execute()) {
-        // If successful, perhaps redirect or update the page state
-    } else {
-        // If there's an error, display the error message
-        echo "Error: " . $stmt->error;
+    // Start transaction
+    $conn->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);  // Explicitly start a RW transaction
+
+    try {
+        // First, fetch the product data to be deleted
+        $selectSql = "SELECT *, costPrice * quantity AS totalCostPrice, retailPrice * quantity AS totalRetailPrice FROM products WHERE productId = ?";
+        $selectStmt = $conn->prepare($selectSql);
+        if (false === $selectStmt) {
+            throw new Exception('Prepare failed: ' . $conn->error);
+        }
+        $selectStmt->bind_param("i", $productId);
+        $selectStmt->execute();
+        $productData = $selectStmt->get_result()->fetch_assoc();
+        $selectStmt->close();
+
+        if (!$productData) {
+            throw new Exception("Product not found.");
+        }
+
+        // Log the deletion in the deleted_products table, including total prices
+        $insertSql = "INSERT INTO deleted_products (productId, Sup_Id, companyName, productName, costPrice, retailPrice, quantity, totalCostPrice, totalRetailPrice) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $insertStmt = $conn->prepare($insertSql);
+        if (false === $insertStmt) {
+            throw new Exception('Prepare failed: ' . $conn->error);
+        }
+        $insertStmt->bind_param("iisssdddd", $productData['productId'], $productData['Sup_Id'], $productData['companyName'], $productData['productName'], $productData['costPrice'], $productData['retailPrice'], $productData['quantity'], $productData['totalCostPrice'], $productData['totalRetailPrice']);
+        $insertStmt->execute();
+        $insertStmt->close();
+
+        // Delete the product from the products table
+        $deleteSql = "DELETE FROM products WHERE productId = ?";
+        $deleteStmt = $conn->prepare($deleteSql);
+        if (false === $deleteStmt) {
+            throw new Exception('Prepare failed: ' . $conn->error);
+        }
+        $deleteStmt->bind_param("i", $productId);
+        $deleteStmt->execute();
+        $deleteStmt->close();
+
+        // Commit the transaction
+        $conn->commit();
+    } catch (Exception $e) {
+        // Rollback the transaction in case of an error
+        $conn->rollback();
+        echo "Error: " . $e->getMessage();
+        // Optionally redirect to an error page or rethrow the exception
+        // header('Location: error_page.php');
+        exit;
     }
 
-    // Close the statement to release resources
-    $stmt->close();
+    $conn->close();
+
+    // Redirect or update state as necessary
+    header("Location: products.php");
+    exit();
 }
-$conn->close();
 ?>
 
 
@@ -202,6 +227,8 @@ if ($result->num_rows > 0) {
 $conn->close();
 ?>
 
+
+<!-- EDIT PRODUCT -->
 <?php
 include 'cus_db.php'; // Include your database connection file
 
@@ -546,9 +573,71 @@ $stmt->bind_param("issdddddi", $supplierId, $companyName, $productName, $costPri
                             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addProductModal">
                                 <i class="fas fa-user-plus fa-sm text-white-50"></i> Add Products
                             </a>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#deleteHistoryModal">
+                                <i class="fas fa-history fa-sm text-white-50"></i> Delete History
+                            </a>
                             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                                 <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
                             </a>
+                        </div>
+                    </div>
+
+                    <!-- Delete History Modal for Products -->
+                    <div class="modal fade" id="deleteHistoryModal" tabindex="-1" role="dialog" aria-labelledby="deleteHistoryProductModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header gradient-header">
+                                    <h5 class="modal-title" id="deleteHistoryProductModalLabel">Product Delete History</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Product ID</th>
+                                                <th>Product Name</th>
+                                                <th>Supplier ID</th>
+                                                <th>Company Name</th>
+                                                <th>Cost Price</th>
+                                                <th>Retail Price</th>
+                                                <th>Quantity</th>
+                                                <th>Total Cost Price</th>
+                                                <th>Total Retail Price</th>
+                                                <th>Deleted At</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            include 'cus_db.php';
+                                            $sql = "SELECT * FROM deleted_products ORDER BY deleted_at DESC";
+                                            $result = $conn->query($sql);
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo "<tr>";
+                                                echo "<td>" . htmlspecialchars($row['productId']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['productName']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['Sup_Id']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['companyName']) . "</td>";
+                                                echo "<td>Php " . number_format($row['costPrice'], 2) . "</td>";
+                                                echo "<td>Php " . number_format($row['retailPrice'], 2) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['quantity']) . "</td>";
+                                                echo "<td>Php " . number_format($row['totalCostPrice'], 2) . "</td>";
+                                                echo "<td>Php " . number_format($row['totalRetailPrice'], 2) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['deleted_at']) . "</td>";
+                                                echo "<td><button class='btn btn-warning' onclick='undoDelete(" . $row['productId'] . ")'>Undo</button></td>";
+                                                echo "</tr>";
+                                            }
+                                            $conn->close();
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -925,7 +1014,7 @@ $stmt->bind_param("issdddddi", $supplierId, $companyName, $productName, $costPri
     }
     </script>
 
-<script>
+    <script>
     function validatePricesEdit() {
         var ep_editCostPrice = parseFloat(document.getElementById('ep_editCostPrice').value);
         var ep_editRetailPrice = parseFloat(document.getElementById('ep_editRetailPrice').value);
@@ -933,6 +1022,29 @@ $stmt->bind_param("issdddddi", $supplierId, $companyName, $productName, $costPri
         if (ep_editRetailPrice < ep_editCostPrice) {
             alert("Retail price cannot be less than the cost price.");
             document.getElementById('ep_editRetailPrice').value = ep_editCostPrice;
+        }
+    }
+    </script>
+
+    <!-- RESTORING DELETED PRODUCT -->
+    <script>
+    function undoDelete(productId) {
+        if (confirm('Are you sure you want to restore this product?')) {
+            $.ajax({
+                url: 'restore_product.php',
+                type: 'POST',
+                data: { productId: productId },
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    alert(data.message);
+                    if (data.success) {
+                        location.reload(); // Reload to update the view
+                    }
+                },
+                error: function() {
+                    alert('Error restoring product.');
+                }
+            });
         }
     }
     </script>

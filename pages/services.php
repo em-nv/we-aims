@@ -1,3 +1,181 @@
+
+<!-- ADD SERVICE -->
+<?php
+include 'cus_db.php'; // Include your database connection file
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['serviceName'], $_POST['employeeId'])) {
+    
+    // Retrieve service details from form data
+    $serviceName = $_POST['serviceName'];
+    $timeRequired = $_POST['timeRequired'];
+    $servicePrice = $_POST['servicePrice'];
+    $employeeId = $_POST['employeeId'];
+    $employeeName = $_POST['first_name']; // Assuming 'first_name' comes from the form as a hidden input
+    $employeeRole = $_POST['role'];       // Retrieve 'role' from the form data
+
+    // Debugging output
+    echo "Service Name: " . $serviceName . "<br>";
+    echo "Employee Name: " . $employeeName . "<br>";
+    echo "Employee Role: " . $employeeRole; // Displaying role for debugging
+
+    // Prepare the SQL statement for inserting service details
+    $sql = "INSERT INTO services (serviceName, timeRequired, servicePrice, employee_id, employee_name, employee_role) VALUES (?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssdiss", $serviceName, $timeRequired, $servicePrice, $employeeId, $employeeName, $employeeRole);
+
+    if ($stmt->execute()) {
+        // Redirect to a new page or refresh with a success message
+        header("Location: services.php?status=success");
+        exit;
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    // Close prepared statement and database connection
+    $stmt->close();
+    $conn->close();
+}
+?>
+
+
+<!--FETCH-->
+<?php
+include 'cus_db.php'; // Make sure this file contains the correct database connection setup
+
+$employees = [];
+$query = "SELECT employee_id, first_name, role FROM employees"; // Assuming 'role' is a column in your 'employees' table
+$result = $conn->query($query);
+
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $employees[$row['employee_id']] = ['first_name' => $row['first_name'], 'role' => $row['role']];
+    }
+} else {
+    echo "Error fetching employees: " . $conn->error;
+}
+
+$conn->close();
+
+?>
+
+
+<!-- DELETE SERVICE -->
+<?php
+include 'cus_db.php';  // Include your database connection file
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deleteServiceId'])) {
+    $serviceId = $_POST['deleteServiceId'];
+
+    // Start transaction
+    $conn->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);  // Explicitly start a RW transaction
+
+    try {
+        // First, fetch the service data to be deleted
+        $selectSql = "SELECT * FROM services WHERE serviceId = ?";
+        $selectStmt = $conn->prepare($selectSql);
+        if (false === $selectStmt) {
+            throw new Exception('Prepare failed: ' . $conn->error);
+        }
+        $selectStmt->bind_param("i", $serviceId);
+        $selectStmt->execute();
+        $serviceData = $selectStmt->get_result()->fetch_assoc();
+        $selectStmt->close();
+
+        if (!$serviceData) {
+            throw new Exception("Service not found.");
+        }
+
+        // Log the deletion in the deleted_services table
+        $insertSql = "INSERT INTO deleted_services (serviceId, serviceName, employee_id, employee_name, employee_role, timeRequired, servicePrice, delete_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
+        $insertStmt = $conn->prepare($insertSql);
+        if (false === $insertStmt) {
+            throw new Exception('Prepare failed: ' . $conn->error);
+        }
+        $insertStmt->bind_param("isisssd", $serviceData['serviceId'], $serviceData['serviceName'], $serviceData['employee_id'], $serviceData['employee_name'], $serviceData['employee_role'], $serviceData['timeRequired'], $serviceData['servicePrice']);
+        $insertStmt->execute();
+        $insertStmt->close();
+
+        // Delete the service from the services table
+        $deleteSql = "DELETE FROM services WHERE serviceId = ?";
+        $deleteStmt = $conn->prepare($deleteSql);
+        if (false === $deleteStmt) {
+            throw new Exception('Prepare failed: ' . $conn->error);
+        }
+        $deleteStmt->bind_param("i", $serviceId);
+        $deleteStmt->execute();
+        $deleteStmt->close();
+
+        // Commit the transaction
+        $conn->commit();
+    } catch (Exception $e) {
+        // Rollback the transaction in case of an error
+        $conn->rollback();
+        echo "Error: " . $e->getMessage();
+        // Optionally redirect to an error page or rethrow the exception
+        // header('Location: error_page.php');
+        exit;
+    }
+
+    $conn->close();
+
+    // Redirect or update state as necessary
+    header("Location: services.php"); // Update the redirection as per your URL structure
+    exit();
+}
+?>
+
+<!-- EDIT SERVICE -->
+<?php
+include 'cus_db.php'; // Include your database connection file
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["ep_serviceId"])) {
+    // Retrieve service details from the form
+    $serviceId = $_POST['ep_serviceId'];
+    $employeeId = $_POST['ep_employeeId'];
+    $serviceName = $_POST['ep_serviceName'];
+    $timeRequired = $_POST['ep_timeRequired'];
+    $servicePrice = $_POST['ep_servicePrice'];
+
+    // SQL to update existing service
+    $sql = "UPDATE services SET 
+            employee_id=?, 
+            serviceName=?, 
+            timeRequired=?, 
+            servicePrice=?
+            WHERE serviceId=?";
+
+    if ($stmt = $conn->prepare($sql)) {
+        // Bind parameters to the prepared statement
+        $stmt->bind_param("issdi", $employeeId, $serviceName, $timeRequired, $servicePrice, $serviceId);
+
+        // Execute the prepared statement to update service information
+        if ($stmt->execute()) {
+            // Check if any rows were updated
+            if ($stmt->affected_rows === 0) {
+                echo "No rows updated. Please check the service ID.";
+            } else {
+                // Redirect to the services page after successful update
+                header("Location: services.php");
+                exit();
+            }
+        } else {
+            // Handle errors in updating the service table
+            echo "Error updating service: " . $stmt->error;
+        }
+        
+        // Close the prepared statement
+        $stmt->close();
+    } else {
+        // Handle errors in preparing the SQL query
+        echo "ERROR: Could not prepare SQL: " . $conn->error;
+    }
+
+    // Close the database connection
+    $conn->close();
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,6 +209,34 @@
 
     <!-- BOXICONS AWESOME ICONS -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+    .gradient-header {
+        background-image: linear-gradient(to right, #003366, #004080, #0059b3); 
+        color: white; /* White text color */
+            /* Add this CSS to your existing styles */
+    }
+    .edit-column button i,
+    .trash-column button i {
+        color: black; /* Set icon color to black */
+    }
+
+    .edit-column button:hover {
+        background-color: #28a745; /* Change background color to green on hover for edit button */
+        border-color: #28a745; /* Change border color to match background color */
+    }
+
+    .trash-column button:hover {
+        background-color: #dc3545; /* Change background color to red on hover for delete button */
+        border-color: #dc3545; /* Change border color to match background color */
+    }
+
+    .modal-xl {
+    max-width: 1300px; 
+    }
+
+    </style>    
+
 
 </head>
 
@@ -250,18 +456,215 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Services</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        <div>
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addServiceModal">
+                            <i class="fas fa-user-plus fa-sm text-white-50"></i> Add Services
+                        </a>
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#deleteHistoryModal">
+                            <i class="fas fa-history fa-sm text-white-50"></i> Delete History
+                        </a>
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                            <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+                        </a>
+                        </div>
                     </div>
 
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3" style="display: flex; justify-content: space-between; background-color: transparent !important;">
-                            <h6 class="m-0 font-weight-bold text-primary"> </h6>
-                            <div class="add-button">
-                                <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" ><i
-                                    class="fas fa-solid fa-plus fa-sm text-white-50"></i> Add</a>
+                    <!-- Delete History Modal -->
+                    <div class="modal fade" id="deleteHistoryModal" tabindex="-1" role="dialog" aria-labelledby="deleteHistoryModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header gradient-header">
+                                    <h5 class="modal-title" id="deleteHistoryModalLabel">Service Delete History</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Service ID</th>
+                                                <th>Service Name</th>
+                                                <th>Employee ID</th>
+                                                <th>Employee Name</th>
+                                                <th>Role/Designation</th>
+                                                <th>Time Required</th>
+                                                <th>Service Price</th>
+                                                <th>Deletion At</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            include 'cus_db.php';
+                                            $historySql = "SELECT * FROM deleted_services ORDER BY delete_at DESC";
+                                            $historyResult = $conn->query($historySql);
+                                            if ($historyResult && $historyResult->num_rows > 0) {
+                                                while ($row = $historyResult->fetch_assoc()) {
+                                                    echo "<tr>";
+                                                    echo "<td>" . htmlspecialchars($row['serviceId']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['serviceName']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['employee_id']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['employee_name']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['employee_role']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['timeRequired']) . "</td>";
+                                                    echo "<td>Php " . htmlspecialchars(number_format($row['servicePrice'], 2)) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['delete_at']) . "</td>";
+                                                    echo "<td><button class='btn btn-warning' onclick='undoDelete(" . $row['serviceId'] . ")'>Undo</button></td>";
+                                                    echo "</tr>";
+                                                }
+                                            } else {
+                                                echo "<tr><td colspan='9'>No deletion history found</td></tr>";
+                                            }
+                                            $conn->close();
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <!-- MODAL FOR ADDING A SERVICE -->
+                    <div class="modal fade" id="addServiceModal" tabindex="-1" role="dialog" aria-labelledby="addServiceModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header gradient-header">
+                                    <h5 class="modal-title" id="addServiceModalLabel">Add New Service</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="addServiceForm" method="POST" action="services.php">
+                                        <div class="form-group">
+                                            <label for="serviceName">Service Name</label>
+                                            <select class="form-control" id="serviceName" name="serviceName">
+                                                <option value="">Select Service Name</option>
+                                                <option value="Tire Mounting and Balancing">Tire Mounting and Balancing</option>
+                                                <option value="Brake Pad Replacement">Brake Pad Replacement</option>
+                                                <option value="Battery Installation">Battery Installation</option>
+                                                <option value="Oil Change">Oil Change</option>
+                                                <option value="Air Filter Replacement">Air Filter Replacement</option>
+                                                <option value="Automatic Tire Changing">Automatic Tire Changing</option>
+                                                <option value="Wheel Alignment">Wheel Alignment</option>
+                                                <option value="Nitrogen Inflation">Nitrogen Inflation</option>
+                                                <option value="Under Chassis Repair">Under Chassis Repair</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="timeRequired">Time Required</label>
+                                            <input type="text" class="form-control" id="timeRequired" name="timeRequired" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="servicePrice">Service Price</label>
+                                            <input type="number" class="form-control" id="servicePrice" name="servicePrice" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="employeeID">Employee ID</label>
+                                            <select class="form-control" id="employeeID" name="employeeId" required onchange="updateEmployeeDetails(this);">
+                                                <option value="">Select Employee ID</option>
+                                                <?php foreach ($employees as $id => $info) {
+                                                    echo "<option value='{$id}' data-first_name='{$info['first_name']}' data-role='{$info['role']}'>{$id} - {$info['first_name']}</option>";
+                                                } ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="first_name">Employee Name</label>
+                                            <input type="text" class="form-control" id="first_name" name="first_name" required readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="role">Role/Designation</label>
+                                            <input type="text" class="form-control" id="role" name="role" required readonly>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" form="addServiceForm">Add Service</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- MODAL FOR EDITING A PRODUCT -->
+                    <div class="modal fade" id="editServiceModal" tabindex="-1" role="dialog" aria-labelledby="editServiceModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header gradient-header">
+                                    <h5 class="modal-title" id="editServiceModalLabel">Edit Service</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="editServiceForm" method="POST" action="services.php">
+                    
+                                        
+                                        <div class="form-group">
+                                            <label for="ep_editserviceName">Service Name</label>
+                                            <select class="form-control" id="ep_editserviceName" name="ep_serviceName">
+                                                <option value="">Select Service Name</option>
+                                                <option value="Tire Mounting and Balancing">Tire Mounting and Balancing</option>
+                                                <option value="Brake Pad Replacement">Brake Pad Replacement</option>
+                                                <option value="Battery Installation">Battery Installation</option>
+                                                <option value="Oil Change">Oil Change</option>
+                                                <option value="Air Filter Replacement">Air Filter Replacement</option>
+                                                <option value="Automatic Tire Changing">Automatic Tire Changing</option>
+                                                <option value="Wheel Alignment">Wheel Alignment</option>
+                                                <option value="Nitrogen Inflation">Nitrogen Inflation</option>
+                                                <option value="Under Chassis Repair">Under Chassis Repair</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ep_edittimeRequired">Time Required</label>
+                                            <input type="text" class="form-control" id="ep_edittimeRequired" name="ep_timeRequired" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ep_editservicePrice">Service Price</label>
+                                            <input type="number" class="form-control" id="ep_editservicePrice" name="ep_servicePrice" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ep_editemployeeID">Employee ID</label>
+                                            <select class="form-control" id="ep_editemployeeID" name="ep_employeeId" required onchange="updateEditEmployeeDetails(this);">
+                                                <option value="">Select Employee ID</option>
+                                                <?php foreach ($employees as $id => $info) {
+                                                    echo "<option value='{$id}' data-first_name='{$info['first_name']}' data-role='{$info['role']}'>{$id} - {$info['first_name']}</option>";
+                                                } ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ep_editfirst_name">Employee Name</label>
+                                            <input type="text" class="form-control" id="ep_editfirst_name" name="ep_first_name" required readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ep_editrole">Role/Designation</label>
+                                            <input type="text" class="form-control" id="ep_editrole" name="ep_role" required readonly>
+                                        </div>
+                                        <!-- Hidden field for service ID -->
+                                        <input type="hidden" id="ep_editServiceId" name="ep_serviceId">
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" form="editServiceForm">Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DataTable for Products -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 gradient-header" style="display: flex; justify-content: space-between;">
+                            <h6 class="m-0 font-weight-bold text-white">Services List</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -270,52 +673,64 @@
                                         <tr>
                                             <th>Service ID</th>
                                             <th>Service Name</th>
+                                            <th>Employee ID</th>
+                                            <th>Employee Name</th>
+                                            <th>Role/Designation</th>
                                             <th>Time Required</th>
                                             <th>Service Price</th>
-                                            <th>Employee ID</th>
-                                            <th></th>
-                                            <th></th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                    <tr>
-                                            <th>Service ID</th>
-                                            <th>Service Name</th>
-                                            <th>Time Required</th>
-                                            <th>Service Price</th>
-                                            <th>Employee ID</th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
-                                        <tr>
-                                            <td>500</td>
-                                            <td>Lorem</td>
-                                            <td>Lorem</td>
-                                            <td>Php500</td>
-                                            <td>002</td>
-                                            <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
-                                            <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>500</td>
-                                            <td>Lorem</td>
-                                            <td>Lorem</td>
-                                            <td>Php500</td>
-                                            <td>002</td>
-                                            <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
-                                            <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>500</td>
-                                            <td>Lorem</td>
-                                            <td>Lorem</td>
-                                            <td>Php500</td>
-                                            <td>002</td>
-                                            <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
-                                            <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                                        </tr>
+                                        <?php
+                                        include 'cus_db.php'; // Include your database connection file
+
+                                        $sql = "SELECT s.serviceId, s.serviceName, s.timeRequired, s.servicePrice, e.employee_id, e.first_name, e.role
+                                        FROM services s
+                                        JOIN employees e ON s.employee_id = e.employee_id";
+
+                                        $result = $conn->query($sql);
+
+                                        if ($result === false) {
+                                            echo "Error: " . $conn->error;
+                                        } else {
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    echo "<tr>";
+                                                    echo "<td>" . htmlspecialchars($row["serviceId"]) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row["serviceName"]) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row["employee_id"]) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row["first_name"]) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row["role"]) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row["timeRequired"]) . "</td>";
+                                                    echo "<td>Php " . htmlspecialchars(number_format($row["servicePrice"], 2)) . "</td>";
+
+                                                    // Edit button
+                                                    echo "<td>
+                                                            <button type='button' class='btn btn-success' data-toggle='modal' data-target='#editServiceModal' onclick='setEditServiceFormData(\"" . htmlspecialchars($row["serviceId"]) . "\", \"" . htmlspecialchars($row["serviceName"]) . "\", \"" . htmlspecialchars($row["employee_id"]) . "\", \"" . htmlspecialchars($row["first_name"]) . "\", \"" . htmlspecialchars($row["role"]) . "\", \"" . htmlspecialchars($row["timeRequired"]) . "\", " . htmlspecialchars($row["servicePrice"]) . ")'>
+                                                                <i class='fa fa-edit'></i>
+                                                            </button>
+                                                        </td>";
+
+
+                                                    // Delete button
+                                                    echo "<td>
+                                                            <form method='POST' action='services.php' onsubmit='return confirm(\"Are you sure you want to delete this service?\");'>
+                                                                <input type='hidden' name='deleteServiceId' value='" . $row["serviceId"] . "'>
+                                                                <button type='submit' class='btn btn-danger'>
+                                                                <i class='fa fa-trash'></i>
+                                                                </button>
+                                                            </form>
+                                                    </td>";
+                                                    echo "</tr>";
+                                                }
+                                            } else {
+                                                echo "<tr><td colspan='9'>No results found</td></tr>";
+                                            }
+                                        }
+                                        $conn->close();
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -392,6 +807,70 @@
 
     <!-- Page level custom scripts -->
     <script src="../js/demo/datatables-demo.js"></script>
+
+    <script>
+    $(document).ready( function () {
+        $('#dataTable').DataTable();
+    } );
+    </script>
+
+
+    <script>
+    function updateEmployeeDetails(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+        if (selectedOption) {
+            document.getElementById('first_name').value = selectedOption.getAttribute('data-first_name');
+            document.getElementById('role').value = selectedOption.getAttribute('data-role');
+        } else {
+            document.getElementById('first_name').value = '';
+            document.getElementById('role').value = '';
+        }
+    }
+    </script>
+    
+    <script>
+    function updateEditEmployeeDetails(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+        if (selectedOption) {
+            // Ensure the IDs match those in the HTML
+            document.getElementById('ep_editfirst_name').value = selectedOption.getAttribute('data-first_name');
+            document.getElementById('ep_editrole').value = selectedOption.getAttribute('data-role');
+        } else {
+            document.getElementById('ep_editfirst_name').value = '';
+            document.getElementById('ep_editrole').value = '';
+        }
+    }
+    </script>
+
+
+    <script>
+    function setEditServiceFormData(serviceId, serviceName, employeeId, employeeName, role, timeRequired, servicePrice) {
+        document.getElementById('ep_editServiceId').value = serviceId;
+        document.getElementById('ep_editserviceName').value = serviceName;
+        document.getElementById('ep_editemployeeID').value = employeeId;
+        document.getElementById('ep_editfirst_name').value = employeeName;
+        document.getElementById('ep_editrole').value = role;
+        document.getElementById('ep_edittimeRequired').value = timeRequired;
+        document.getElementById('ep_editservicePrice').value = servicePrice;
+    }
+    </script>
+
+    <script>
+    function undoDelete(serviceId) {
+        console.log("Restoring service with ID:", serviceId);  // Add this to check the ID
+        if (confirm("Are you sure you want to restore this service?")) {
+            $.post('restore_service.php', { serviceId: serviceId }, function(data) {
+                console.log("Response:", data);  // Log the response
+                alert(data.message);
+                if (data.success) {
+                    location.reload();
+                }
+            }, 'json');
+        }
+    }
+    </script>
 
 </body>
 

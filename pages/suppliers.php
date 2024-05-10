@@ -123,6 +123,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['supplierId'])) {
     $conn->begin_transaction();
 
     try {
+        // First, fetch the supplier data
+        $selectSql = "SELECT * FROM suppliers WHERE Sup_Id = ?";
+        $selectStmt = $conn->prepare($selectSql);
+        $selectStmt->bind_param("i", $supplier_id);
+        $selectStmt->execute();
+        $supplierData = $selectStmt->get_result()->fetch_assoc();
+        $selectStmt->close();
+
+        // Log deletion
+        $logSql = "INSERT INTO deleted_suppliers (supplier_id, companyName, province, city, zipCode, phoneNumber) VALUES (?, ?, ?, ?, ?, ?)";
+        $logStmt = $conn->prepare($logSql);
+        $logStmt->bind_param("isssss", $supplier_id, $supplierData['companyName'], $supplierData['province'], $supplierData['city'], $supplierData['zipCode'], $supplierData['phoneNumber']);
+        if (!$logStmt->execute()) {
+            throw new Exception("Error logging deletion: " . $logStmt->error);
+        }
+        $logStmt->close();
+
         // Prepare and execute the deletion of the supplier.
         $stmt = $conn->prepare("DELETE FROM suppliers WHERE Sup_Id = ?");
         $stmt->bind_param("i", $supplier_id);
@@ -147,6 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['supplierId'])) {
     header("Location: suppliers.php");
     exit();
 }
+
 ?>
 
 
@@ -430,8 +448,65 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['supplierId'])) {
                                 data-target="#addSupplierModal">
                                 <i class="fas fa-user-plus fa-sm text-white-50"></i> Add Supplier
                             </a>
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#deleteHistoryModal">
+                                <i class="fas fa-history fa-sm text-white-50"></i> Delete History
+                            </a>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Delete History Modal with Undo Option for Suppliers -->
+                    <div class="modal fade" id="deleteHistoryModal" tabindex="-1" role="dialog" aria-labelledby="deleteHistoryModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document"> <!-- Changed from modal-lg to modal-xl -->
+                            <div class="modal-content">
+                                <div class="modal-header gradient-header">
+                                    <h5 class="modal-title" id="deleteHistoryModalLabel">Supplier Delete History</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Supplier ID</th>
+                                                <th>Company Name</th>
+                                                <th>Province</th>
+                                                <th>City/Municipality</th>
+                                                <th>Zip Code</th>
+                                                <th>Phone Number</th>
+                                                <th>Deleted At</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            include 'cus_db.php';
+                                            $sql = "SELECT * FROM deleted_suppliers ORDER BY deleted_at DESC";
+                                            $result = $conn->query($sql);
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo "<tr>";
+                                                echo "<td>" . htmlspecialchars($row['supplier_id']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['companyName']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['province']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['city']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['zipCode']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['phoneNumber']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['deleted_at']) . "</td>";
+                                                echo "<td><button onclick='undoDelete(" . $row['supplier_id'] . ")' class='btn btn-warning'>Undo</button></td>";
+                                                echo "</tr>";
+                                            }
+                                            $conn->close();
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -843,13 +918,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['supplierId'])) {
         });
     </script>
 
-
-
-
-
-
-
-
     <script>
         function setEditSupplierFormData(Sup_Id, companyName, province, city, zipCode, phoneNumber, productID) {
             document.getElementById("editSupplierId").value = Sup_Id;
@@ -858,7 +926,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['supplierId'])) {
             document.getElementById("editSupplierCity").value = city;
             document.getElementById("editSupplierZipCode").value = zipCode;
             document.getElementById("editSupplierPhoneNumber").value = phoneNumber;
+        }
+    </script>
 
+    <!-- RESTORING DELETED SUPPLIER -->
+    <script>
+        function undoDelete(supplierId) {
+            if (confirm('Are you sure you want to undo this deletion?')) {
+                $.post('restore_supplier.php', { id: supplierId }, function(data) {
+                    alert(data.message);
+                    if (data.success) {
+                        location.reload(); // Reload the page to update the table
+                    }
+                }, 'json');
+            }
         }
     </script>
 

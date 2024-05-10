@@ -117,18 +117,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['employee_id'])) {
     include 'cus_db.php'; // Include your database connection file
     $employee_id = $_POST['employee_id'];
 
-    // Prepare SQL and bind parameters
-    $stmt = $conn->prepare("DELETE FROM employees WHERE employee_id = ?");
-    $stmt->bind_param("i", $employee_id);
-    
-    if($stmt->execute()) {
-        // Record deleted successfully, you can set a session message here
-        $_SESSION['message'] = "Record deleted successfully";
-    } else {
-        $_SESSION['error'] = "Error deleting record: " . $conn->error;
+    // Start transaction
+    $conn->begin_transaction();
+
+    try {
+        // First, fetch the data of the employee to be deleted
+        $selectSql = "SELECT * FROM employees WHERE employee_id = ?";
+        $selectStmt = $conn->prepare($selectSql);
+        $selectStmt->bind_param("i", $employee_id);
+        $selectStmt->execute();
+        $employeeData = $selectStmt->get_result()->fetch_assoc();
+        $selectStmt->close();
+
+        if (!$employeeData) {
+            throw new Exception("Employee not found.");
+        }
+
+        // Insert data into deleted_employees
+        $insertSql = "INSERT INTO deleted_employees (employee_id, first_name, last_name, role, salary, phone_no) VALUES (?, ?, ?, ?, ?, ?)";
+        $insertStmt = $conn->prepare($insertSql);
+        $insertStmt->bind_param("isssss", $employeeData['employee_id'], $employeeData['first_name'], $employeeData['last_name'], $employeeData['role'], $employeeData['salary'], $employeeData['phone_no']);
+        if (!$insertStmt->execute()) {
+            throw new Exception("Error logging deletion: " . $insertStmt->error);
+        }
+        $insertStmt->close();
+
+        // Delete the employee from the employees table
+        $deleteStmt = $conn->prepare("DELETE FROM employees WHERE employee_id = ?");
+        $deleteStmt->bind_param("i", $employee_id);
+        if (!$deleteStmt->execute()) {
+            throw new Exception("Error deleting employee: " . $deleteStmt->error);
+        }
+        $deleteStmt->close();
+
+        // Commit the transaction
+        $conn->commit();
+        $_SESSION['message'] = "Employee record deleted successfully.";
+    } catch (Exception $e) {
+        // Rollback the transaction in case of an error
+        $conn->rollback();
+        $_SESSION['error'] = "Error deleting employee: " . $e->getMessage();
     }
-    
-    $stmt->close();
+
     $conn->close();
 
     header("Location: employees.php");
@@ -416,12 +446,72 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['employee_id'])) {
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Employees</h1>
                         <div>
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal"
-                                data-target="#addEmployeeModal">
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addEmployeeModal">
                                 <i class="fas fa-user-plus fa-sm text-white-50"></i> Add Employee
                             </a>
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#deleteHistoryModal">
+                                <i class="fas fa-history fa-sm text-white-50"></i> Delete History
+                            </a>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Delete History Modal for Employees -->
+                    <div class="modal fade" id="deleteHistoryModal" tabindex="-1" role="dialog" aria-labelledby="deleteHistoryEmployeeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header gradient-header">
+                                    <h5 class="modal-title" id="deleteHistoryEmployeeModalLabel">Employee Delete History</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Employee ID</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Role</th>
+                                                <th>Salary</th>
+                                                <th>Phone Number</th>
+                                                <th>Deleted At</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            include 'cus_db.php';
+                                            $sql = "SELECT * FROM deleted_employees ORDER BY deleted_at DESC";
+                                            $result = $conn->query($sql);
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    echo "<tr>";
+                                                    echo "<td>" . htmlspecialchars($row['employee_id']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['first_name']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['last_name']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['role']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['salary']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['phone_no']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['deleted_at']) . "</td>";
+                                                    echo "<td><button class='btn btn-warning' onclick='undoDelete(" . $row['employee_id'] . ")'>Undo</button></td>";
+                                                    echo "</tr>";
+                                                }
+                                            } else {
+                                                echo "<tr><td colspan='8'>No deleted records found</td></tr>";
+                                            }
+                                            $conn->close();
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -834,9 +924,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['employee_id'])) {
     });
     </script>
 
-
-
-
     <script>
     function setEditFormData(employee_id, first_name, last_name, role, salary, phone_no) {
         document.getElementById("editEmployeeFirstName").value = first_name;
@@ -845,6 +932,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['employee_id'])) {
         document.getElementById("editEmployeeSalary").value = salary;
         document.getElementById("editEmployeePhone").value = phone_no;
         document.getElementById("editEmployeeId").value = employee_id;
+    }
+    </script>
+
+    <!-- RESTORING DELETED EMPLOYEE -->
+    <script>
+    function undoDelete(employeeId) {
+        if (confirm('Are you sure you want to restore this employee?')) {
+            $.post('restore_employee.php', { employee_id: employeeId }, function(data) {
+                var response = JSON.parse(data);
+                alert(response.message);
+                if (response.success) {
+                    location.reload();  // Refresh the page to reflect changes
+                }
+            });
+        }
     }
     </script>
 

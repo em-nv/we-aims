@@ -109,17 +109,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editCustomerId"]) && i
 
 <!--DELETE CUSTOMER-->
 <?php
-// Put this block at the top of the customers.php file
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     include 'cus_db.php'; // Include your database connection file
     $customer_id = $_POST['id'];
 
-    // Prepare SQL and bind parameters
+    // First, fetch the data of the customer to be deleted
+    $query = "SELECT * FROM customers WHERE id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $customer_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $customerData = $result->fetch_assoc();
+
+    // Insert data into deleted_customers
+    $insertQuery = "INSERT INTO deleted_customers (customer_id, firstName, lastName, phone, paymentMethod) VALUES (?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($insertQuery);
+    $stmt->bind_param("issss", $customer_id, $customerData['firstName'], $customerData['lastName'], $customerData['phone'], $customerData['paymentMethod']);
+    $stmt->execute();
+
+    // Now delete the customer from the customers table
     $stmt = $conn->prepare("DELETE FROM customers WHERE id = ?");
     $stmt->bind_param("i", $customer_id);
-    
     if($stmt->execute()) {
-        // Record deleted successfully, you can set a session message here
         $_SESSION['message'] = "Record deleted successfully";
     } else {
         $_SESSION['error'] = "Error deleting record: " . $conn->error;
@@ -131,6 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     header("Location: customers.php");
     exit();
 }
+
 ?>
 
 
@@ -412,10 +424,67 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
                                 data-target="#addCustomerModal">
                                 <i class="fas fa-user-plus fa-sm text-white-50"></i> Add Customer
                             </a>
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#deleteHistoryModal">
+                                <i class="fas fa-history fa-sm text-white-50"></i> Delete History
+                            </a>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+                            </a>
                         </div>
                     </div>
+
+
+                    <!-- Delete History Modal with Undo Option -->
+                    <div class="modal fade" id="deleteHistoryModal" tabindex="-1" role="dialog" aria-labelledby="deleteHistoryModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header gradient-header">
+                                    <h5 class="modal-title" id="deleteHistoryModalLabel">Delete History</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Customer ID</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Phone</th>
+                                                <th>Payment Method</th>
+                                                <th>Deleted At</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            include 'cus_db.php';
+                                            $query = "SELECT * FROM deleted_customers ORDER BY deleted_at DESC";
+                                            $result = $conn->query($query);
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo "<tr>";
+                                                echo "<td>" . htmlspecialchars($row['customer_id']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['firstName']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['lastName']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['phone']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['paymentMethod']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['deleted_at']) . "</td>";
+                                                echo "<td><button onclick='undoDelete(" . $row['id'] . ")' class='btn btn-warning'>Undo</button></td>";
+                                                echo "</tr>";
+                                            }
+                                            $conn->close();
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <!-- MODAL FOR ADDING A CUSTOMER -->
                     <div class="modal fade" id="addCustomerModal" tabindex="-1" role="dialog" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
@@ -764,7 +833,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     </script>
 
 
-
+    
     <script>
     function setEditFormData(id, firstName, lastName, phone, paymentMethod) {
         document.getElementById("editCustomerFirstName").value = firstName;
@@ -774,5 +843,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
         document.getElementById("editCustomerId").value = id;
     }
     </script>
+
+    <!-- RESTORING DELETED CUSTOMER -->
+    <script>
+    function undoDelete(deletedCustomerId) {
+        if (confirm('Are you sure you want to undo this deletion?')) {
+            $.post('restore_customer.php', { id: deletedCustomerId }, function(data) {
+                alert(data.message);
+                if (data.success) {
+                    location.reload(); // Reload the page to update the table
+                }
+            }, 'json');
+        }
+    }
+    </script>
+
+
 </body>
 </html>
