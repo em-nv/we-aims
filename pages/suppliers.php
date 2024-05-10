@@ -578,7 +578,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['supplierId'])) {
                                                     echo "<td>" . htmlspecialchars($row["zipCode"]) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row["phoneNumber"]) . "</td>";
                                                     echo "<td>
-                                                            <button type='button' class='btn btn-success' data-toggle='modal' data-target='#editSupplierModal' onclick='setEditSupplierFormData(\"" . htmlspecialchars($row["Sup_Id"]) . "\", \"" . htmlspecialchars($row["companyName"]) . "\", \"" . htmlspecialchars($row["province"]) . "\", \"" . htmlspecialchars($row["city"]) . "\", \"" . htmlspecialchars($row["zipCode"]) . "\", \"" . htmlspecialchars($row["phoneNumber"]) . "\")'>
+                                                            <button type='button' class='btn btn-success centered-button' data-toggle='modal' data-target='#editSupplierModal' onclick='setEditSupplierFormData(\"" . htmlspecialchars($row["Sup_Id"]) . "\", \"" . htmlspecialchars($row["companyName"]) . "\", \"" . htmlspecialchars($row["province"]) . "\", \"" . htmlspecialchars($row["city"]) . "\", \"" . htmlspecialchars($row["zipCode"]) . "\", \"" . htmlspecialchars($row["phoneNumber"]) . "\")'>
                                                                 <i class='fa fa-edit'></i>
                                                             </button>
                                                         </td>";
@@ -586,7 +586,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['supplierId'])) {
                                                     echo "<td>
                                                             <form method='POST' action='suppliers.php' onsubmit='return confirm(\"Are you sure you want to delete this record?\");'>
                                                                 <input type='hidden' name='supplierId' value='" . $row["Sup_Id"] . "'>
-                                                                <button type='submit' class='btn btn-danger'>
+                                                                <button type='submit' class='btn btn-danger centered-button'>
                                                                     <i class='fa fa-trash'></i>
                                                                 </button>
                                                             </form>

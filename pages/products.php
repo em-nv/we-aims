@@ -732,7 +732,7 @@ $stmt->bind_param("issdddddi", $supplierId, $companyName, $productName, $costPri
                                                         echo "<td>Php" . number_format($row["totalRetailPrice"], 2) . "</td>";
                                                     
                                                         echo "<td>
-                                                                <button type='button' class='btn btn-success' data-toggle='modal' data-target='#editProductModal'onclick='setEditProductFormData(\"" . htmlspecialchars($row["productId"]) . "\", \"" . htmlspecialchars($row["Sup_Id"]) . "\", \"" . htmlspecialchars($row["companyName"]) . "\", \"" . htmlspecialchars($row["productName"]) . "\", \"" . htmlspecialchars($row["costPrice"]) . "\", \"" . htmlspecialchars($row["retailPrice"]) . "\", \"" . htmlspecialchars($row["quantity"]) . "\")'>
+                                                                <button type='button' class='btn btn-success centered-button' data-toggle='modal' data-target='#editProductModal'onclick='setEditProductFormData(\"" . htmlspecialchars($row["productId"]) . "\", \"" . htmlspecialchars($row["Sup_Id"]) . "\", \"" . htmlspecialchars($row["companyName"]) . "\", \"" . htmlspecialchars($row["productName"]) . "\", \"" . htmlspecialchars($row["costPrice"]) . "\", \"" . htmlspecialchars($row["retailPrice"]) . "\", \"" . htmlspecialchars($row["quantity"]) . "\")'>
                                                                     <i class='fa fa-edit'></i>
                                                                 </button>
                                                             </td>";
@@ -741,7 +741,7 @@ $stmt->bind_param("issdddddi", $supplierId, $companyName, $productName, $costPri
                                                         echo "<td>
                                                             <form method='POST' action='products.php' onsubmit='return confirm(\"Are you sure you want to delete this product?\");'>
                                                                 <input type='hidden' name='deleteProductId' value='" . $row["productId"] . "'>
-                                                                <button type='submit' class='btn btn-danger'>
+                                                                <button type='submit' class='btn btn-danger centered-button'>
                                                                     <i class='fa fa-trash'></i>
                                                                 </button>
                                                             </form>

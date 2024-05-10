@@ -394,86 +394,86 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['admin_id'])) {
                     </div>
                 </div>
 
-        <!-- MODAL FOR ADDING A ADMIN -->
-        <div class="modal fade" id="addAdminModal" tabindex="-1" role="dialog" aria-labelledby="addAdminModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header gradient-header">
-                        <h5 class="modal-title" id="addAdminModalLabel">Add New Admin</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                <!-- MODAL FOR ADDING A ADMIN -->
+                <div class="modal fade" id="addAdminModal" tabindex="-1" role="dialog" aria-labelledby="addAdminModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header gradient-header">
+                                <h5 class="modal-title" id="addAdminModalLabel">Add New Admin</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="addAdminForm" method="POST" action="admin.php">
+                                    <div class="form-group">
+                                        <label for="adminFirstName">First Name</label>
+                                        <input type="text" class="form-control" id="adminFirstName" name="adminFirstName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="adminLastName">Last Name</label>
+                                        <input type="text" class="form-control" id="adminLastName" name="adminLastName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="adminEmail">Email Address</label>
+                                        <input type="email" class="form-control" id="adminEmail" name="adminEmail" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="adminPassword">Password</label>
+                                        <input type="password" class="form-control" id="adminPassword" name="adminPassword" minlength="8" required>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" form="addAdminForm">Add Admin</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                    <form id="addAdminForm" method="POST" action="admin.php">
-                        <div class="form-group">
-                            <label for="adminFirstName">First Name</label>
-                            <input type="text" class="form-control" id="adminFirstName" name="adminFirstName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
-                        </div>
-                        <div class="form-group">
-                            <label for="adminLastName">Last Name</label>
-                            <input type="text" class="form-control" id="adminLastName" name="adminLastName" required pattern="[A-Za-z ]+" title="Only letters and spaces allowed">
-                        </div>
-                        <div class="form-group">
-                            <label for="adminEmail">Email Address</label>
-                            <input type="email" class="form-control" id="adminEmail" name="adminEmail" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="adminPassword">Password</label>
-                            <input type="password" class="form-control" id="adminPassword" name="adminPassword" minlength="8" required>
-                        </div>
-                    </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="addAdminForm">Add Admin</button>
-            </div>
-        </div>
-    </div>
-</div>
+                </div>
 
 
-<!-- MODAL FOR EDITING (EDIT BUTTON) THE ADMIN -->
-<div class="modal fade" id="editAdminModal" tabindex="-1" role="dialog" aria-labelledby="editAdminModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header gradient-header">
-                <h5 class="modal-title" id="editAdminModalLabel">Edit Admin</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="editAdminForm" method="POST" action="admin.php">
-                        <div class="form-group">
-                            <label for="editAdminFirstName">First Name</label>
-                            <input type="text" class="form-control" id="editAdminFirstName" name="editAdminFirstName" required pattern="[A-Za-z ]+" title="Only letters allowed">
+                <!-- MODAL FOR EDITING (EDIT BUTTON) THE ADMIN -->
+                <div class="modal fade" id="editAdminModal" tabindex="-1" role="dialog" aria-labelledby="editAdminModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header gradient-header">
+                                <h5 class="modal-title" id="editAdminModalLabel">Edit Admin</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="editAdminForm" method="POST" action="admin.php">
+                                        <div class="form-group">
+                                            <label for="editAdminFirstName">First Name</label>
+                                            <input type="text" class="form-control" id="editAdminFirstName" name="editAdminFirstName" required pattern="[A-Za-z ]+" title="Only letters allowed">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editAdminLastName">Last Name</label>
+                                            <input type="text" class="form-control" id="editAdminLastName" name="editAdminLastName" required pattern="[A-Za-z ]+" title="Only letters allowed">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editAdminEmail">Email Address</label>
+                                            <input type="email" class="form-control" id="editAdminEmail" name="editAdminEmail" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editAdminPassword">Password</label>
+                                            <input type="password" class="form-control" id="editAdminPassword" name="editAdminPassword" minlength="8" required>
+                                        </div>
+                                    <!-- Hidden field for admin ID -->
+                                    <input type="hidden" id="editAdminId" name="editAdminId">
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" form="editAdminForm">Save Changes</button>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="editAdminLastName">Last Name</label>
-                            <input type="text" class="form-control" id="editAdminLastName" name="editAdminLastName" required pattern="[A-Za-z ]+" title="Only letters allowed">
-                        </div>
-                        <div class="form-group">
-                            <label for="editAdminEmail">Email Address</label>
-                            <input type="email" class="form-control" id="editAdminEmail" name="editAdminEmail" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="editAdminPassword">Password</label>
-                            <input type="password" class="form-control" id="editAdminPassword" name="editAdminPassword" minlength="8" required>
-                        </div>
-                    <!-- Hidden field for admin ID -->
-                    <input type="hidden" id="editAdminId" name="editAdminId">
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="editAdminForm">Save Changes</button>
-            </div>
-        </div>
-    </div>
-</div>
+                    </div>
+                </div>
 
                     <!-- DataTales Example -->
                     <!-- <div class="card shadow mb-4">
@@ -580,16 +580,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['admin_id'])) {
                                                 echo "<td>" . htmlspecialchars($row["password"]) . "</td>";
                                                 // Edit button form
                                                 echo "<td>
-                                                <button type='button' class='btn btn-success centered-button' data-toggle='modal' data-target='#editAdminModal' 
-                                                onclick='setEditFormData(\"" . htmlspecialchars($row["admin_id"]) . "\", \"" . htmlspecialchars($row["fname"]) . "\", \"" . htmlspecialchars($row["lname"]) . "\", \"" . htmlspecialchars($row["email"]) . "\", \"" . htmlspecialchars($row["password"]) . "\")'>
-                                                    <i class='fa fa-edit'></i> Edit
-                                                </button>
-                                            </td>";
+                                                        <button type='button' class='btn btn-success centered-button' data-toggle='modal' data-target='#editAdminModal' onclick='setEditFormData(\"" . htmlspecialchars($row["admin_id"]) . "\", \"" . htmlspecialchars($row["fname"]) . "\", \"" . htmlspecialchars($row["lname"]) . "\", \"" . htmlspecialchars($row["email"]) . "\", \"" . htmlspecialchars($row["password"]) . "\")'>
+                                                            <i class='fa fa-edit'></i>
+                                                        </button>
+                                                    </td>";
                                                 // Delete button form
                                                 echo "<td>
                                                         <form method='POST' action='admin.php' onsubmit='return confirm(\"Are you sure you want to delete this record?\");'>
                                                             <input type='hidden' name='admin_id' value='" . $row["admin_id"] . "'>
-                                                            <button type='submit' class='btn btn-danger centered-button'><i class='fa fa-trash'></i> Delete</button>
+                                                            <button type='submit' class='btn btn-danger centered-button'>
+                                                                <i class='fa fa-trash'></i>
+                                                            </button>
                                                         </form>
                                                     </td>";
                                                 echo "</tr>";

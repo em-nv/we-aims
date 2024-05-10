@@ -10589,7 +10589,7 @@ a:focus {
       left: 0;
   }
   to {
-      left: calc(100% - 250px); /* Adjust the value according to your design */
+      left: calc(100% - 270px); /* Adjust the value according to your design */
   }
 }
 
