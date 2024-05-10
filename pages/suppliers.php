@@ -308,15 +308,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['supplierId'])) {
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTransactions"
                     aria-expanded="true" aria-controls="collapseTransactions">
-                    <i class="fas fa-fw fa-solid fa-hand-holding-dollar"></i>
+                    <i class="fas fa-fw fa-solid fa-clock-rotate-left"></i>
                     <span>Transactions</span>
                 </a>
                 <div id="collapseTransactions" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="">Customer Transactions</a>
-                        <a class="collapse-item" href="">Product Transactions</a>
-                        <a class="collapse-item" href="">Supplier Transactions</a>
+                        <a class="collapse-item" href="product_transactions.php">Product Transactions</a>
+                        <a class="collapse-item" href="service_transactions.php">Service Transactions</a>
                     </div>
                 </div>
             </li>
@@ -446,7 +445,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['supplierId'])) {
                         <div>
                             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal"
                                 data-target="#addSupplierModal">
-                                <i class="fas fa-user-plus fa-sm text-white-50"></i> Add Supplier
+                                <i class="fas fa-solid fa-plus fa-sm text-white-50"></i> Add Supplier
                             </a>
                             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#deleteHistoryModal">
                                 <i class="fas fa-history fa-sm text-white-50"></i> Delete History

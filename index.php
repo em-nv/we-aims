@@ -214,15 +214,14 @@ $conn->close();
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTransactions"
                     aria-expanded="true" aria-controls="collapseTransactions">
-                    <i class="fas fa-fw fa-solid fa-hand-holding-dollar"></i>
+                    <i class="fas fa-fw fa-solid fa-clock-rotate-left"></i>
                     <span>Transactions</span>
                 </a>
                 <div id="collapseTransactions" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="">Customer Transactions</a>
-                        <a class="collapse-item" href="">Product Transactions</a>
-                        <a class="collapse-item" href="">Supplier Transactions</a>
+                        <a class="collapse-item" href="pages/product_transactions.php">Product Transactions</a>
+                        <a class="collapse-item" href="pages/service_transactions.php">Service Transactions</a>
                     </div>
                 </div>
             </li>
@@ -252,52 +251,16 @@ $conn->close();
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-
                     <!-- Topbar DATE AND TIME -->
-                    <div class="date-and-time">
-                        <span class="calendar-logo"><i class='bx bx-calendar'></i></span>
-                        <span id="date_now" class="date-now"></span>
-                        <span id="current-time" class="time-now"></span>
+                    <div class="d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="date-and-time">
+                            <span class="calendar-logo"><i class='bx bx-calendar'></i></span>
+                            <span id="date_now" class="date-now"></span>
+                            <span id="current-time" class="time-now"></span>
+                        </div>
                     </div>
 
                     <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
 
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
