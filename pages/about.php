@@ -94,13 +94,29 @@
                         <!-- Page Heading -->
                         <h4>ABOUT US</h4>
                         <h1>LEGAZPI WILLEM MARKETING CORPORATION</h1>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque quod fugiat delectus laboriosam, vero reprehenderit rem vitae facilis. Exercitationem labore dolorem vero perspiciatis alias facere doloribus asperiores nesciunt nihil maxime?
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, nulla nesciunt maxime, corporis vel itaque obcaecati dolorum repellendus, quasi ad ipsum laboriosam. Ipsum rerum autem dolore reprehenderit, minus exercitationem sapiente?
-                        </p>
+                        <p>Welcome to Legazpi Willem Marketing Corporation, your trusted partner in auto parts retail and installation services. At Legazpi Willem, we are committed to delivering top-quality automotive products and services to our valued customers.</p>
+                        <h4 class="subtitle">Introducing We-AIMS: Your Comprehensive Inventory Management Solution</h4>
+                        <p>We-AIMS (Willem Auto Inventory Management System) is our cutting-edge inventory management system designed specifically for our auto parts retail and installation business. Developed with the aim of streamlining operations and enhancing customer satisfaction, We-AIMS provides us with the tools needed to efficiently manage our vast inventory and ensure timely delivery of services.</p>
                     </div>
                     <div class="about-image">
                         <!-- Page Heading -->
                         
+                    </div>
+                    
+                </div>
+                <div class="container-fluid about-content-container">
+                    <div class="about-image2">
+                        <!-- Page Heading -->
+                        
+                    </div>
+                    <div class="about-caption">
+                        <!-- Page Heading -->
+                        <!-- <h4>ABOUT US</h4> -->
+                        <h4 class="subtitle">Why Choose Legazpi Willem Marketing Corporation and We-AIMS?</h4>
+                        <p>Legazpi Willem Marketing Corporation has been a trusted name in the auto parts industry for 9 years. Our dedication to quality, reliability, and customer satisfaction sets us apart. With We-AIMS, we bring innovation to our operations, ensuring that every customer receives the best possible service. 
+                            <br><br>Whether you're looking for quality auto parts or professional installation services, Legazpi Willem Marketing Corporation is here to meet your needs. Experience the difference with We-AIMS and discover why we are the preferred choice for auto enthusiasts and businesses alike.
+                            <br><br>For inquiries or to learn more about our services, please contact us at 09097507203.
+                        </p>
                     </div>
                     
                 </div>
