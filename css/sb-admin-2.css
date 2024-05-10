@@ -10427,7 +10427,7 @@ a:focus {
   justify-content: center;
   align-items: center;
   text-align: center; /* Center align text inside the container */
-  padding: 50px;
+  padding: 50px 100px 50px 100px;
 }
 .about-caption,
 .about-image {
@@ -10435,7 +10435,7 @@ a:focus {
 }
 .about-caption{
   text-align: left;
-  padding-right: 30px;
+  padding: 0px 20px 0px 20px;
   h1{
     color: var(--blue);
     font-weight: bolder;
@@ -10443,14 +10443,32 @@ a:focus {
   h4, p {
     color: black;
   }
+  p {
+    text-align: justify;
+  }
+  .subtitle {
+    color: var(--blue);
+    font-weight: bolder;
+  }
 }
 .about-image{
   width: 300px; /* adjust the width and height as needed */
   height: 65vh;
-  background-image: url('../img/branch.jpg'); /* specify your image URL */
+  background-image: url('../about/branch.jpg'); /* specify your image URL */
   background-size: cover; /* this will make the image cover the entire div */
   background-position: center; /* this will center the image */
   border-radius: 25px;
+  margin: 0px 15px 0px 15px;
+}
+
+.about-image2{
+  width: 650px; /* adjust the width and height as needed */
+  height: 65vh;
+  background-image: url('../about/tires.jpg'); /* specify your image URL */
+  background-size: cover; /* this will make the image cover the entire div */
+  background-position: center; /* this will center the image */
+  border-radius: 25px;
+  margin: 0px 15px 0px 15px;
 }
 
 
@@ -10563,6 +10581,9 @@ a:focus {
   .about-image{
     display: none;
 
+  }
+  .about-image2{
+    display: none;
   }
 
 }
