@@ -40,15 +40,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             // Execute the query
             if($stmt->execute()){
-                echo "Records inserted successfully.";
+                /* echo "Records inserted successfully."; */
             } else{
-                echo "ERROR: Could not execute query: $sql. " . $conn->error;
+                /* echo "ERROR: Could not execute query: $sql. " . $conn->error; */
             }
         } else{
-            echo "ERROR: Could not prepare query: $sql. " . $conn->error;
+            /* echo "ERROR: Could not prepare query: $sql. " . $conn->error; */
         }
     } else {
-        echo "ERROR: First Name is required.";
+        /* echo "ERROR: First Name is required."; */
     }
 }
 ?>
@@ -362,17 +362,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['admin_id'])) {
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="admin.php">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
+                                    Admin
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">

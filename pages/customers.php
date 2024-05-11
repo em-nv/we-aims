@@ -56,15 +56,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             // Execute the query
             if($stmt->execute()){
-                echo "Records inserted successfully.";
+                /* echo "Records inserted successfully."; */
             } else{
-                echo "ERROR: Could not execute query: $sql. " . $conn->error;
+                /* echo "ERROR: Could not execute query: $sql. " . $conn->error; */
             }
         } else{
-            echo "ERROR: Could not prepare query: $sql. " . $conn->error;
+            /* echo "ERROR: Could not prepare query: $sql. " . $conn->error; */
         }
     } else {
-        echo "ERROR: First Name is required.";
+        /* echo "ERROR: First Name is required."; */
     }
 }
 ?>
