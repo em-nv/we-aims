@@ -1,3 +1,23 @@
+<!-- FOR LOGIN -->
+<?php
+session_start();
+
+if (!isset($_SESSION["user"])) {
+    header("Location: login.php");
+}
+
+include ("database_login.php");
+if (isset($_SESSION['email'])) {
+    $email = $_SESSION['email'];
+    $query = "SELECT * FROM admin WHERE email = '$email' limit 1";
+
+    $result = mysqli_query($con_login, $query);
+    if($result && mysqli_num_rows($result) > 0) {
+        $user_data = mysqli_fetch_assoc($result);
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,13 +29,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Products</title>
+    <title>Transaction Products</title>
 
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
+
 
     <!-- Custom styles for this template -->
     <link href="../css/sb-admin-2.css" rel="stylesheet">
@@ -29,8 +50,40 @@
     <!-- LORDICONS -->
     <script src="../https://cdn.lordicon.com/lordicon.js"></script>
 
-    <!-- BOXICONS AWESOME ICONS -->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- TO DOWNLOAD PDF -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <!-- Transaction Products List with Date Filters and Profit Calculation -->
+<style>
+    .card-header {
+        padding: 20px;
+    }
+
+    .input-group {
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
+    }
+
+    .input-group > div {
+        margin-right: 10px; 
+        margin-right: 10px;
+    }
+
+
+
+    .input-group input[type="date"] {
+        width: 180px; 
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+</style>
+
+
 
 </head>
 
@@ -90,7 +143,7 @@
             </li>
 
             <!-- Nav Item - PRODUCTS -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="../pages/products.php">
                     <i class="fas fa-fw fa-solid fa-dolly"></i>
                     <span>Products</span></a>
@@ -103,35 +156,36 @@
                     <span>Services</span></a>
             </li>
 
-            <!-- Nav Item - SALE REPORTS -->
-            <li class="nav-item">
-                <a class="nav-link" href="pages/salesReport.php">
+            <!-- Nav Item - SALES REPORTS Menu -->
+            <li class="nav-item active">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+                    aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-solid fa-chart-line"></i>
-                    <span>Sales Report</span></a>
+                    <span>Sales Reports</span>
+                </a>
+                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <!-- <h6 class="collapse-header">Custom Components:</h6> -->
+                        <a class="collapse-item" href="SalesRepPro.php">Product Sales Reports</a>
+                        <a class="collapse-item active" href="SalesRepSer.php">Service Sales Reports</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Nav Item - TRANSACTIONS Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTransactions"
                     aria-expanded="true" aria-controls="collapseTransactions">
-                    <i class="fas fa-fw fa-solid fa-hand-holding-dollar"></i>
+                    <i class="fas fa-fw fa-solid fa-clock-rotate-left"></i>
                     <span>Transactions</span>
                 </a>
                 <div id="collapseTransactions" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="buttons.php">Transaction Customer</a>
-                        <a class="collapse-item" href="cards.php">Products</a>
-                        <a class="collapse-item" href="cards.php">Supplier</a>
+                        <a class="collapse-item" href="product_transactions.php">Product Transactions</a>
+                        <a class="collapse-item" href="service_transactions.php">Service Transactions</a>
                     </div>
                 </div>
-            </li>
-
-            <!-- Nav Item - ADMIN -->
-            <li class="nav-item">
-                <a class="nav-link" href="admin.php">
-                    <i class="fas fa-fw fa-solid fa-user-tie"></i>
-                    <span>Admin</span></a>
             </li>
 
             <!-- Divider -->
@@ -227,24 +281,16 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $user_data['fname']?> <?php echo $user_data['lname']?></span>
                                 <img class="img-profile rounded-circle"
                                     src="../img/profile-icons/undraw_pic_profile_re_7g2h.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="admin.php">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
+                                    Admin
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -259,109 +305,143 @@
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+               <!-- Begin Page Content -->
+               <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Products</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-                    </div>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Sales Report Services</h1>
+    <div>
+    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#confirmationModal"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+</div>
 
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3" style="display: flex; justify-content: space-between; background-color: transparent !important;">
-                            <!-- <h6 class="m-0 font-weight-bold text-primary"> </h6> -->
-                            <div class="products-filter-button">
-                                    <a href="products.php" class="d-sm-inline-block btn products-filter">All</a>
-                                    <a href="products-near-expiry.php" class="d-sm-inline-block btn products-filter active">Near Expiry</a>
-                                </div>
-                            <div class="add-button">
-                                <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" ><i
-                                    class="fas fa-solid fa-plus fa-sm text-white-50"></i> Add</a>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Product ID</th>
-                                            <th>Product Name</th>
-                                            <th>Cost Price</th>
-                                            <th>Retail Price</th>
-                                            <th>Quantity in Stock</th>
-                                            <th>Total Cost Price</th>
-                                            <th>Total Retail Price</th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Product ID</th>
-                                            <th>Product Name</th>
-                                            <th>Cost Price</th>
-                                            <th>Retail Price</th>
-                                            <th>Quantity in Stock</th>
-                                            <th>Total Cost Price</th>
-                                            <th>Total Retail Price</th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <tr>
-                                            <td>001</td>
-                                            <td>Lorem</td>
-                                            <td>Php500</td>
-                                            <td>Php700</td>
-                                            <td>20</td>
-                                            <td>Php800</td>
-                                            <td>Php900</td>
-                                            <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
-                                            <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>002</td>
-                                            <td>Lorem</td>
-                                            <td>Php500</td>
-                                            <td>Php700</td>
-                                            <td>20</td>
-                                            <td>Php800</td>
-                                            <td>Php900</td>
-                                            <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
-                                            <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>003</td>
-                                            <td>Lorem</td>
-                                            <td>Php500</td>
-                                            <td>Php700</td>
-                                            <td>20</td>
-                                            <td>Php800</td>
-                                            <td>Php900</td>
-                                            <td class="edit-column"><a href="#"><i class="fa-solid fa-pen"></i></a></td>
-                                            <td class="trash-column"><a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
-                <!-- /.container-fluid -->
 
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Confirm Download</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <div class="modal-body">
+                Are you sure you want to download the sales report for this services?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="downloadPDF();">Download</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 gradient-header">
+        <form action="" method="GET">
+            <div class="row justify-content-center">
+                <div class="input-group">
+                    <div style="display: flex;">
+                        <label style="margin-right: 10px;" for="dateFrom" class="col-form-label text-white">Date From:</label>
+                        <input type="date" class="form-control" id="dateFrom" name="dateFrom" required>
+                    </div>
+                    <div style="display: flex;">
+                        <label style="margin-right: 10px; margin-left: 10px;" for="dateTo" class="col-form-label text-white">Date To:</label>
+                        <input style="margin-right: 10px;" type="date" class="form-control" id="dateTo" name="dateTo" required>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-solid fa-magnifying-glass a-sm text-white-50"></i> Find Reports</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-body" style="display: none;" id="dataTableContainer">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>TransSer ID</th>
+                        <th>Date</th>
+                        <th>Service Name</th>
+                        <th>Service Price</th>
+                        <th>Customer Name</th>
+                        <th>Payment Method</th>
+                        <th>Employee Name</th>
+                        <th>Role/Designation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                include 'cus_db.php'; 
+                if (isset($_GET['dateFrom']) && isset($_GET['dateTo'])) {
+                    echo "<script>document.getElementById('dataTableContainer').style.display = 'block';</script>";
+
+                    $sql = "SELECT 
+                                t.transactionServiceId AS transSerId, 
+                                t.date AS transSerDate, 
+                                s.serviceName AS serviceName, 
+                                s.servicePrice AS servicePrice,
+                                c.firstName AS customerName, 
+                                c.paymentMethod AS paymentMethod,
+                                e.first_name AS employeeName,
+                                e.role AS role
+                            FROM transactionsser t
+                            JOIN services s ON t.serviceId = s.serviceId
+                            JOIN customers c ON t.customerId = c.id 
+                            JOIN employees e ON t.employeeId = e.employee_id
+                            WHERE t.date BETWEEN ? AND ?";
+
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("ss", $_GET['dateFrom'], $_GET['dateTo']);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($row["transSerId"]) . "</td>";
+                            echo "<td>" . htmlspecialchars($row["transSerDate"]) . "</td>";
+                            echo "<td>" . htmlspecialchars($row["serviceName"]) . "</td>";
+                            echo "<td>$" . htmlspecialchars(number_format($row["servicePrice"], 2)) . "</td>";
+                            echo "<td>" . htmlspecialchars($row["customerName"]) . "</td>";
+                            echo "<td>" . htmlspecialchars($row["paymentMethod"]) . "</td>";
+                            echo "<td>" . htmlspecialchars($row["employeeName"]) . "</td>";
+                            echo "<td>" . htmlspecialchars($row["role"]) . "</td>";
+                            echo "</tr>";
+                        } 
+                    } else {
+                        echo "<tr><td colspan='8'>No results found</td></tr>";
+                    }
+                    $stmt->close();
+                } else {
+                    echo "<tr><td colspan='8'>Please choose a date range</td></tr>";
+                }
+                $conn->close();
+                ?>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</div>
+            
+
+
+</div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; We-AIMS 2024</span>
+                        <span>Copyright &copy; Your Website 2020</span>
                     </div>
                 </div>
             </footer>
@@ -420,7 +500,39 @@
     <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="../js/demo/datatables-demo.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+     <!-- Page level plugins -->
+    <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script>
+    $(document).ready( function () {
+        $('#dataTable').DataTable();
+    } );
+    </script>
+
+<script>
+function downloadPDF() {
+    const element = document.getElementById('dataTableContainer');
+    html2canvas(element).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jspdf.jsPDF({orientation: 'landscape'});
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save("report.pdf");
+    }).catch(err => {
+        console.error("Error generating PDF: ", err);
+    });
+}
+</script>
+
+
+
+
 
 </body>
 
