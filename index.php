@@ -40,7 +40,6 @@ $conn->close();
 ?>
 
 
-
 <!-- SUPPLIER COUNT -->
 <?php 
 include 'pages/cus_db.php'; // database connection
@@ -59,8 +58,47 @@ if ($result->num_rows > 0) {
 
 $conn->close();
 
+?>
+
+<!-- PRODUCTS SOLD COUNT -->
+<?php 
+include 'pages/cus_db.php'; // database connection
+
+// Execute SQL query to sum the quantity
+$sql = "SELECT SUM(quantity) AS total_quantity FROM transactionspro";
+$result = $conn->query($sql);
+
+// Fetch the sum result
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $total_quantity_sold = $row["total_quantity"];
+} else {
+    $total_quantity_sold = 0;
+}
+
+$conn->close();
+?>
+
+<!-- SERVICE TRANSACTIONS COUNT -->
+<?php 
+include 'pages/cus_db.php'; // database connection
+
+// Execute SQL query
+$sql = "SELECT COUNT(*) AS service_transactions FROM transactionsser";
+$result = $conn->query($sql);
+
+// Fetch the count result
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $total_service_transactions_count = $row["service_transactions"];
+} else {
+    $total_service_transactions_count = 0;
+}
+
+$conn->close();
 
 ?>
+
 
 
 <!DOCTYPE html>
@@ -523,7 +561,7 @@ $conn->close();
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 TOTAL PRODUCTS SOLD</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $total_quantity_sold; ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-solid fa-box-open fa-2x text-blue-300"></i>
@@ -542,7 +580,7 @@ $conn->close();
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 TOTAL SERVICE TRANSACTION</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $total_service_transactions_count; ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-solid fa-screwdriver-wrench fa-2x text-blue-300"></i>

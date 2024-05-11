@@ -816,7 +816,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransId'])) {
                                                         echo "<td>" . htmlspecialchars($row["customerName"]) . "</td>";
                                                         echo "<td>" . htmlspecialchars($row["paymentMethod"]) . "</td>";
                                                         echo "<td>
-                                                                <button type='button' class='btn btn-success' data-toggle='modal' data-target='#editTransactionModal' onclick='setEditModalValues(\"" . htmlspecialchars($row['transId']) . "\", \"" . htmlspecialchars($row['transDate']) . "\", \"" . htmlspecialchars($row['productName']) . "\", \"" . htmlspecialchars($row['retailPrice']) . "\", \"" . htmlspecialchars($row['quantity']) . "\", \"" . htmlspecialchars($row['customerName']) . "\", \"" . htmlspecialchars($row['paymentMethod']) . "\")'>
+                                                                <button type='button' class='btn btn-success centered-button' data-toggle='modal' data-target='#editTransactionModal' onclick='setEditModalValues(\"" . htmlspecialchars($row['transId']) . "\", \"" . htmlspecialchars($row['transDate']) . "\", \"" . htmlspecialchars($row['productName']) . "\", \"" . htmlspecialchars($row['retailPrice']) . "\", \"" . htmlspecialchars($row['quantity']) . "\", \"" . htmlspecialchars($row['customerName']) . "\", \"" . htmlspecialchars($row['paymentMethod']) . "\")'>
                                                                     <i class='fa fa-edit'></i>
                                                                 </button>
                                                             </td>";
@@ -825,7 +825,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransId'])) {
                                                         echo "<td>
                                                                 <form action='product_transactions.php' method='POST' onsubmit='return confirm(\"Are you sure you want to delete this record?\");'>
                                                                     <input type='hidden' name='deletetransId' value='" . htmlspecialchars($row['transId']) . "'/>
-                                                                        <button type='submit' class='btn btn-danger'>
+                                                                        <button type='submit' class='btn btn-danger centered-button'>
                                                                             <i class='fa fa-trash'></i>
                                                                         </button>
                                                                 </form>

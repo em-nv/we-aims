@@ -888,14 +888,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransSerId'])) {
                                                     echo "<td>" . htmlspecialchars($row["employeeName"]) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row["roled"]) . "</td>";
                                                     echo "<td>
-                                                            <button type='button' class='btn btn-success' data-toggle='modal' data-target='#editTransactionModal' onclick='setEditModalValues(\"" . htmlspecialchars($row['transSerId']) . "\", \"" . htmlspecialchars($row['transSerDate']) . "\", \"" . htmlspecialchars($row['serviceName']) . "\", \"" . htmlspecialchars($row['servicePrice']) . "\", \"" . htmlspecialchars($row['customerName']) . "\", \"" . htmlspecialchars($row['paymentMethod']) . "\", \"" . htmlspecialchars($row['employeeName']) . "\", \"" . htmlspecialchars($row['roled']) . "\")'>
+                                                            <button type='button' class='btn btn-success centered-button' data-toggle='modal' data-target='#editTransactionModal' onclick='setEditModalValues(\"" . htmlspecialchars($row['transSerId']) . "\", \"" . htmlspecialchars($row['transSerDate']) . "\", \"" . htmlspecialchars($row['serviceName']) . "\", \"" . htmlspecialchars($row['servicePrice']) . "\", \"" . htmlspecialchars($row['customerName']) . "\", \"" . htmlspecialchars($row['paymentMethod']) . "\", \"" . htmlspecialchars($row['employeeName']) . "\", \"" . htmlspecialchars($row['roled']) . "\")'>
                                                                 <i class='fa fa-edit'></i>
                                                             </button>
                                                         </td>";
                                                     echo "<td>
                                                             <form action='service_transactions.php' method='POST' onsubmit='return confirm(\"Are you sure you want to delete this record?\");'>
                                                                 <input type='hidden' name='deletetransSerId' value='" . htmlspecialchars($row['transSerId']) . "'/>
-                                                                <button type='submit' class='btn btn-danger'>
+                                                                <button type='submit' class='btn btn-danger centered-button'>
                                                                     <i class='fa fa-trash'></i>
                                                                 </button>
                                                             </form>
