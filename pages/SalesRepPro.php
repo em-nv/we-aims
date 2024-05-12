@@ -71,13 +71,15 @@ if (isset($_SESSION['email'])) {
         margin-right: 10px;/* Adds space between input fields and button */
     }
 
-
-
     .input-group input[type="date"] {
         width: 180px; /* Ensures all date input fields have the same width */
         padding: 8px;
         border-radius: 4px;
         border: 1px solid #ccc;
+    }
+    .echo_message {
+        font-size: 18px;
+        margin-bottom: 0px !important;
     }
 </style>
 
@@ -356,78 +358,79 @@ if (isset($_SESSION['email'])) {
             </div>
         </form>
     </div>
-    <div class="card-body" style="display: none;" id="dataTableContainer">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>TransPro ID</th>
-                        <th>Date</th>
-                        <th>Product Name</th>
-                        <th>Retail Price</th>
-                        <th>Cost Price</th>
-                        <th>Quantity Sold</th>
-                        <th>Total Retail Sold Price</th>
-                        <th>Profit</th>
-                        <th>Customer Name</th>
-                        <th>Payment Method</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php
-                    include 'cus_db.php'; // Ensure you have a config file with your DB connection
+    <div class="card-body" id="dataTableContainer">
+    <?php
+    if (!empty($_GET['dateFrom']) && !empty($_GET['dateTo'])) {
+        echo "<div class='table-responsive'>";
+        echo "<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>";
+        echo "<thead>";
+        echo "<tr>";
+        echo "<th>TransPro ID</th>";
+        echo "<th>Date</th>";
+        echo "<th>Product Name</th>";
+        echo "<th>Retail Price</th>";
+        echo "<th>Cost Price</th>";
+        echo "<th>Quantity Sold</th>";
+        echo "<th>Total Retail Sold Price</th>";
+        echo "<th>Profit</th>";
+        echo "<th>Customer Name</th>";
+        echo "<th>Payment Method</th>";
+        echo "</tr>";
+        echo "</thead>";
+        echo "<tbody>";
 
-                    if (isset($_GET['dateFrom']) && isset($_GET['dateTo'])) {
-                        echo "<script>document.getElementById('dataTableContainer').style.display = 'block';</script>";
+        include 'cus_db.php'; // Ensure you have a config file with your DB connection
 
-                        $sql = "SELECT 
-                                    t.transactionId AS transId, 
-                                    t.date AS transDate, 
-                                    p.productName AS productName, 
-                                    p.retailPrice AS retailPrice,
-                                    p.costPrice AS costPrice, 
-                                    t.quantity AS quantity, 
-                                    (p.retailPrice * t.quantity) AS totalRetailPrice,
-                                    ((p.retailPrice - p.costPrice) * t.quantity) AS profit,
-                                    c.firstName AS customerName, 
-                                    c.paymentMethod AS paymentMethod
-                                FROM transactionspro t
-                                JOIN customers c ON t.customerId = c.id 
-                                JOIN products p ON t.productId = p.productId
-                                WHERE t.date BETWEEN ? AND ?";
+        $sql = "SELECT 
+                    t.transactionId AS transId, 
+                    t.date AS transDate, 
+                    p.productName AS productName, 
+                    p.retailPrice AS retailPrice,
+                    p.costPrice AS costPrice, 
+                    t.quantity AS quantity, 
+                    (p.retailPrice * t.quantity) AS totalRetailPrice,
+                    ((p.retailPrice - p.costPrice) * t.quantity) AS profit,
+                    c.firstName AS customerName, 
+                    c.paymentMethod AS paymentMethod
+                FROM transactionspro t
+                JOIN customers c ON t.customerId = c.id 
+                JOIN products p ON t.productId = p.productId
+                WHERE t.date BETWEEN ? AND ?";
 
-                        $stmt = $conn->prepare($sql);
-                        $stmt->bind_param("ss", $_GET['dateFrom'], $_GET['dateTo']);
-                        $stmt->execute();
-                        $result = $stmt->get_result();
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $_GET['dateFrom'], $_GET['dateTo']);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<tr>";
-                                echo "<td>" . htmlspecialchars($row["transId"]) . "</td>";
-                                echo "<td>" . htmlspecialchars($row["transDate"]) . "</td>";
-                                echo "<td>" . htmlspecialchars($row["productName"]) . "</td>";
-                                echo "<td>$" . htmlspecialchars(number_format($row["retailPrice"], 2)) . "</td>";
-                                echo "<td>$" . htmlspecialchars(number_format($row["costPrice"], 2)) . "</td>";
-                                echo "<td>" . htmlspecialchars($row["quantity"]) . "</td>";
-                                echo "<td>$" . number_format($row["totalRetailPrice"], 2) . "</td>";
-                                echo "<td>$" . number_format($row["profit"], 2) . "</td>";
-                                echo "<td>" . htmlspecialchars($row["customerName"]) . "</td>";
-                                echo "<td>" . htmlspecialchars($row["paymentMethod"]) . "</td>";
-                                echo "</tr>";
-                            } 
-                        } else {
-                            echo "<tr><td colspan='10'>No results found</td></tr>";
-                        }
-                        $stmt->close();
-                    } else {
-                        echo "<tr><td colspan='10'>Please choose a date range</td></tr>";
-                    }
-                    $conn->close();
-                    ?>
-                </tbody>
-            </table>
-        </div>
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . htmlspecialchars($row["transId"]) . "</td>";
+                echo "<td>" . htmlspecialchars($row["transDate"]) . "</td>";
+                echo "<td>" . htmlspecialchars($row["productName"]) . "</td>";
+                echo "<td>Php " . htmlspecialchars(number_format($row["retailPrice"], 2)) . "</td>";
+                echo "<td>Php " . htmlspecialchars(number_format($row["costPrice"], 2)) . "</td>";
+                echo "<td>" . htmlspecialchars($row["quantity"]) . "</td>";
+                echo "<td>Php " . number_format($row["totalRetailPrice"], 2) . "</td>";
+                echo "<td>Php " . number_format($row["profit"], 2) . "</td>";
+                echo "<td>" . htmlspecialchars($row["customerName"]) . "</td>";
+                echo "<td>" . htmlspecialchars($row["paymentMethod"]) . "</td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='10'><p class='text-center echo_message'>No results found</p></td></tr>";
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        echo "</tbody>";
+        echo "</table>";
+        echo "</div>";
+    } else {
+        echo "<p class='text-center echo_message'>Please choose a date range</p>";
+    }
+    ?>
     </div>
 </div>
 </div>

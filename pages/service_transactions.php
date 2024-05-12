@@ -622,7 +622,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransSerId'])) {
                                                     echo "<td>" . htmlspecialchars($row['transactionServiceId']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['date']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['serviceName']) . "</td>";
-                                                    echo "<td>$" . htmlspecialchars(number_format($row['servicePrice'], 2)) . "</td>";
+                                                    echo "<td>Php " . htmlspecialchars(number_format($row['servicePrice'], 2)) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['customerName']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['paymentMethod']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['employeeName']) . "</td>";
@@ -683,7 +683,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransSerId'])) {
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="servicePrice">Service Price ($)</label>
+                                            <label for="servicePrice">Service Price (Php)</label>
                                             <input type="text" class="form-control" id="servicePrice" name="servicePrice" readonly>
                                         </div>
                                         <div class="form-group">
@@ -776,7 +776,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransSerId'])) {
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="ep_editServicePrice">Service Price ($)</label>
+                                            <label for="ep_editServicePrice">Service Price (Php)</label>
                                             <input type="text" class="form-control" id="ep_editServicePrice" name="ep_servicePrice" readonly>
                                         </div>
                                         <div class="form-group">
@@ -882,7 +882,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransSerId'])) {
                                                     echo "<td>" . htmlspecialchars($row["transSerId"]) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row["transSerDate"]) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row["serviceName"]) . "</td>";
-                                                    echo "<td>$" . htmlspecialchars(number_format($row["servicePrice"], 2)) . "</td>";
+                                                    echo "<td>Php " . htmlspecialchars(number_format($row["servicePrice"], 2)) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row["customerName"]) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row["paymentMethod"]) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row["employeeName"]) . "</td>";

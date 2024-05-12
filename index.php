@@ -60,6 +60,76 @@ $conn->close();
 
 ?>
 
+<!-- PRODUCTS SALES COUNT -->
+<?php 
+include 'pages/cus_db.php'; // database connection
+
+// Execute SQL query to sum the product sales
+$sql = "SELECT SUM(totalRetailPrice) AS total_productSales FROM transactionspro";
+$result = $conn->query($sql);
+
+// Fetch the sum result
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $total_product_sales = $row["total_productSales"];
+    $formatted_product_sales = number_format($total_product_sales, 2);
+} else {
+    $total_product_sales = 0;
+    $formatted_product_sales = number_format($total_product_sales, 2);
+}
+
+$conn->close();
+?>
+
+<!-- SERVICE SALES COUNT -->
+<?php 
+include 'pages/cus_db.php'; // database connection
+
+// Execute SQL query to sum the product sales
+$sql = "SELECT SUM(servicePrice) AS total_serviceSales FROM transactionsser";
+$result = $conn->query($sql);
+
+// Fetch the sum result
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $total_service_sales = $row["total_serviceSales"];
+    $formatted_service_sales = number_format($total_service_sales, 2);
+} else {
+    $total_service_sales = 0;
+    $formatted_service_sales = number_format($total_service_sales, 2);
+}
+
+$conn->close();
+?>
+
+<!-- TOTAL SALES COUNT -->
+<?php 
+$total_sales = $total_product_sales + $total_service_sales;
+$formatted_total_sales = number_format($total_sales, 2);
+
+?>
+
+<!-- PROFIT COUNT -->
+<?php 
+include 'pages/cus_db.php'; // database connection
+
+// Execute SQL query to sum the product sales
+$sql = "SELECT SUM(totalRetailPrice) AS total_productSales FROM transactionspro";
+$result = $conn->query($sql);
+
+// Fetch the sum result
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $total_product_sales = $row["total_productSales"];
+    $formatted_product_sales = number_format($total_product_sales, 2);
+} else {
+    $total_product_sales = 0;
+    $formatted_product_sales = number_format($total_product_sales, 2);
+}
+
+$conn->close();
+?>
+
 <!-- PRODUCTS SOLD COUNT -->
 <?php 
 include 'pages/cus_db.php'; // database connection
@@ -452,7 +522,7 @@ $conn->close();
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 TOTAL SALES</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Php 14,500</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Php <?php echo $formatted_total_sales; ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-solid fa-peso-sign fa-2x text-blue-300"></i>
@@ -487,8 +557,8 @@ $conn->close();
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                RETAIL SALES</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Php 8,000</div>
+                                                PRODUCT SALES</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Php <?php echo $formatted_product_sales; ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-solid fa-peso-sign fa-2x text-blue-300"></i>
@@ -506,7 +576,7 @@ $conn->close();
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 SERVICE SALES</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Php 6,500</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Php <?php echo $formatted_service_sales; ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-solid fa-peso-sign fa-2x text-blue-300"></i>
