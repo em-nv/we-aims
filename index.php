@@ -496,7 +496,7 @@ $conn->close();
                                             
                                             <!-- Page Heading -->
                                             <div class="d-sm-flex align-items-center justify-content-between" style="padding-top:10px;">
-                                                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                                <a href="pages/SalesRepPro.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                                                     <i class="fas fa-solid fa-chart-line fa-sm text-white-50"></i> View Reports</a>
                                             </div>
                                         </div>
