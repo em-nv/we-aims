@@ -597,13 +597,11 @@ $conn->close();
 
                     <div class="row">
 
-                        <!-- Area Chart -->
+                        <!-- TOP SELLING -->
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
-                                <!-- REPORTS -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">REPORTS</h6>
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">TOP SELLING</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -611,24 +609,130 @@ $conn->close();
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                             aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                            <div class="dropdown-header">Filter:</div>
+                                            <a class="dropdown-item" href="#" id="topSellingServices">Top Selling Services</a>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
+                                    <div class="table-responsive-dashboard">
+                                        <table class="table table-bordered" id="productTable" width="100%" cellspacing="0">
+                                            <!--  for products -->
+                                            <thead>
+                                                <tr style="text-align: center;">
+                                                    <th colspan="3">Top Products</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Rank</th>
+                                                    <th>Product name</th>
+                                                    <th>Items Sold</th>
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                                <?php 
+                                                include 'pages/cus_db.php'; // database connection file
+
+                                                $sql = "SELECT productName, SUM(quantity) AS totalItemsSold 
+                                                        FROM transactionspro 
+                                                        GROUP BY productName 
+                                                        ORDER BY totalItemsSold DESC 
+                                                        LIMIT 4"; // Selecting product names and summing up the quantities sold, ordering by total sold descending, and limiting to the top 4.
+
+                                                $result = mysqli_query($conn, $sql); // Executing SQL query
+
+                                                // Counter for rank
+                                                $rank = 1;
+
+                                                // Fetching data from the result set and displaying it in table rows
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                    echo "<tr>";
+                                                    echo "<td>" . $rank . "</td>"; // Rank
+                                                    echo "<td>" . $row['productName'] . "</td>"; // Product name
+                                                    echo "<td>" . $row['totalItemsSold'] . "</td>"; // Total items sold
+                                                    echo "</tr>";
+                                                    $rank++; // Incrementing rank
+                                                }
+                                                ?>
+                                            </tbody>
+
+                                        </table>
+
+                                        <table class="table table-bordered" id="serviceTable" width="100%" cellspacing="0" style="display: none;">
+                                            <!-- for services -->
+                                            <thead>
+                                                <tr style="text-align: center;">
+                                                    <th colspan="3">Top Services</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Rank</th>
+                                                    <th>Service name</th>
+                                                    <th>Services Acquired</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php 
+                                                include 'pages/cus_db.php'; // database connection file
+
+                                                $sql = "SELECT serviceName, COUNT(*) AS totalServicesAcquired 
+                                                        FROM transactionsser 
+                                                        GROUP BY serviceName 
+                                                        ORDER BY totalServicesAcquired DESC 
+                                                        LIMIT 4"; // Selecting service names and counting the number of times each service was acquired, ordering by total acquired descending, and limiting to the top 4.
+
+                                                $result = mysqli_query($conn, $sql); // Executing SQL query
+
+                                                // Counter for rank
+                                                $rank = 1;
+
+                                                // Fetching data from the result set and displaying it in table rows
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                    echo "<tr>";
+                                                    echo "<td>" . $rank . "</td>"; // Rank
+                                                    echo "<td>" . $row['serviceName'] . "</td>"; // Service name
+                                                    echo "<td>" . $row['totalServicesAcquired'] . "</td>"; // Total services acquired
+                                                    echo "</tr>";
+                                                    $rank++; // Incrementing rank
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                        <a href="pages/product_transactions.php" id="seeMoreProducts" style="padding: 5px; display: block; margin: 0 auto; width: fit-content;">See more...</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Pie Chart -->
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                        <script>
+                            $(document).ready(function () {
+                                $("#topSellingServices").click(function (event) {
+                                    event.preventDefault(); // Prevent default behavior of the anchor tag
+                                    toggleTables();
+                                });
+
+                                // Function to toggle between product and service tables
+                                function toggleTables() {
+                                    if ($("#productTable").is(":visible")) {
+                                        // Products are currently displayed, switch to services
+                                        $("#productTable").hide();
+                                        $("#serviceTable").show();
+                                        $("#seeMoreProducts").attr("href", "pages/services_transactions.php");
+                                        $("#topSellingServices").text("Top Selling Products");
+                                    } else {
+                                        // Services are currently displayed, switch to products
+                                        $("#productTable").show();
+                                        $("#serviceTable").hide();
+                                        $("#seeMoreProducts").attr("href", "pages/product_transactions.php");
+                                        $("#topSellingServices").text("Top Selling Services");
+                                    }
+                                }
+                            });
+                        </script>
+
+
+                        <!-- REMINDERS -->
                         <div class="col-xl-4 col-lg-5">
                             <div class="card shadow mb-4">
                                 <!-- REMINDERS -->
@@ -827,37 +931,37 @@ $conn->close();
                                     <h6 class="m-0 font-weight-bold text-primary">EMPLOYEE PREVIEW</h6>
                                 </div>
                                 <div class="card-body">
-                                <div class="table-responsive-dashboard">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th>Employee ID</th>
-                                                <th>Name</th>
-                                                <th>Designation</th>
-                                                <th>Phone No.</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php 
-                                            include 'pages/cus_db.php'; // database connection file
-                                            $sql = "SELECT employee_ID, first_name, last_name, role, phone_no FROM employees LIMIT 4"; // Selecting required columns
+                                    <div class="table-responsive-dashboard">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Employee ID</th>
+                                                    <th>Name</th>
+                                                    <th>Designation</th>
+                                                    <th>Phone No.</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php 
+                                                include 'pages/cus_db.php'; // database connection file
+                                                $sql = "SELECT employee_ID, first_name, last_name, role, phone_no FROM employees LIMIT 4"; // Selecting required columns
 
-                                            $result = mysqli_query($conn, $sql); // Executing SQL query
+                                                $result = mysqli_query($conn, $sql); // Executing SQL query
 
-                                            // Fetching data from the result set and displaying it in table rows
-                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                echo "<tr>";
-                                                echo "<td>" . $row['employee_ID'] . "</td>";
-                                                echo "<td>" . $row['first_name'] . " " . $row['last_name'] . "</td>"; // Combining first name and last name
-                                                echo "<td>" . $row['role'] . "</td>";
-                                                echo "<td>" . $row['phone_no'] . "</td>";
-                                                echo "</tr>";
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
-                                    <a href="pages/employees.php" style="padding: 5px; display: block; margin: 0 auto; width: fit-content;">See more...</a>
-                                </div>
+                                                // Fetching data from the result set and displaying it in table rows
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                    echo "<tr>";
+                                                    echo "<td>" . $row['employee_ID'] . "</td>";
+                                                    echo "<td>" . $row['first_name'] . " " . $row['last_name'] . "</td>"; // Combining first name and last name
+                                                    echo "<td>" . $row['role'] . "</td>";
+                                                    echo "<td>" . $row['phone_no'] . "</td>";
+                                                    echo "</tr>";
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                        <a href="pages/employees.php" style="padding: 5px; display: block; margin: 0 auto; width: fit-content;">See more...</a>
+                                    </div>
                                 </div>
                             </div>
 
