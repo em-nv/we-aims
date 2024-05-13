@@ -323,11 +323,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransSerId'])) {
     <script src="../https://cdn.lordicon.com/lordicon.js"></script>
 
     <style>
-    .gradient-header {
+    /* .gradient-header {
         background-image: linear-gradient(to right, #003366, #004080, #0059b3); 
-        color: white; /* White text color */
-            /* Add this CSS to your existing styles */
-    }
+        color: white; 
+    } */
     .edit-column button i,
     .trash-column button i {
         color: black; /* Set icon color to black */
@@ -622,7 +621,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransSerId'])) {
                                                     echo "<td>" . htmlspecialchars($row['transactionServiceId']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['date']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['serviceName']) . "</td>";
-                                                    echo "<td>$" . htmlspecialchars(number_format($row['servicePrice'], 2)) . "</td>";
+                                                    echo "<td>Php " . htmlspecialchars(number_format($row['servicePrice'], 2)) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['customerName']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['paymentMethod']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['employeeName']) . "</td>";
@@ -683,7 +682,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransSerId'])) {
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="servicePrice">Service Price ($)</label>
+                                            <label for="servicePrice">Service Price (Php)</label>
                                             <input type="text" class="form-control" id="servicePrice" name="servicePrice" readonly>
                                         </div>
                                         <div class="form-group">
@@ -776,7 +775,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransSerId'])) {
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="ep_editServicePrice">Service Price ($)</label>
+                                            <label for="ep_editServicePrice">Service Price (Php)</label>
                                             <input type="text" class="form-control" id="ep_editServicePrice" name="ep_servicePrice" readonly>
                                         </div>
                                         <div class="form-group">
@@ -882,7 +881,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransSerId'])) {
                                                     echo "<td>" . htmlspecialchars($row["transSerId"]) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row["transSerDate"]) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row["serviceName"]) . "</td>";
-                                                    echo "<td>$" . htmlspecialchars(number_format($row["servicePrice"], 2)) . "</td>";
+                                                    echo "<td>Php " . htmlspecialchars(number_format($row["servicePrice"], 2)) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row["customerName"]) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row["paymentMethod"]) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row["employeeName"]) . "</td>";

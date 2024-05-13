@@ -72,13 +72,15 @@ if (isset($_SESSION['email'])) {
         margin-right: 10px;
     }
 
-
-
     .input-group input[type="date"] {
         width: 180px; 
         padding: 8px;
         border-radius: 4px;
         border: 1px solid #ccc;
+    }
+    .echo_message {
+        font-size: 18px;
+        margin-bottom: 0px !important;
     }
 
 </style>
@@ -360,73 +362,72 @@ if (isset($_SESSION['email'])) {
             </div>
         </form>
     </div>
-    <div class="card-body" style="display: none;" id="dataTableContainer">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>TransSer ID</th>
-                        <th>Date</th>
-                        <th>Service Name</th>
-                        <th>Service Price</th>
-                        <th>Customer Name</th>
-                        <th>Payment Method</th>
-                        <th>Employee Name</th>
-                        <th>Role/Designation</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php
-                include 'cus_db.php'; 
-                if (isset($_GET['dateFrom']) && isset($_GET['dateTo'])) {
-                    echo "<script>document.getElementById('dataTableContainer').style.display = 'block';</script>";
+    <div class="card-body" id="dataTableContainer">
+    <?php
+        if (isset($_GET['dateFrom']) && isset($_GET['dateTo'])) {
+            echo "<div class='table-responsive'>";
+            echo "<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>";
+            echo "<thead>";
+            echo "<tr>";
+            echo "<th>TransSer ID</th>";
+            echo "<th>Date</th>";
+            echo "<th>Service Name</th>";
+            echo "<th>Service Price</th>";
+            echo "<th>Customer Name</th>";
+            echo "<th>Payment Method</th>";
+            echo "<th>Employee Name</th>";
+            echo "<th>Role/Designation</th>";
+            echo "</tr>";
+            echo "</thead>";
+            echo "<tbody>";
 
-                    $sql = "SELECT 
-                                t.transactionServiceId AS transSerId, 
-                                t.date AS transSerDate, 
-                                s.serviceName AS serviceName, 
-                                s.servicePrice AS servicePrice,
-                                c.firstName AS customerName, 
-                                c.paymentMethod AS paymentMethod,
-                                e.first_name AS employeeName,
-                                e.role AS role
-                            FROM transactionsser t
-                            JOIN services s ON t.serviceId = s.serviceId
-                            JOIN customers c ON t.customerId = c.id 
-                            JOIN employees e ON t.employeeId = e.employee_id
-                            WHERE t.date BETWEEN ? AND ?";
+            include 'cus_db.php'; 
+            $sql = "SELECT 
+                        t.transactionServiceId AS transSerId, 
+                        t.date AS transSerDate, 
+                        s.serviceName AS serviceName, 
+                        s.servicePrice AS servicePrice,
+                        c.firstName AS customerName, 
+                        c.paymentMethod AS paymentMethod,
+                        e.first_name AS employeeName,
+                        e.role AS role
+                    FROM transactionsser t
+                    JOIN services s ON t.serviceId = s.serviceId
+                    JOIN customers c ON t.customerId = c.id 
+                    JOIN employees e ON t.employeeId = e.employee_id
+                    WHERE t.date BETWEEN ? AND ?";
 
-                    $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("ss", $_GET['dateFrom'], $_GET['dateTo']);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ss", $_GET['dateFrom'], $_GET['dateTo']);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . htmlspecialchars($row["transSerId"]) . "</td>";
-                            echo "<td>" . htmlspecialchars($row["transSerDate"]) . "</td>";
-                            echo "<td>" . htmlspecialchars($row["serviceName"]) . "</td>";
-                            echo "<td>$" . htmlspecialchars(number_format($row["servicePrice"], 2)) . "</td>";
-                            echo "<td>" . htmlspecialchars($row["customerName"]) . "</td>";
-                            echo "<td>" . htmlspecialchars($row["paymentMethod"]) . "</td>";
-                            echo "<td>" . htmlspecialchars($row["employeeName"]) . "</td>";
-                            echo "<td>" . htmlspecialchars($row["role"]) . "</td>";
-                            echo "</tr>";
-                        } 
-                    } else {
-                        echo "<tr><td colspan='8'>No results found</td></tr>";
-                    }
-                    $stmt->close();
-                } else {
-                    echo "<tr><td colspan='8'>Please choose a date range</td></tr>";
-                }
-                $conn->close();
-                ?>
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>" . htmlspecialchars($row["transSerId"]) . "</td>";
+                    echo "<td>" . htmlspecialchars($row["transSerDate"]) . "</td>";
+                    echo "<td>" . htmlspecialchars($row["serviceName"]) . "</td>";
+                    echo "<td>Php " . htmlspecialchars(number_format($row["servicePrice"], 2)) . "</td>";
+                    echo "<td>" . htmlspecialchars($row["customerName"]) . "</td>";
+                    echo "<td>" . htmlspecialchars($row["paymentMethod"]) . "</td>";
+                    echo "<td>" . htmlspecialchars($row["employeeName"]) . "</td>";
+                    echo "<td>" . htmlspecialchars($row["role"]) . "</td>";
+                    echo "</tr>";
+                } 
+            } else {
+                echo "<tr><td colspan='8'><p class='text-center echo_message'>No results found</p></td></tr>";
+            }
+            $stmt->close();
+            $conn->close();
 
-                </tbody>
-            </table>
-        </div>
+            echo "</tbody>";
+            echo "</table>";
+            echo "</div>";
+        } else {
+            echo "<p class='text-center echo_message'>Please choose a date range</p>";
+        }
+        ?>
     </div>
 </div>
 
