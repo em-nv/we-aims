@@ -44,7 +44,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('../img/branch.jpg');
+            background-image: url('../img/about/branch.jpg');
             background-size: cover;
             background-position: center;
            /*  filter: blur(5px); */ /* Adjust the blur radius as needed */

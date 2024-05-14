@@ -27,6 +27,9 @@ if (isset($_SESSION["user"])) {
     <!-- Custom styles for this template-->
     <link href="../css/sb-admin-2.css" rel="stylesheet">
 
+    <!-- FONT AWESOME ICONS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
     <!-- CUSTOMIZED JS -->
     <script src="../js/customized.js"></script>
 
@@ -122,6 +125,11 @@ if (isset($_SESSION["user"])) {
                             <hr>
                             <div class="text-center">
                                 <a class="small" href="login.php">Already have an account? Login!</a>
+                            </div>
+                            <div class="text-center" style="margin-top: 60px; color: #911C1C;">
+                                <a style="color: #911C1C;" class="small" href="home.php"><i class="fa-solid fa-house"></i> Home</a> |
+                                <a style="color: #911C1C;" class="small" href="about.php"><i class="fa-solid fa-circle-info"></i> About</a> |
+                                <a style="color: #911C1C;" class="small" href="contact.php"><i class="fa-solid fa-comment"></i> Contact Us</a>
                             </div>
                         </div>
                     </div>

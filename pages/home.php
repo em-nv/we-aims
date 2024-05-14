@@ -75,7 +75,7 @@
                 <div class="container-fluid home-content-container">
 
                     <!-- Page Heading -->
-                    <h1>Welcome to We-AIMS!</h1>
+                    <h1 class="home-h1">Welcome to We-AIMS!</h1>
                     <p> “Willem's Wheels, Sorted Deals: Aims your Growth as Success Reveals!”</p>
                     <div class="home-content-button">
                         <img src="../img/red-car2.png" class="car">

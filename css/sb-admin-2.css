@@ -10454,7 +10454,7 @@ a:focus {
 .about-image{
   width: 300px; /* adjust the width and height as needed */
   height: 65vh;
-  background-image: url('../about/branch.jpg'); /* specify your image URL */
+  background-image: url('../img/about/branch.jpg'); /* specify your image URL */
   background-size: cover; /* this will make the image cover the entire div */
   background-position: center; /* this will center the image */
   border-radius: 25px;
@@ -10464,7 +10464,7 @@ a:focus {
 .about-image2{
   width: 650px; /* adjust the width and height as needed */
   height: 65vh;
-  background-image: url('../about/tires.jpg'); /* specify your image URL */
+  background-image: url('../img/about/tires.jpg'); /* specify your image URL */
   background-size: cover; /* this will make the image cover the entire div */
   background-position: center; /* this will center the image */
   border-radius: 25px;
@@ -11794,3 +11794,106 @@ button.centered-button {
   margin: 0 auto;
   /* Additional styling for the button */
 }
+
+
+
+
+
+.home-h1 {
+  animation: slideRight 1.5s ease forwards;
+}
+
+
+/* KEYFRAMES */
+
+
+@keyframes imgFloat {
+  0% {
+      transform: translateY(70px);
+      opacity: 0;
+  }
+  100% {
+      transform: translateY(0);
+      opacity: 1;
+  }
+} 
+
+@keyframes logoAnimate {
+  0% {
+      transform: translateX(-100px);
+      opacity: 0;
+  }
+  100% {
+      transform: translateX(0);
+      opacity: 1;
+  }
+}
+
+@keyframes nav {
+  0% {
+      transform: translateX(100px);
+      opacity: 0;
+  }
+  100% {
+      transform: translateX(0);
+      opacity: 1;
+  }
+}
+
+/* @keyframes slideLeft {
+  0% {
+      transform: translateX(-100px);
+      opacity: 0;
+  }
+  100% {
+      transform: translateX(0);
+      opacity: 1;
+  }
+} */
+
+@keyframes slideRight {
+  0% {
+      transform: translateX(-100px);
+      opacity: 0;
+  }
+  100% {
+      transform: translateX(0);
+      opacity: 1;
+  }
+}
+
+
+@keyframes slideLeft {
+  0% {
+      transform: translateX(100px);
+      opacity: 0;
+  }
+  100% {
+      transform: translateX(0);
+      opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+      transform: translateY(100px);
+      opacity: 0;
+  }
+  100% {
+      transform: translateY(0);
+      opacity: 1;
+  }
+}
+@keyframes slideDown {
+  0% {
+      transform: translateY(-100px);
+      opacity: 0;
+  }
+  100% {
+      transform: translateY(0);
+      opacity: 1;
+  }
+}
+
+
+
