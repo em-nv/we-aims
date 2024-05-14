@@ -456,9 +456,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['supplierId'])) {
                             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#deleteHistoryModal">
                                 <i class="fas fa-history fa-sm text-white-50"></i> Delete History
                             </a>
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                                <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
-                            </a>
                         </div>
                     </div>
 

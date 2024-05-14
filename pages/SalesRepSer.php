@@ -51,7 +51,6 @@ if (isset($_SESSION['email'])) {
     <script src="../https://cdn.lordicon.com/lordicon.js"></script>
 
     <!-- TO DOWNLOAD PDF -->
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
@@ -81,6 +80,9 @@ if (isset($_SESSION['email'])) {
     .echo_message {
         font-size: 18px;
         margin-bottom: 0px !important;
+    }
+   .hide-for-pdf {
+        display: none;
     }
 
 </style>
@@ -504,6 +506,9 @@ if (isset($_SESSION['email'])) {
     <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
+    <!-- ADD THIS PO -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <!-- Page level custom scripts -->
     <script>
     $(document).ready( function () {
@@ -513,15 +518,50 @@ if (isset($_SESSION['email'])) {
 
 <script>
 function downloadPDF() {
+    document.querySelector('.dataTables_filter').classList.add('hide-for-pdf');
+    document.querySelector('.dataTables_length').classList.add('hide-for-pdf');
+    document.querySelector('.dataTables_paginate').classList.add('hide-for-pdf');
+
     const element = document.getElementById('dataTableContainer');
     html2canvas(element).then(canvas => {
+        document.querySelector('.dataTables_filter').classList.remove('hide-for-pdf');
+        document.querySelector('.dataTables_length').classList.remove('hide-for-pdf');
+        document.querySelector('.dataTables_paginate').classList.remove('hide-for-pdf');
+
         const imgData = canvas.toDataURL('image/png');
         const pdf = new jspdf.jsPDF({orientation: 'landscape'});
         const imgProps = pdf.getImageProperties(imgData);
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
         pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save("report.pdf");
+
+    
+        const logo = 'log.jpg'; 
+        const logoWidth = 25; 
+        const logoHeight = 16; 
+        const bottomMargin = 5;
+
+ 
+        pdf.addImage(logo, 'PNG', 13, pdf.internal.pageSize.getHeight() - logoHeight - bottomMargin, logoWidth, logoHeight);
+
+        pdf.setFontSize(11);
+        pdf.setTextColor(150, 150, 150);
+
+        const companyText = "Willem’s Automotive Inventory Management System";
+        const textStart = logoWidth + 15; 
+        pdf.text(companyText, textStart, pdf.internal.pageSize.getHeight() - bottomMargin - 7);
+
+        const watermark = "UNOFFICIAL COPY";
+        pdf.setTextColor(220, 220, 220);
+        pdf.setFontSize(70);
+        const textWidth = pdf.getStringUnitWidth(watermark) * pdf.getFontSize() / pdf.internal.scaleFactor;
+        
+        const xCenter = (pdfWidth - textWidth * Math.cos(Math.PI / 4)) / 2;
+        const yCenter = (pdfHeight / 2) + (textWidth * Math.sin(Math.PI / 4));
+
+        pdf.text(watermark, xCenter, yCenter, {angle: 45}); 
+
+        pdf.save("Service Sales Report.pdf");
     }).catch(err => {
         console.error("Error generating PDF: ", err);
     });
