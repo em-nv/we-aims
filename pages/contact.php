@@ -50,12 +50,12 @@
                         <li class='logo'><a href='#'><img src='../img/logo/logo.png'><span class="top-bar-text">We-AIMS - WILLEM'S AUTOMOTIVE INVANTORY MANAGEMENT SYSTEM</span></a></li>
                         <input type='checkbox' id='check' />
                         <span class="menu">
-                            <li><a href="home.php">Home</a></li>
-                            <li><a href="about.php">About</a></li>
-                            <li><a href="features.php">Features</a></li>
-                            <li class="shade"><a href="contact.php" class="active">Contact</a></li>
-                            <li><a href="login.php">Login</a></li>
-                            <li><a href="register.php">Sign Up</a></li>
+                            <li style="--i:1;"><a href="home.php">Home</a></li>
+                            <li style="--i:2;"><a href="about.php">About</a></li>
+                            <li style="--i:3;"><a href="features.php">Features</a></li>
+                            <li style="--i:4;" class="shade"><a href="contact.php" class="active">Contact</a></li>
+                            <li style="--i:5;"><a href="login.php">Login</a></li>
+                            <li style="--i:6;"><a href="register.php">Sign Up</a></li>
                             <label for="check" class="close-menu"><i class="fas fa-times"></i></label>
                         </span>
                         <label for="check" class="open-menu"><i class="fas fa-bars"></i></label>
@@ -66,35 +66,35 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid contact-content-container">
                     <div class="contact-caption">
-                        <h1 style="padding-bottom: 10px;">Get in Touch with Us</h1>
-                        <p style="padding-bottom: 10px;">We're here to assist you every step of the way. Whether you have inquiries, feedback, or simply want to say hello, drop us a line.</p>
+                        <h1 style="padding-bottom: 10px;" class="contact-a">Get in Touch with Us</h1>
+                        <p style="padding-bottom: 10px;" class="contact-b">We're here to assist you every step of the way. Whether you have inquiries, feedback, or simply want to say hello, drop us a line.</p>
                     </div>
                     <div class="">
                         <form class="user">
                             <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                <div class="col-sm-6 mb-3 mb-sm-0 contact-c">
                                     <input type="text" class="form-control contact-form-control-user" id="contactFirstName"
                                         placeholder="First Name">
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-6 contact-c">
                                     <input type="text" class="form-control contact-form-control-user" id="contactLastName"
                                         placeholder="Last Name">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group contact-c">
                                 <input type="email" class="form-control contact-form-control-user" id="contactInputEmail"
                                     placeholder="Email Address">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group contact-c">
                                 <input type="text" class="form-control contact-form-control-user" id="contactInputSubject"
                                     placeholder="Subject">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group contact-c">
                                 <textarea type="text" class="form-control contact-form-control-user" id="contactInputMessage"
                                     placeholder="Message"></textarea>
                             </div>
         
-                            <div class="form-group">
+                            <div class="form-group contact-c">
                                 <a style="width: 20%; font-size: smaller;" href="" class="btn btn-primary">
                                     SEND
                                 </a>

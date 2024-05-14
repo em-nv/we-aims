@@ -10459,6 +10459,10 @@ a:focus {
   background-position: center; /* this will center the image */
   border-radius: 25px;
   margin: 0px 15px 0px 15px;
+  opacity: 0;
+  animation: imgFloat 2s ease forwards;
+  animation-delay: .8s;
+
 }
 
 .about-image2{
@@ -10469,6 +10473,9 @@ a:focus {
   background-position: center; /* this will center the image */
   border-radius: 25px;
   margin: 0px 15px 0px 15px;
+  opacity: 0;
+  animation: imgFloat 2s ease forwards;
+  animation-delay: .8s;
 }
 
 
@@ -11800,8 +11807,115 @@ button.centered-button {
 
 
 .home-h1 {
-  animation: slideRight 1.5s ease forwards;
+  opacity: 0;
+  animation: slideRight 2s ease forwards;
+  animation-delay: .5s;
 }
+.home-p {
+  opacity: 0;
+  animation: slideLeft 2s ease forwards;
+  animation-delay: .8s;
+}
+.home-button {
+  opacity: 0;
+  animation: appear 1s ease forwards;
+  animation-delay: 3s;
+}
+.logo {
+  animation: slideRight 2s ease forwards;
+}
+
+
+
+
+
+
+.about-a{
+  opacity: 0;
+  animation: slideDown 2s ease forwards;
+}
+.about-b{
+  opacity: 0;
+  animation: slideRight 2s ease forwards;
+}
+.about-c{
+  opacity: 0;
+  animation: slideRight 2s ease forwards;
+  animation-delay: .4s;
+}
+.about-d{
+  opacity: 0;
+  animation: slideRight 2s ease forwards;
+  animation-delay: .6s;
+}
+.about-e{
+  opacity: 0;
+  animation: slideRight 2s ease forwards;
+  animation-delay: .8s;
+}
+.about-f{
+  opacity: 0;
+  animation: slideLeft 2s ease forwards;
+  animation-delay: .8s;
+}
+
+
+
+
+
+.features-a{
+  opacity: 0;
+  animation: slideDown 2s ease forwards;
+  animation-delay: .3s;
+}
+.features-b{
+  opacity: 0;
+  animation: slideLeft 2s ease forwards;
+  animation-delay: .5s;
+}
+.features-c{
+  opacity: 0;
+  animation: slideLeft 2s ease forwards;
+  animation-delay: 1s;
+}
+.features-d{
+  opacity: 0;
+  animation: slideLeft 2s ease forwards;
+  animation-delay: 1.5s;
+}
+
+
+
+
+
+
+.contact-a{
+  opacity: 0;
+  animation: slideDown 2s ease forwards;
+  animation-delay: .2s;
+}
+.contact-b{
+  opacity: 0;
+  animation: slideUp 2s ease forwards;
+  animation-delay: .3s;
+}
+.contact-c{
+  opacity: 0;
+  animation: appear 2s ease forwards;
+  animation-delay: .8s;
+}
+
+
+.login-a{
+  opacity: 0;
+  animation: appear 1s ease forwards;
+}
+
+.signup-a{
+  opacity: 0;
+  animation: appear 1s ease forwards;
+}
+
 
 
 /* KEYFRAMES */
@@ -11892,6 +12006,15 @@ button.centered-button {
   100% {
       transform: translateY(0);
       opacity: 1;
+  }
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 

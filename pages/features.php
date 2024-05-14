@@ -51,12 +51,12 @@
                         <li class='logo'><a href='#'><img src='../img/logo/logo.png'><span class="top-bar-text">We-AIMS - WILLEM'S AUTOMOTIVE INVANTORY MANAGEMENT SYSTEM</span></a></li>
                         <input type='checkbox' id='check' />
                         <span class="menu">
-                            <li><a href="home.php">Home</a></li>
-                            <li><a href="about.php">About</a></li>
-                            <li class="shade"><a href="features.php" class="active">Features</a></li>
-                            <li><a href="contact.php">Contact</a></li>
-                            <li><a href="login.php">Login</a></li>
-                            <li><a href="register.php">Sign Up</a></li>
+                            <li style="--i:1;"><a href="home.php">Home</a></li>
+                            <li style="--i:2;"><a href="about.php">About</a></li>
+                            <li style="--i:3;" class="shade"><a href="features.php" class="active">Features</a></li>
+                            <li style="--i:4;"><a href="contact.php">Contact</a></li>
+                            <li style="--i:5;"><a href="login.php">Login</a></li>
+                            <li style="--i:6;"><a href="register.php">Sign Up</a></li>
                             <label for="check" class="close-menu"><i class="fas fa-times"></i></label>
                         </span>
                         <label for="check" class="open-menu"><i class="fas fa-bars"></i></label>
@@ -68,21 +68,21 @@
                 <div class="container-fluid features-content-container">
 
                     <div class="features-caption">
-                        <h1 style="padding-bottom: 10px;">WHAT WE OFFER</h1>
+                        <h1 style="padding-bottom: 10px;" class="features-a">WHAT WE OFFER</h1>
                     </div>
                     <div class="features-container">
-                        <div class="features-card">
+                        <div class="features-card features-b">
                             <img src="../img/features-img/undraw_server_re_twwj.svg" alt="">
                             <h4>Centralized Data Management</h4>
                             <p>We-aims provides a centralized repository for storing all relevant data including sales transactions, inventory records, customer information, and branch-specific details.</p>
                         </div>
 
-                        <div class="features-card">
+                        <div class="features-card features-c">
                             <img src="../img/features-img/undraw_all_the_data_re_hh4w.svg" alt="">
                             <h4>Real-time Inventory Management</h4>
                             <p>We-aims can also track inventory levels of the business, enabling better inventory control and timely replenishment.</p>
                         </div>
-                        <div class="features-card">
+                        <div class="features-card features-d">
                             <img src="../img/features-img/undraw_data_processing_yrrv.svg" alt="">
                             <h4>Efficient Transaction Processing</h4>
                             <p>Daily transaction processing such as recording sales and managing inventory, can also be found in we-aims inventory management system, reducing manual errors and increasing efficiency.</p>

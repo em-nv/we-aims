@@ -58,12 +58,12 @@
                         <li class='logo'><a href='#'><img src='../img/logo/logo.png'><span class="top-bar-text">We-AIMS - WILLEM'S AUTOMOTIVE INVANTORY MANAGEMENT SYSTEM</span></a></li>
                         <input type='checkbox' id='check' />
                         <span class="menu">
-                            <li class="shade"><a href="home.php" class="active">Home</a></li>
-                            <li><a href="about.php">About</a></li>
-                            <li><a href="features.php">Features</a></li>
-                            <li><a href="contact.php">Contact</a></li>
-                            <li><a href="login.php">Login</a></li>
-                            <li><a href="register.php">Sign Up</a></li>
+                            <li style="--i:1;" class="shade"><a href="home.php" class="active">Home</a></li>
+                            <li style="--i:2;"><a href="about.php">About</a></li>
+                            <li style="--i:3;"><a href="features.php">Features</a></li>
+                            <li style="--i:4;"><a href="contact.php">Contact</a></li>
+                            <li style="--i:5;"><a href="login.php">Login</a></li>
+                            <li style="--i:6;"><a href="register.php">Sign Up</a></li>
                             <label for="check" class="close-menu"><i class="fas fa-times"></i></label>
                         </span>
                         <label for="check" class="open-menu"><i class="fas fa-bars"></i></label>
@@ -76,10 +76,10 @@
 
                     <!-- Page Heading -->
                     <h1 class="home-h1">Welcome to We-AIMS!</h1>
-                    <p> “Willem's Wheels, Sorted Deals: Aims your Growth as Success Reveals!”</p>
+                    <p class="home-p"> “Willem's Wheels, Sorted Deals: Aims your Growth as Success Reveals!”</p>
                     <div class="home-content-button">
                         <img src="../img/red-car2.png" class="car">
-                        <a class="button-link" href="login.php">
+                        <a class="button-link home-button" href="login.php">
                             <i style="font-size: 20px;" class="fa-solid fa-angles-right"></i>
                         </a>
                     </div>
