@@ -387,8 +387,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['admin_id'])) {
                             data-target="#addAdminModal">
                             <i class="fas fa-user-plus fa-sm text-white-50"></i> Add Admin
                         </a>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
                 </div>
 
