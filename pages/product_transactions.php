@@ -633,7 +633,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransId'])) {
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="retailPrice">Retail Price ($)</label>
+                                            <label for="retailPrice">Retail Price (Php)</label>
                                             <input type="text" class="form-control" id="retailPrice" name="retailPrice" readonly>
                                         </div>
                                         <div class="form-group">
@@ -641,7 +641,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransId'])) {
                                             <input type="number" class="form-control" id="quantity" name="quantity" required onchange="updateTotalRetailPrice()">
                                         </div>
                                         <div class="form-group">
-                                            <label for="totalRetailPrice">Total Retail Sold Price ($)</label>
+                                            <label for="totalRetailPrice">Total Retail Sold Price (Php)</label>
                                             <input type="text" class="form-control" id="totalRetailPrice" name="totalRetailPrice" readonly>
                                         </div>
                                         <div class="form-group">
@@ -711,7 +711,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransId'])) {
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="ep_retailPrice">Retail Price ($)</label>
+                                            <label for="ep_retailPrice">Retail Price (Php)</label>
                                             <input type="text" class="form-control" id="ep_editretailPrice" name="ep_retailPrice" readonly>
                                         </div>
                                         <div class="form-group">
@@ -719,7 +719,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransId'])) {
                                             <input type="number" class="form-control" id="ep_editquantity" name="ep_quantity" required onchange="updateEditTotalRetailPrice();">
                                         </div>
                                         <div class="form-group">
-                                            <label for="ep_totalRetailPrice">Total Retail Sold Price ($)</label>
+                                            <label for="ep_totalRetailPrice">Total Retail Sold Price (Php)</label>
                                             <input type="text" class="form-control" id="ep_edittotalRetailPrice" name="ep_totalRetailPrice" readonly>
                                         </div>
                                         <div class="form-group">
