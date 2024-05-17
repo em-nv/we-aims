@@ -373,6 +373,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransId'])) {
                     <span>Services</span></a>
             </li>
 
+            <!-- Nav Item - TRANSACTIONS Menu -->
+            <li class="nav-item active">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+                    aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-solid fa-hand-holding-dollar"></i>
+                    <span>Transactions</span>
+                </a>
+                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <!-- <h6 class="collapse-header">Custom Components:</h6> -->
+                        <a class="collapse-item active" href="product_transactions.php">Product Transactions</a>
+                        <a class="collapse-item" href="service_transactions.php">Service Transactions</a>
+                    </div>
+                </div>
+            </li>
+
             <!-- Nav Item - SALES REPORT Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSalesReport"
@@ -389,21 +405,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransId'])) {
                 </div>
             </li>
 
-            <!-- Nav Item - TRANSACTIONS Menu -->
-            <li class="nav-item active">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-                    aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-solid fa-hand-holding-dollar"></i>
-                    <span>Transactions</span>
-                </a>
-                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item active" href="product_transactions.php">Product Transactions</a>
-                        <a class="collapse-item" href="service_transactions.php">Service Transactions</a>
-                    </div>
-                </div>
-            </li>
+            
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

@@ -159,6 +159,22 @@ if (isset($_SESSION['email'])) {
                     <span>Services</span></a>
             </li>
 
+            <!-- Nav Item - TRANSACTIONS Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTransactions"
+                    aria-expanded="true" aria-controls="collapseTransactions">
+                    <i class="fas fa-fw fa-solid fa-clock-rotate-left"></i>
+                    <span>Transactions</span>
+                </a>
+                <div id="collapseTransactions" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <!-- <h6 class="collapse-header">Custom Components:</h6> -->
+                        <a class="collapse-item" href="product_transactions.php">Product Transactions</a>
+                        <a class="collapse-item" href="service_transactions.php">Service Transactions</a>
+                    </div>
+                </div>
+            </li>
+
             <!-- Nav Item - SALES REPORTS Menu -->
             <li class="nav-item active">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
@@ -175,21 +191,7 @@ if (isset($_SESSION['email'])) {
                 </div>
             </li>
 
-            <!-- Nav Item - TRANSACTIONS Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTransactions"
-                    aria-expanded="true" aria-controls="collapseTransactions">
-                    <i class="fas fa-fw fa-solid fa-clock-rotate-left"></i>
-                    <span>Transactions</span>
-                </a>
-                <div id="collapseTransactions" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="product_transactions.php">Product Transactions</a>
-                        <a class="collapse-item" href="service_transactions.php">Service Transactions</a>
-                    </div>
-                </div>
-            </li>
+            
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

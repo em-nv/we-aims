@@ -55,7 +55,7 @@
                 <!-- Topbar -->
                 <nav>
                     <ul class='nav-bar'>
-                        <li class='logo'><a href='#'><img src='../img/logo/logo.png'><span class="top-bar-text">We-AIMS - WILLEM'S AUTOMOTIVE INVANTORY MANAGEMENT SYSTEM</span></a></li>
+                        <li class='logo logo2'><a href='#'><img src='../img/logo/logo.png'><span class="top-bar-text">We-AIMS - WILLEM'S AUTOMOTIVE INVANTORY MANAGEMENT SYSTEM</span></a></li>
                         <input type='checkbox' id='check' />
                         <span class="menu">
                             <li style="--i:1;" class="shade"><a href="home.php" class="active">Home</a></li>
