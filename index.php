@@ -117,6 +117,7 @@ $sql = "SELECT productName, retailPrice, quantity FROM transactionspro";
 $result = $conn->query($sql);
 
 $totalProfit = 0;
+$finalProfit = 0;
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -157,11 +158,12 @@ $sql = "SELECT SUM(quantity) AS total_quantity FROM transactionspro";
 $result = $conn->query($sql);
 
 // Fetch the sum result
-if ($result->num_rows > 0) {
+$total_quantity_sold = 0;
+if ($result) {
     $row = $result->fetch_assoc();
-    $total_quantity_sold = $row["total_quantity"];
+    $total_quantity_sold = $row["total_quantity"] ?? 0;
 } else {
-    $total_quantity_sold = 0;
+    echo "Error in query: " . $conn->error;
 }
 
 $conn->close();

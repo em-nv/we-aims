@@ -522,6 +522,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
                                                 <option value="Credit Card">Credit Card</option>
                                                 <option value="PayPal">PayPal</option>
                                                 <option value="Bank Transfer">Bank Transfer</option>
+                                                <option value="Cash">Cash</option>
                                             </select>
                                         </div>
                                     </form>
