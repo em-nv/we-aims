@@ -179,11 +179,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <style>
-    /* .gradient-header {
-        background-image: linear-gradient(to right, #003366, #004080, #0059b3); 
+    .gradient-header {
+        background-color: #016193; 
         color: white;
             
-    } */
+    }
     .edit-column button i,
     .trash-column button i {
         color: black; /* Set icon color to black */
@@ -430,9 +430,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
                             </a>
                             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#deleteHistoryModal">
                                 <i class="fas fa-history fa-sm text-white-50"></i> Delete History
-                            </a>
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                                <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
                             </a>
                         </div>
                     </div>

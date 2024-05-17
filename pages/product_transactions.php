@@ -276,10 +276,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransId'])) {
     <script src="../https://cdn.lordicon.com/lordicon.js"></script>
 
     <style>
-    /* .gradient-header {
-        background-image: linear-gradient(to right, #003366, #004080, #0059b3); 
-        color: white; 
-    } */
+    .gradient-header {
+        background-color: #016193; 
+        color: white; /
+            
+    }
     .edit-column button i,
     .trash-column button i {
         color: black; /* Set icon color to black */
@@ -529,9 +530,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransId'])) {
                             </a>
                             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#deleteHistoryModal">
                                 <i class="fas fa-history fa-sm text-white-50"></i> Delete History
-                            </a>
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                                <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
                             </a>
                         </div>
                     </div>
