@@ -276,10 +276,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransId'])) {
     <script src="../https://cdn.lordicon.com/lordicon.js"></script>
 
     <style>
-    /* .gradient-header {
-        background-image: linear-gradient(to right, #003366, #004080, #0059b3); 
-        color: white; 
-    } */
+    .gradient-header {
+        background-color: #016193; 
+        color: white; /
+            
+    }
     .edit-column button i,
     .trash-column button i {
         color: black; /* Set icon color to black */

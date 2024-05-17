@@ -331,10 +331,11 @@ $stmt->bind_param("issdddddi", $supplierId, $companyName, $productName, $costPri
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <style>
-    /* .gradient-header {
-        background-image: linear-gradient(to right, #003366, #004080, #0059b3); 
-        color: white; 
-    } */
+    .gradient-header {
+        background-color: #016193; 
+        color: white; /
+            
+    }
     .edit-column button i,
     .trash-column button i {
         color: black; /* Set icon color to black */
