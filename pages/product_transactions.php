@@ -275,6 +275,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deletetransId'])) {
     <!-- LORDICONS -->
     <script src="../https://cdn.lordicon.com/lordicon.js"></script>
 
+    <!-- BOXICONS AWESOME ICONS -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
     <style>
     .gradient-header {
         background-color: #016193; 

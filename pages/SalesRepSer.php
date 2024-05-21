@@ -29,7 +29,7 @@ if (isset($_SESSION['email'])) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Transaction Products</title>
+    <title>Services Sales Report</title>
 
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -49,6 +49,9 @@ if (isset($_SESSION['email'])) {
 
     <!-- LORDICONS -->
     <script src="../https://cdn.lordicon.com/lordicon.js"></script>
+
+    <!-- BOXICONS AWESOME ICONS -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <!-- TO DOWNLOAD PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -312,7 +315,7 @@ if (isset($_SESSION['email'])) {
                <div class="container-fluid">
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Sales Report Services</h1>
+    <h1 class="h3 mb-0 text-gray-800">Services Sales Report</h1>
     <div>
     <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#confirmationModal"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
 </div>
