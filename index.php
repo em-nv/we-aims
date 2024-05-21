@@ -787,8 +787,9 @@ $conn->close();
                                                 ?>
                                             </tbody>
                                         </table>
-                                        <a href="pages/product_transactions.php" id="seeMoreProducts" style="padding: 5px; display: block; margin: 0 auto; width: fit-content;">See more...</a>
+                                        
                                     </div>
+                                    <a href="pages/product_transactions.php" id="seeMoreProducts" style="padding: 5px; display: block; margin: 0 auto; width: fit-content;">See more...</a>
                                 </div>
                             </div>
                         </div>
@@ -916,8 +917,8 @@ $conn->close();
                                                 ?>
                                             </tbody>
                                         </table>
-                                        <a href="pages/customers.php" style="padding: 5px; display: block; margin: 0 auto; width: fit-content;">See more...</a>
                                     </div>
+                                    <a href="pages/customers.php" style="padding: 5px; display: block; margin: 0 auto; width: fit-content;">See more...</a>
                                 </div>
                             </div>
 
@@ -954,8 +955,8 @@ $conn->close();
                                                 ?>
                                             </tbody>
                                         </table>
-                                        <a href="pages/customers.php" style="padding: 5px; display: block; margin: 0 auto; width: fit-content;">See more...</a>
                                     </div>
+                                    <a href="pages/customers.php" style="padding: 5px; display: block; margin: 0 auto; width: fit-content;">See more...</a>
                                 </div>
                             </div>
 
@@ -1036,8 +1037,8 @@ $conn->close();
                                                 ?>
                                             </tbody>
                                         </table>
-                                        <a href="pages/employees.php" style="padding: 5px; display: block; margin: 0 auto; width: fit-content;">See more...</a>
                                     </div>
+                                    <a href="pages/employees.php" style="padding: 5px; display: block; margin: 0 auto; width: fit-content;">See more...</a>
                                 </div>
                             </div>
 
