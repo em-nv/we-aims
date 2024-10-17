@@ -1,4 +1,4 @@
-STEP 1: Clone the Repository. Alternatively, download the zip file by clicking.....
+STEP 1: Clone the Repository. Alternatively, download the zip file by clicking "Code" and choose "Download Zip."
 STEP 2: Start Apache and MySQL
         2.1. Open the XAMPP Control Panel.
         2.2. Start Apache by clicking the 'Start' button next to Apache.
